@@ -1,0 +1,1103 @@
+{
+  "dataset_version": "northstar-v1",
+  "documents": [
+    {
+      "document_id": "DOC-CORE-PC001-IC-001",
+      "company_id": "PC-001",
+      "document_type": "investment_committee_memo",
+      "title": "Meridian Health Systems Investment Committee Memorandum",
+      "document_date": "2023-02-01",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC001-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "Meridian provides hospital workflow and clinical-operations software to health systems. The underwriting thesis centers on durable demand for software that coordinates complex hospital operations.",
+          "source_fact_ids": [
+            "PC-001",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Commercial diligence identified St. Anne Health Network and Atlantic University Hospitals as established customer relationships, with St. Anne representing the larger account.",
+          "source_fact_ids": [
+            "CC-001",
+            "CC-002",
+            "CUST-001",
+            "CUST-002"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC001-QMR-2026Q2",
+      "company_id": "PC-001",
+      "document_type": "quarterly_management_report",
+      "title": "Meridian Health Systems Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC001-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $82 million in 2025Q2 to $98 million in 2026Q2. EBITDA in the current quarter was $20 million. Net retention in 2026Q2 was 111 percent.",
+          "source_fact_ids": [
+            "FIN-PC-001-2025Q2",
+            "FIN-PC-001-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'implementation backlog sites' moved from 53 sites in 2025Q2 to 76 sites in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-001-2025Q2-BACKLOG",
+            "OP-PC-001-2026Q2-BACKLOG"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Revenue continues to expand, but reliance on one health-system account remains a material commercial exposure.",
+          "source_fact_ids": [
+            "RISK-001",
+            "FIN-PC-001-2026Q2"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+      "company_id": "PC-001",
+      "document_type": "board_update",
+      "title": "Meridian Health Systems Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "The company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability.",
+          "source_fact_ids": [
+            "RISK-001",
+            "FIN-PC-001-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $98 million of revenue and 76 sites for implementation backlog sites.",
+          "source_fact_ids": [
+            "FIN-PC-001-2026Q2",
+            "OP-PC-001-2026Q2-BACKLOG"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC001-RISK-2026Q2",
+      "company_id": "PC-001",
+      "document_type": "risk_review",
+      "title": "Meridian Health Systems Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC001-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "St. Anne Health Network represents 31 percent of Meridian revenue, creating material customer concentration exposure.",
+          "source_fact_ids": [
+            "RISK-001",
+            "CC-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Atlantic University Hospitals represents an additional 14 percent of revenue, making the two named health-system relationships important to the company's commercial profile.",
+          "source_fact_ids": [
+            "CC-002"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC001-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, implementation backlog sites was 53 sites in 2025Q2 and 76 sites in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-001-2025Q2-BACKLOG",
+            "OP-PC-001-2026Q2-BACKLOG"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC002-IC-001",
+      "company_id": "PC-002",
+      "document_type": "investment_committee_memo",
+      "title": "Alder Manufacturing Investment Committee Memorandum",
+      "document_date": "2022-10-20",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC002-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "Alder manufactures precision industrial components with meaningful exposure to aerospace demand. The investment thesis depends on durable customer relationships and specialized production capability.",
+          "source_fact_ids": [
+            "PC-002",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Skyward Aerospace and Kestrel Industrial Group were established customers during underwriting, giving Alder exposure to both aerospace and broader industrial end markets.",
+          "source_fact_ids": [
+            "CC-003",
+            "CC-004",
+            "CUST-003",
+            "CUST-004"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+      "company_id": "PC-002",
+      "document_type": "quarterly_management_report",
+      "title": "Alder Manufacturing Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC002-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $100 million in 2025Q2 to $106 million in 2026Q2. EBITDA in the current quarter was $16 million.",
+          "source_fact_ids": [
+            "FIN-PC-002-2025Q2",
+            "FIN-PC-002-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'production yield pct' moved from 96.8 percent in 2025Q2 to 94.2 percent in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-002-2025Q2-YIELD",
+            "OP-PC-002-2026Q2-YIELD"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Manufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source.",
+          "source_fact_ids": [
+            "RISK-002",
+            "OP-PC-002-2026Q2-YIELD"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+      "company_id": "PC-002",
+      "document_type": "board_update",
+      "title": "Alder Manufacturing Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "Two operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier.",
+          "source_fact_ids": [
+            "RISK-002",
+            "OP-PC-002-2025Q2-YIELD",
+            "OP-PC-002-2026Q2-YIELD"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $106 million of revenue and 94.2 percent for production yield pct.",
+          "source_fact_ids": [
+            "FIN-PC-002-2026Q2",
+            "OP-PC-002-2026Q2-YIELD"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+      "company_id": "PC-002",
+      "document_type": "risk_review",
+      "title": "Alder Manufacturing Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "TitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship.",
+          "source_fact_ids": [
+            "RISK-002",
+            "CS-003",
+            "SUP-005",
+            "GEO-002"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Alder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical.",
+          "source_fact_ids": [
+            "CS-014",
+            "SUP-002"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC002-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, production yield pct was 96.8 percent in 2025Q2 and 94.2 percent in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-002-2025Q2-YIELD",
+            "OP-PC-002-2026Q2-YIELD"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC003-IC-001",
+      "company_id": "PC-003",
+      "document_type": "investment_committee_memo",
+      "title": "BluePeak Logistics Investment Committee Memorandum",
+      "document_date": "2023-05-01",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC003-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "BluePeak provides freight-management and routing software for logistics customers. The thesis combines workflow software adoption with growing complexity in cross-border freight operations.",
+          "source_fact_ids": [
+            "PC-003",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "MapleMart Canada and TransContinental Freight were established Canadian customer relationships before Northstar's investment.",
+          "source_fact_ids": [
+            "CC-005",
+            "CC-006",
+            "CUST-005",
+            "CUST-006"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+      "company_id": "PC-003",
+      "document_type": "quarterly_management_report",
+      "title": "BluePeak Logistics Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC003-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $66 million in 2025Q2 to $72 million in 2026Q2. EBITDA in the current quarter was $13 million. Net retention in 2026Q2 was 101 percent.",
+          "source_fact_ids": [
+            "FIN-PC-003-2025Q2",
+            "FIN-PC-003-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'freight volume million shipments' moved from 13.3 million_shipments in 2025Q2 to 12.7 million_shipments in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-003-2025Q2-FREIGHT",
+            "OP-PC-003-2026Q2-FREIGHT"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Several customers have reduced shipment expectations as activity softened across selected Canadian freight corridors.",
+          "source_fact_ids": [
+            "RISK-003",
+            "GEO-003"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC003-BOARD-2026Q2",
+      "company_id": "PC-003",
+      "document_type": "board_update",
+      "title": "BluePeak Logistics Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC003-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "The main operating concern is a loss of freight momentum in Canada rather than a broad contraction in the customer base.",
+          "source_fact_ids": [
+            "RISK-003",
+            "GEO-003",
+            "OP-PC-003-2026Q2-FREIGHT"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $72 million of revenue and 12.7 million_shipments for freight volume million shipments.",
+          "source_fact_ids": [
+            "FIN-PC-003-2026Q2",
+            "OP-PC-003-2026Q2-FREIGHT"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+      "company_id": "PC-003",
+      "document_type": "risk_review",
+      "title": "BluePeak Logistics Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC003-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "Customer shipment forecasts have weakened in selected Canadian corridors, creating demand sensitivity for BluePeak.",
+          "source_fact_ids": [
+            "RISK-003",
+            "GEO-003"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Canada represents 36 percent of BluePeak revenue exposure, while MapleMart Canada and TransContinental Freight are two named customer relationships in that market.",
+          "source_fact_ids": [
+            "GEO-003",
+            "CC-005",
+            "CC-006"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC003-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, freight volume million shipments was 13.3 million_shipments in 2025Q2 and 12.7 million_shipments in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-003-2025Q2-FREIGHT",
+            "OP-PC-003-2026Q2-FREIGHT"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC004-IC-001",
+      "company_id": "PC-004",
+      "document_type": "investment_committee_memo",
+      "title": "HelioGrid Energy Investment Committee Memorandum",
+      "document_date": "2022-08-29",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC004-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "HelioGrid develops distributed solar and battery infrastructure. The underwriting thesis is based on continued deployment of distributed energy assets and expansion of installed capacity.",
+          "source_fact_ids": [
+            "PC-004",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Northbridge Utilities was an established customer relationship before Northstar's investment and provided evidence of demand from utility counterparties.",
+          "source_fact_ids": [
+            "CC-007",
+            "CUST-007"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+      "company_id": "PC-004",
+      "document_type": "quarterly_management_report",
+      "title": "HelioGrid Energy Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC004-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $68 million in 2025Q2 to $92 million in 2026Q2. EBITDA in the current quarter was $18 million.",
+          "source_fact_ids": [
+            "FIN-PC-004-2025Q2",
+            "FIN-PC-004-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'installed capacity mw' moved from 530 megawatts in 2025Q2 to 770 megawatts in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-004-2025Q2-CAPACITY",
+            "OP-PC-004-2026Q2-CAPACITY"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Growth remains strong, but several western storage projects are progressing more slowly because local approvals are taking longer than planned.",
+          "source_fact_ids": [
+            "RISK-004",
+            "FIN-PC-004-2026Q2"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+      "company_id": "PC-004",
+      "document_type": "board_update",
+      "title": "HelioGrid Energy Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC004-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "Rapid scale expansion and permitting friction are occurring simultaneously: installed capacity is rising while some projects remain behind their original schedules.",
+          "source_fact_ids": [
+            "RISK-004",
+            "OP-PC-004-2026Q2-CAPACITY"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $92 million of revenue and 770 megawatts for installed capacity mw.",
+          "source_fact_ids": [
+            "FIN-PC-004-2026Q2",
+            "OP-PC-004-2026Q2-CAPACITY"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+      "company_id": "PC-004",
+      "document_type": "risk_review",
+      "title": "HelioGrid Energy Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "Permitting delays are affecting the schedule of several distributed storage projects in western states.",
+          "source_fact_ids": [
+            "RISK-004"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "HelioGrid depends on Pacific Battery Cells for battery cells and SolarCore Modules for solar modules, creating additional supply-chain exposures around its deployment program.",
+          "source_fact_ids": [
+            "CS-005",
+            "SUP-004",
+            "CS-006",
+            "SUP-007"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC004-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, installed capacity mw was 530 megawatts in 2025Q2 and 770 megawatts in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-004-2025Q2-CAPACITY",
+            "OP-PC-004-2026Q2-CAPACITY"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC005-IC-001",
+      "company_id": "PC-005",
+      "document_type": "investment_committee_memo",
+      "title": "Vantage Retail Analytics Investment Committee Memorandum",
+      "document_date": "2023-07-20",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC005-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "Vantage provides demand-forecasting and merchandising analytics for large retailers. The investment thesis is based on increasing adoption of data-driven merchandising workflows.",
+          "source_fact_ids": [
+            "PC-005",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Crown Street Retail and Hartwell Department Stores were established customers before Northstar's investment and represented meaningful enterprise-retail relationships.",
+          "source_fact_ids": [
+            "CC-008",
+            "CC-009",
+            "CUST-008",
+            "CUST-009"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+      "company_id": "PC-005",
+      "document_type": "quarterly_management_report",
+      "title": "Vantage Retail Analytics Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent.",
+          "source_fact_ids": [
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'forecast jobs million' moved from 59 million_jobs in 2025Q2 to 93 million_jobs in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-005-2025Q2-JOBS",
+            "OP-PC-005-2026Q2-JOBS"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "New-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior.",
+          "source_fact_ids": [
+            "RISK-005",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+      "company_id": "PC-005",
+      "document_type": "board_update",
+      "title": "Vantage Retail Analytics Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "Top-line expansion remains strong even though the quality of newer customer cohorts has weakened.",
+          "source_fact_ids": [
+            "RISK-005",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $79 million of revenue and 93 million_jobs for forecast jobs million.",
+          "source_fact_ids": [
+            "FIN-PC-005-2026Q2",
+            "OP-PC-005-2026Q2-JOBS"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+      "company_id": "PC-005",
+      "document_type": "risk_review",
+      "title": "Vantage Retail Analytics Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "Vantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth.",
+          "source_fact_ids": [
+            "RISK-005",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Crown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship.",
+          "source_fact_ids": [
+            "CC-008"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC005-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, forecast jobs million was 59 million_jobs in 2025Q2 and 93 million_jobs in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-005-2025Q2-JOBS",
+            "OP-PC-005-2026Q2-JOBS"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC006-IC-001",
+      "company_id": "PC-006",
+      "document_type": "investment_committee_memo",
+      "title": "Orbis Cybersecurity Investment Committee Memorandum",
+      "document_date": "2022-11-30",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC006-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "Orbis provides enterprise identity and threat-detection software. The investment thesis is based on durable cybersecurity demand and expansion of recurring enterprise deployments.",
+          "source_fact_ids": [
+            "PC-006",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Rheinwerk AG was an established enterprise customer before Northstar's investment, providing direct exposure to the German market.",
+          "source_fact_ids": [
+            "CC-010",
+            "CUST-010",
+            "GEO-006"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+      "company_id": "PC-006",
+      "document_type": "quarterly_management_report",
+      "title": "Orbis Cybersecurity Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC006-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $97 million in 2025Q2 to $121 million in 2026Q2. EBITDA in the current quarter was $30 million. Net retention in 2026Q2 was 117 percent.",
+          "source_fact_ids": [
+            "FIN-PC-006-2025Q2",
+            "FIN-PC-006-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'platform uptime pct' moved from 99.99 percent in 2025Q2 to 99.97 percent in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-006-2025Q2-UPTIME",
+            "OP-PC-006-2026Q2-UPTIME"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Authentication reliability deteriorated during the first quarter before service performance recovered during Q2.",
+          "source_fact_ids": [
+            "RISK-006",
+            "OP-PC-006-2026Q1-UPTIME",
+            "OP-PC-006-2026Q2-UPTIME"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+      "company_id": "PC-006",
+      "document_type": "board_update",
+      "title": "Orbis Cybersecurity Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC006-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "The authentication reliability problem has been remediated, and service availability recovered materially in the following quarter.",
+          "source_fact_ids": [
+            "RISK-006",
+            "OP-PC-006-2026Q1-UPTIME",
+            "OP-PC-006-2026Q2-UPTIME"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $121 million of revenue and 99.97 percent for platform uptime pct.",
+          "source_fact_ids": [
+            "FIN-PC-006-2026Q2",
+            "OP-PC-006-2026Q2-UPTIME"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+      "company_id": "PC-006",
+      "document_type": "risk_review",
+      "title": "Orbis Cybersecurity Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "The ORBIS-IDX-7 service experienced an authentication defect that caused intermittent identity-validation failures for a subset of enterprise tenants.",
+          "source_fact_ids": [
+            "RISK-006"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Germany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency.",
+          "source_fact_ids": [
+            "GEO-006",
+            "CC-010",
+            "CUST-010"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC006-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, platform uptime pct was 99.99 percent in 2025Q2 and 99.97 percent in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-006-2025Q2-UPTIME",
+            "OP-PC-006-2026Q2-UPTIME"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC007-IC-001",
+      "company_id": "PC-007",
+      "document_type": "investment_committee_memo",
+      "title": "Cedar Financial Technologies Investment Committee Memorandum",
+      "document_date": "2023-03-10",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC007-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "Cedar provides compliance and workflow infrastructure to regional banks. The underwriting thesis is based on persistent regulatory complexity and modernization of bank operating workflows.",
+          "source_fact_ids": [
+            "PC-007",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Harbor Regional Bank and Pioneer Community Bank were established customers before Northstar's investment.",
+          "source_fact_ids": [
+            "CC-011",
+            "CC-012",
+            "CUST-011",
+            "CUST-012"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+      "company_id": "PC-007",
+      "document_type": "quarterly_management_report",
+      "title": "Cedar Financial Technologies Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC007-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $76 million in 2025Q2 to $84 million in 2026Q2. EBITDA in the current quarter was $16 million. Net retention in 2026Q2 was 106 percent.",
+          "source_fact_ids": [
+            "FIN-PC-007-2025Q2",
+            "FIN-PC-007-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'transaction volume billion usd' moved from 28.9 usd_billions in 2025Q2 to 35.7 usd_billions in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-007-2025Q2-VOLUME",
+            "OP-PC-007-2026Q2-VOLUME"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "The business continues to grow, but a single regional-bank account still represents a substantial share of revenue.",
+          "source_fact_ids": [
+            "RISK-007",
+            "FIN-PC-007-2026Q2"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC007-BOARD-2026Q2",
+      "company_id": "PC-007",
+      "document_type": "board_update",
+      "title": "Cedar Financial Technologies Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC007-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "Customer concentration remains the principal commercial risk even as transaction activity and quarterly revenue continue to increase.",
+          "source_fact_ids": [
+            "RISK-007",
+            "FIN-PC-007-2026Q2",
+            "OP-PC-007-2026Q2-VOLUME"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $84 million of revenue and 35.7 usd_billions for transaction volume billion usd.",
+          "source_fact_ids": [
+            "FIN-PC-007-2026Q2",
+            "OP-PC-007-2026Q2-VOLUME"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC007-RISK-2026Q2",
+      "company_id": "PC-007",
+      "document_type": "risk_review",
+      "title": "Cedar Financial Technologies Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC007-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "Harbor Regional Bank represents 26 percent of Cedar revenue, leaving the company materially exposed to one regional-bank relationship.",
+          "source_fact_ids": [
+            "RISK-007",
+            "CC-011"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "Pioneer Community Bank represents another 13 percent of revenue, although the Harbor relationship is the larger concentration.",
+          "source_fact_ids": [
+            "CC-012",
+            "CC-011"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC007-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, transaction volume billion usd was 28.9 usd_billions in 2025Q2 and 35.7 usd_billions in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-007-2025Q2-VOLUME",
+            "OP-PC-007-2026Q2-VOLUME"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC008-IC-001",
+      "company_id": "PC-008",
+      "document_type": "investment_committee_memo",
+      "title": "NovaBio Instruments Investment Committee Memorandum",
+      "document_date": "2022-10-10",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC008-IC-THESIS",
+          "heading": "Investment thesis",
+          "text": "NovaBio develops laboratory automation and diagnostic instrumentation. The investment thesis combines automation demand with recurring needs for high-precision life-sciences equipment.",
+          "source_fact_ids": [
+            "PC-008",
+            "FUND-001"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-IC-DILIGENCE",
+          "heading": "Commercial diligence",
+          "text": "Alpine Diagnostics and Genomicore Laboratories were established life-sciences customers before Northstar's investment.",
+          "source_fact_ids": [
+            "CC-013",
+            "CC-014",
+            "CUST-013",
+            "CUST-014"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+      "company_id": "PC-008",
+      "document_type": "quarterly_management_report",
+      "title": "NovaBio Instruments Q2 2026 Management Report",
+      "document_date": "2026-07-10",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC008-QMR-FINANCIAL",
+          "heading": "Financial performance",
+          "text": "Revenue increased from $67 million in 2025Q2 to $83 million in 2026Q2. EBITDA in the current quarter was $14 million.",
+          "source_fact_ids": [
+            "FIN-PC-008-2025Q2",
+            "FIN-PC-008-2026Q2"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-QMR-OPERATING",
+          "heading": "Operating indicator",
+          "text": "The operating indicator 'instrument shipments' moved from 950 units in 2025Q2 to 1175 units in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-008-2025Q2-SHIPMENTS",
+            "OP-PC-008-2026Q2-SHIPMENTS"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-QMR-SIGNAL",
+          "heading": "Management signal",
+          "text": "Shipment growth remains healthy, but a precision-motion assembly still depends on a single qualified source.",
+          "source_fact_ids": [
+            "RISK-008",
+            "OP-PC-008-2026Q2-SHIPMENTS"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+      "company_id": "PC-008",
+      "document_type": "board_update",
+      "title": "NovaBio Instruments Q2 2026 Board Update",
+      "document_date": "2026-07-20",
+      "confidentiality": "confidential",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC008-BOARD-PRIORITY",
+          "heading": "Primary board issue",
+          "text": "Commercial activity continues to expand while an unresolved single-source dependency remains embedded in the automation platform.",
+          "source_fact_ids": [
+            "RISK-008",
+            "OP-PC-008-2026Q2-SHIPMENTS"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-BOARD-SCORECARD",
+          "heading": "Quarter-end scorecard",
+          "text": "The Q2 scorecard records $83 million of revenue and 1175 units for instrument shipments.",
+          "source_fact_ids": [
+            "FIN-PC-008-2026Q2",
+            "OP-PC-008-2026Q2-SHIPMENTS"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+      "company_id": "PC-008",
+      "document_type": "risk_review",
+      "title": "NovaBio Instruments Q2 2026 Risk Review",
+      "document_date": "2026-07-31",
+      "confidentiality": "restricted",
+      "version": 1,
+      "evidence": [
+        {
+          "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+          "heading": "Primary risk",
+          "text": "Helix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany.",
+          "source_fact_ids": [
+            "RISK-008",
+            "CS-011",
+            "SUP-011",
+            "GEO-008"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-RISK-CONTEXT",
+          "heading": "Risk context",
+          "text": "NovaBio also sources laboratory optics from Alpine Optics AG in Switzerland, but that relationship is classified as high criticality rather than single-source critical.",
+          "source_fact_ids": [
+            "CS-012",
+            "SUP-012",
+            "GEO-009"
+          ]
+        },
+        {
+          "evidence_id": "EVID-CORE-PC008-RISK-INDICATOR",
+          "heading": "Operating indicator",
+          "text": "For monitoring context, instrument shipments was 950 units in 2025Q2 and 1175 units in 2026Q2.",
+          "source_fact_ids": [
+            "OP-PC-008-2025Q2-SHIPMENTS",
+            "OP-PC-008-2026Q2-SHIPMENTS"
+          ]
+        }
+      ]
+    }
+  ]
+}
