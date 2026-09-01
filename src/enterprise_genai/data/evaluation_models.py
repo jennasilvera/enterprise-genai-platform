@@ -44,7 +44,7 @@ AnswerType = Literal[
 
 class ExpectedAnswer(BaseModel):
     answer_type: AnswerType
-    value: str | float | bool | list[str] | None
+    value: str | int | float | bool | list[str] | None
     unit: str | None = None
     tolerance: float | None = Field(default=None, ge=0)
 
@@ -53,6 +53,10 @@ class ExpectedAnswer(BaseModel):
         if self.answer_type == "abstain":
             if self.value is not None:
                 raise ValueError("Abstention answers must have value=None.")
+
+            if self.unit is not None or self.tolerance is not None:
+                raise ValueError("Abstention answers cannot define units or tolerance.")
+
             return self
 
         if self.value is None:
@@ -64,11 +68,31 @@ class ExpectedAnswer(BaseModel):
                 (int, float),
             ):
                 raise ValueError("Numeric answers require an int or float value.")
-        elif self.tolerance is not None:
-            raise ValueError("Tolerance is only valid for numeric answers.")
+        else:
+            if self.tolerance is not None:
+                raise ValueError("Tolerance is only valid for numeric answers.")
 
-        if self.answer_type == "entities" and not isinstance(self.value, list):
-            raise ValueError("Entity-list answers require list[str].")
+            if self.unit is not None:
+                raise ValueError("Units are only valid for numeric answers.")
+
+        if self.answer_type in {"text", "entity"} and not isinstance(
+            self.value,
+            str,
+        ):
+            raise ValueError(f"{self.answer_type} answers require a string value.")
+
+        if self.answer_type == "boolean" and not isinstance(
+            self.value,
+            bool,
+        ):
+            raise ValueError("Boolean answers require a bool value.")
+
+        if self.answer_type == "entities":
+            if not isinstance(self.value, list):
+                raise ValueError("Entity-list answers require list[str].")
+
+            if not self.value or not all(isinstance(item, str) for item in self.value):
+                raise ValueError("Entity-list answers require a non-empty list[str].")
 
         return self
 
@@ -88,31 +112,60 @@ class EvaluationCase(BaseModel):
     difficulty: Difficulty
     answerable: bool
     expected_answer: ExpectedAnswer
-    required_tools: list[RequiredTool]
+    answer_source_fact_ids: list[str] = Field(default_factory=list)
+    required_tools: list[RequiredTool] = Field(min_length=1)
     relevance_judgments: list[RelevanceJudgment]
 
     @model_validator(mode="after")
     def validate_case(self) -> Self:
         judgment_keys = [
-            (judgment.document_id, judgment.evidence_id) for judgment in self.relevance_judgments
+            (
+                judgment.document_id,
+                judgment.evidence_id,
+            )
+            for judgment in self.relevance_judgments
         ]
 
         if len(judgment_keys) != len(set(judgment_keys)):
             raise ValueError(f"Duplicate relevance judgment in {self.query_id}.")
 
+        if len(self.required_tools) != len(set(self.required_tools)):
+            raise ValueError(f"Duplicate required tool in {self.query_id}.")
+
+        if len(self.answer_source_fact_ids) != len(set(self.answer_source_fact_ids)):
+            raise ValueError(f"Duplicate answer source fact in {self.query_id}.")
+
         grades = [judgment.relevance_grade for judgment in self.relevance_judgments]
+
+        retrieval_tools = {
+            "lexical_retrieval",
+            "dense_retrieval",
+            "hybrid_retrieval",
+        }
+
+        uses_retrieval = bool(retrieval_tools.intersection(self.required_tools))
 
         if self.answerable:
             if self.expected_answer.answer_type == "abstain":
                 raise ValueError("Answerable cases cannot expect abstention.")
 
-            if 3 not in grades:
+            if uses_retrieval and 3 not in grades:
                 raise ValueError(
-                    "Answerable cases require at least one grade-3 canonical evidence judgment."
+                    "Answerable retrieval cases require at least one "
+                    "grade-3 canonical evidence judgment."
                 )
+
+            if not uses_retrieval and not self.answer_source_fact_ids:
+                raise ValueError(
+                    "Answerable non-retrieval cases require canonical answer source facts."
+                )
+
         else:
             if self.expected_answer.answer_type != "abstain":
                 raise ValueError("Unanswerable cases must expect abstention.")
+
+            if self.answer_source_fact_ids:
+                raise ValueError("Unanswerable cases cannot define answer source facts.")
 
             if 3 in grades:
                 raise ValueError("Unanswerable cases cannot contain grade-3 answer evidence.")

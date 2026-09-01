@@ -1,12 +1,14 @@
 from enterprise_genai.data.document_models import DocumentCorpus
 from enterprise_genai.data.evaluation_models import EvaluationSet
+from enterprise_genai.data.models import EnterpriseUniverse
+from enterprise_genai.data.provenance import canonical_fact_ids
 
 
 def validate_evaluation_references(
     evaluation_set: EvaluationSet,
     corpus: DocumentCorpus,
 ) -> None:
-    """Validate evaluation judgments against the document corpus."""
+    """Validate retrieval judgments against the document corpus."""
 
     if evaluation_set.dataset_version != corpus.dataset_version:
         raise ValueError("Evaluation and corpus dataset versions do not match.")
@@ -42,3 +44,25 @@ def validate_evaluation_references(
                     f"{judgment.document_id}, but the evidence belongs to "
                     f"{evidence_document_id}."
                 )
+
+
+def validate_evaluation_ground_truth(
+    evaluation_set: EvaluationSet,
+    universe: EnterpriseUniverse,
+) -> None:
+    """Validate answer-source fact IDs against canonical enterprise truth."""
+
+    if evaluation_set.dataset_version != universe.metadata.dataset_version:
+        raise ValueError("Evaluation and universe dataset versions do not match.")
+
+    valid_fact_ids = canonical_fact_ids(universe)
+
+    for case in evaluation_set.cases:
+        unknown = set(case.answer_source_fact_ids) - valid_fact_ids
+
+        if unknown:
+            unknown_list = ", ".join(sorted(unknown))
+
+            raise ValueError(
+                f"{case.query_id} references unknown canonical answer facts: {unknown_list}"
+            )

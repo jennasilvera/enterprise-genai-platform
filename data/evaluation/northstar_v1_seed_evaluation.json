@@ -1,0 +1,730 @@
+{
+  "dataset_version": "northstar-v1",
+  "evaluation_version": "northstar-eval-v1-seed",
+  "cases": [
+    {
+      "query_id": "Q-0001",
+      "question": "What defect affected ORBIS-IDX-7?",
+      "query_type": "lexical",
+      "split": "development",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "An authentication defect caused intermittent identity-validation failures for a subset of enterprise tenants.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-006"
+      ],
+      "required_tools": [
+        "lexical_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Explicitly names ORBIS-IDX-7 and the defect."
+        },
+        {
+          "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+          "relevance_grade": 1,
+          "rationale": "Describes the reliability issue without the identifier."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0002",
+      "question": "Which critical titanium supplier is Alder's only qualified source?",
+      "query_type": "lexical",
+      "split": "development",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "TitaniumWorks GmbH",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CS-003",
+        "SUP-005",
+        "RISK-002"
+      ],
+      "required_tools": [
+        "lexical_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Explicitly identifies TitaniumWorks GmbH."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0003",
+      "question": "Which portfolio company relies on Helix Motion GmbH as its only qualified source?",
+      "query_type": "lexical",
+      "split": "test",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "NovaBio Instruments",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-008",
+        "CS-011",
+        "SUP-011"
+      ],
+      "required_tools": [
+        "lexical_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Explicitly identifies Helix Motion GmbH."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0004",
+      "question": "Which portfolio company is still growing even though newer customers are failing to settle into normal renewal behavior?",
+      "query_type": "semantic",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "Vantage Retail Analytics",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-005",
+        "FIN-PC-005-2025Q2",
+        "FIN-PC-005-2026Q2"
+      ],
+      "required_tools": [
+        "dense_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+          "relevance_grade": 3,
+          "rationale": "Direct semantic description of weakening cohorts."
+        },
+        {
+          "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+          "relevance_grade": 2,
+          "rationale": "Supports the cohort-quality deterioration."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0005",
+      "question": "Which company has projects progressing more slowly because local approvals are taking longer?",
+      "query_type": "semantic",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "HelioGrid Energy",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-004"
+      ],
+      "required_tools": [
+        "dense_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-QMR-SIGNAL",
+          "relevance_grade": 3,
+          "rationale": "Paraphrases the permitting-delay problem."
+        },
+        {
+          "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+          "relevance_grade": 2,
+          "rationale": "States the permitting risk explicitly."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0006",
+      "question": "Which portfolio company is seeing freight momentum weaken in Canadian corridors?",
+      "query_type": "semantic",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "BluePeak Logistics",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-003",
+        "GEO-003",
+        "OP-PC-003-2026Q2-FREIGHT"
+      ],
+      "required_tools": [
+        "dense_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC003-BOARD-2026Q2",
+          "evidence_id": "EVID-CORE-PC003-BOARD-PRIORITY",
+          "relevance_grade": 3,
+          "rationale": "Directly describes weaker Canadian freight momentum."
+        },
+        {
+          "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC003-QMR-SIGNAL",
+          "relevance_grade": 2,
+          "rationale": "Describes customers reducing shipment expectations."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0007",
+      "question": "What happened to ORBIS-IDX-7, and how did service reliability change afterward?",
+      "query_type": "hybrid",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "ORBIS-IDX-7 experienced an authentication defect that caused intermittent identity-validation failures; reliability deteriorated in 2026 Q1 and recovered during 2026 Q2.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-006",
+        "OP-PC-006-2026Q1-UPTIME",
+        "OP-PC-006-2026Q2-UPTIME"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical identifier-specific incident evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+          "relevance_grade": 3,
+          "rationale": "Canonical evidence of deterioration and recovery."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0008",
+      "question": "What operational risk is associated with TitaniumWorks GmbH, and how has Alder's production yield changed?",
+      "query_type": "hybrid",
+      "split": "development",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "Alder has a critical single-source dependency on TitaniumWorks GmbH, while production yield declined from 96.8 percent in 2025 Q2 to 94.2 percent in 2026 Q2.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-002",
+        "CS-003",
+        "SUP-005",
+        "OP-PC-002-2025Q2-YIELD",
+        "OP-PC-002-2026Q2-YIELD"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical supplier-risk evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC002-QMR-OPERATING",
+          "relevance_grade": 3,
+          "rationale": "Canonical production-yield trend evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0009",
+      "question": "What is the risk around Crown Street Retail, and what broader customer-quality problem is Vantage experiencing?",
+      "query_type": "hybrid",
+      "split": "development",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "Crown Street Retail represents 27 percent of Vantage revenue and is at risk, while newer customer cohorts are failing to settle into normal renewal behavior.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CC-008",
+        "RISK-005"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+          "relevance_grade": 3,
+          "rationale": "Canonical Crown Street relationship evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+          "relevance_grade": 3,
+          "rationale": "Canonical semantic cohort-quality evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0010",
+      "question": "Which portfolio company had the highest year-over-year revenue growth in 2026 Q2?",
+      "query_type": "sql",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "HelioGrid Energy",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-004-2025Q2",
+        "FIN-PC-004-2026Q2"
+      ],
+      "required_tools": [
+        "sql"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0011",
+      "question": "What was total portfolio revenue in 2026 Q2?",
+      "query_type": "sql",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "number",
+        "value": 735000000,
+        "unit": "USD",
+        "tolerance": 0.0
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-001-2026Q2",
+        "FIN-PC-002-2026Q2",
+        "FIN-PC-003-2026Q2",
+        "FIN-PC-004-2026Q2",
+        "FIN-PC-005-2026Q2",
+        "FIN-PC-006-2026Q2",
+        "FIN-PC-007-2026Q2",
+        "FIN-PC-008-2026Q2"
+      ],
+      "required_tools": [
+        "sql"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0012",
+      "question": "Which company had net retention below 100 percent in 2026 Q2?",
+      "query_type": "sql",
+      "split": "development",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "Vantage Retail Analytics",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-005-2026Q2"
+      ],
+      "required_tools": [
+        "sql"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0013",
+      "question": "Which company had the highest EBITDA margin in 2026 Q2?",
+      "query_type": "sql",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "Orbis Cybersecurity",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-001-2026Q2",
+        "FIN-PC-002-2026Q2",
+        "FIN-PC-003-2026Q2",
+        "FIN-PC-004-2026Q2",
+        "FIN-PC-005-2026Q2",
+        "FIN-PC-006-2026Q2",
+        "FIN-PC-007-2026Q2",
+        "FIN-PC-008-2026Q2"
+      ],
+      "required_tools": [
+        "sql"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0014",
+      "question": "Which portfolio companies depend on critical suppliers located in Germany?",
+      "query_type": "graph",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entities",
+        "value": [
+          "Alder Manufacturing",
+          "NovaBio Instruments"
+        ],
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CS-003",
+        "SUP-005",
+        "GEO-002",
+        "RISK-002",
+        "CS-011",
+        "SUP-011",
+        "GEO-008",
+        "RISK-008"
+      ],
+      "required_tools": [
+        "graph"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0015",
+      "question": "Which portfolio company serves a customer based in Germany?",
+      "query_type": "graph",
+      "split": "development",
+      "difficulty": "easy",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "Orbis Cybersecurity",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CC-010",
+        "CUST-010",
+        "PC-006"
+      ],
+      "required_tools": [
+        "graph"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0016",
+      "question": "Which company has both a critical German supplier and a supplier located in Switzerland?",
+      "query_type": "graph",
+      "split": "development",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "NovaBio Instruments",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CS-011",
+        "SUP-011",
+        "CS-012",
+        "SUP-012",
+        "GEO-008",
+        "GEO-009"
+      ],
+      "required_tools": [
+        "graph"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0017",
+      "question": "Summarize HelioGrid's Q2 revenue growth and principal operating risk.",
+      "query_type": "multi_source",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "Revenue increased from $68 million in 2025 Q2 to $92 million in 2026 Q2, while permitting delays are slowing western distributed-storage projects.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-004-2025Q2",
+        "FIN-PC-004-2026Q2",
+        "RISK-004"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-QMR-FINANCIAL",
+          "relevance_grade": 3,
+          "rationale": "Canonical revenue-growth evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical permitting-risk evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0018",
+      "question": "What customer concentration risk does Cedar face, and what were its 2026 Q2 revenue and net retention?",
+      "query_type": "multi_source",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "Harbor Regional Bank represents 26 percent of Cedar revenue; Cedar generated $84 million of revenue in 2026 Q2 with net retention of 106 percent.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-007",
+        "CC-011",
+        "FIN-PC-007-2026Q2"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC007-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC007-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical customer-concentration evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC007-QMR-FINANCIAL",
+          "relevance_grade": 3,
+          "rationale": "Canonical Q2 financial evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0019",
+      "question": "What critical supplier risk does NovaBio face, and how have instrument shipments changed?",
+      "query_type": "multi_source",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "text",
+        "value": "NovaBio depends on Helix Motion GmbH as its only qualified source for a critical precision motion assembly, while instrument shipments increased from 950 units in 2025 Q2 to 1,175 units in 2026 Q2.",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "RISK-008",
+        "CS-011",
+        "SUP-011",
+        "OP-PC-008-2025Q2-SHIPMENTS",
+        "OP-PC-008-2026Q2-SHIPMENTS"
+      ],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical supplier-risk evidence."
+        },
+        {
+          "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC008-QMR-OPERATING",
+          "relevance_grade": 3,
+          "rationale": "Canonical shipment-trend evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0020",
+      "question": "Which company had net retention below 100 percent in 2026 Q2 and also has document evidence that newer customer cohorts are failing to normalize?",
+      "query_type": "mixed_tool",
+      "split": "development",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "Vantage Retail Analytics",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-005-2026Q2",
+        "RISK-005"
+      ],
+      "required_tools": [
+        "sql",
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+          "relevance_grade": 3,
+          "rationale": "Canonical semantic cohort-quality evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0021",
+      "question": "Which company had the highest year-over-year revenue growth in 2026 Q2 and also has a documented permitting problem?",
+      "query_type": "mixed_tool",
+      "split": "development",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "HelioGrid Energy",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "FIN-PC-004-2025Q2",
+        "FIN-PC-004-2026Q2",
+        "RISK-004"
+      ],
+      "required_tools": [
+        "sql",
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": [
+        {
+          "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+          "relevance_grade": 3,
+          "rationale": "Canonical permitting-risk evidence."
+        }
+      ]
+    },
+    {
+      "query_id": "Q-0022",
+      "question": "Among companies with critical suppliers in Germany, which had lower revenue in 2026 Q2?",
+      "query_type": "mixed_tool",
+      "split": "test",
+      "difficulty": "hard",
+      "answerable": true,
+      "expected_answer": {
+        "answer_type": "entity",
+        "value": "NovaBio Instruments",
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [
+        "CS-003",
+        "SUP-005",
+        "CS-011",
+        "SUP-011",
+        "FIN-PC-002-2026Q2",
+        "FIN-PC-008-2026Q2"
+      ],
+      "required_tools": [
+        "graph",
+        "sql"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0023",
+      "question": "What is Northstar's expected 2030 exit valuation for Meridian Health Systems?",
+      "query_type": "insufficient_evidence",
+      "split": "test",
+      "difficulty": "medium",
+      "answerable": false,
+      "expected_answer": {
+        "answer_type": "abstain",
+        "value": null,
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [],
+      "required_tools": [
+        "hybrid_retrieval"
+      ],
+      "relevance_judgments": []
+    },
+    {
+      "query_id": "Q-0024",
+      "question": "What was Alder Manufacturing's exact customer churn rate in 2026 Q2?",
+      "query_type": "insufficient_evidence",
+      "split": "development",
+      "difficulty": "medium",
+      "answerable": false,
+      "expected_answer": {
+        "answer_type": "abstain",
+        "value": null,
+        "unit": null,
+        "tolerance": null
+      },
+      "answer_source_fact_ids": [],
+      "required_tools": [
+        "sql"
+      ],
+      "relevance_judgments": []
+    }
+  ]
+}
