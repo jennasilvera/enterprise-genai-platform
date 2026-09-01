@@ -507,6 +507,1162 @@
       "relationship_status": "active"
     }
   ],
+  "financial_metrics": [
+    {
+      "company_id": "PC-001",
+      "period": "2024Q3",
+      "revenue_usd": 72000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 69.0,
+      "net_retention_pct": 112.0,
+      "customer_count": 118,
+      "employee_count": 420
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2024Q4",
+      "revenue_usd": 75000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 69.5,
+      "net_retention_pct": 113.0,
+      "customer_count": 122,
+      "employee_count": 431
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2025Q1",
+      "revenue_usd": 78000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 70.0,
+      "net_retention_pct": 114.0,
+      "customer_count": 126,
+      "employee_count": 445
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2025Q2",
+      "revenue_usd": 82000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 70.2,
+      "net_retention_pct": 115.0,
+      "customer_count": 131,
+      "employee_count": 458
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2025Q3",
+      "revenue_usd": 85000000,
+      "ebitda_usd": 16000000,
+      "gross_margin_pct": 70.5,
+      "net_retention_pct": 114.0,
+      "customer_count": 135,
+      "employee_count": 469
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2025Q4",
+      "revenue_usd": 89000000,
+      "ebitda_usd": 17000000,
+      "gross_margin_pct": 71.0,
+      "net_retention_pct": 113.0,
+      "customer_count": 139,
+      "employee_count": 480
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2026Q1",
+      "revenue_usd": 93000000,
+      "ebitda_usd": 18000000,
+      "gross_margin_pct": 71.2,
+      "net_retention_pct": 112.0,
+      "customer_count": 143,
+      "employee_count": 491
+    },
+    {
+      "company_id": "PC-001",
+      "period": "2026Q2",
+      "revenue_usd": 98000000,
+      "ebitda_usd": 20000000,
+      "gross_margin_pct": 71.5,
+      "net_retention_pct": 111.0,
+      "customer_count": 147,
+      "employee_count": 505
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2024Q3",
+      "revenue_usd": 95000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 31.0,
+      "net_retention_pct": null,
+      "customer_count": 64,
+      "employee_count": 615
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2024Q4",
+      "revenue_usd": 97000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 31.2,
+      "net_retention_pct": null,
+      "customer_count": 65,
+      "employee_count": 620
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2025Q1",
+      "revenue_usd": 98000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 31.5,
+      "net_retention_pct": null,
+      "customer_count": 65,
+      "employee_count": 626
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2025Q2",
+      "revenue_usd": 100000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 31.8,
+      "net_retention_pct": null,
+      "customer_count": 66,
+      "employee_count": 631
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2025Q3",
+      "revenue_usd": 101000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 31.6,
+      "net_retention_pct": null,
+      "customer_count": 66,
+      "employee_count": 637
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2025Q4",
+      "revenue_usd": 103000000,
+      "ebitda_usd": 16000000,
+      "gross_margin_pct": 31.4,
+      "net_retention_pct": null,
+      "customer_count": 67,
+      "employee_count": 642
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2026Q1",
+      "revenue_usd": 104000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 30.8,
+      "net_retention_pct": null,
+      "customer_count": 67,
+      "employee_count": 646
+    },
+    {
+      "company_id": "PC-002",
+      "period": "2026Q2",
+      "revenue_usd": 106000000,
+      "ebitda_usd": 16000000,
+      "gross_margin_pct": 30.5,
+      "net_retention_pct": null,
+      "customer_count": 68,
+      "employee_count": 650
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2024Q3",
+      "revenue_usd": 61000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 57.0,
+      "net_retention_pct": 107.0,
+      "customer_count": 202,
+      "employee_count": 338
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2024Q4",
+      "revenue_usd": 63000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 57.3,
+      "net_retention_pct": 107.0,
+      "customer_count": 207,
+      "employee_count": 344
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2025Q1",
+      "revenue_usd": 64000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 57.5,
+      "net_retention_pct": 106.0,
+      "customer_count": 211,
+      "employee_count": 350
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2025Q2",
+      "revenue_usd": 66000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 57.8,
+      "net_retention_pct": 106.0,
+      "customer_count": 216,
+      "employee_count": 357
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2025Q3",
+      "revenue_usd": 67000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 58.0,
+      "net_retention_pct": 105.0,
+      "customer_count": 219,
+      "employee_count": 363
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2025Q4",
+      "revenue_usd": 69000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 58.1,
+      "net_retention_pct": 104.0,
+      "customer_count": 222,
+      "employee_count": 368
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2026Q1",
+      "revenue_usd": 70000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 58.0,
+      "net_retention_pct": 102.0,
+      "customer_count": 224,
+      "employee_count": 371
+    },
+    {
+      "company_id": "PC-003",
+      "period": "2026Q2",
+      "revenue_usd": 72000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 57.9,
+      "net_retention_pct": 101.0,
+      "customer_count": 226,
+      "employee_count": 374
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2024Q3",
+      "revenue_usd": 54000000,
+      "ebitda_usd": 8000000,
+      "gross_margin_pct": 38.0,
+      "net_retention_pct": null,
+      "customer_count": 18,
+      "employee_count": 281
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2024Q4",
+      "revenue_usd": 58000000,
+      "ebitda_usd": 9000000,
+      "gross_margin_pct": 38.4,
+      "net_retention_pct": null,
+      "customer_count": 19,
+      "employee_count": 294
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2025Q1",
+      "revenue_usd": 62000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 38.8,
+      "net_retention_pct": null,
+      "customer_count": 19,
+      "employee_count": 309
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2025Q2",
+      "revenue_usd": 68000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 39.2,
+      "net_retention_pct": null,
+      "customer_count": 20,
+      "employee_count": 326
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2025Q3",
+      "revenue_usd": 72000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 39.6,
+      "net_retention_pct": null,
+      "customer_count": 20,
+      "employee_count": 340
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2025Q4",
+      "revenue_usd": 77000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 40.0,
+      "net_retention_pct": null,
+      "customer_count": 21,
+      "employee_count": 356
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2026Q1",
+      "revenue_usd": 83000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 40.3,
+      "net_retention_pct": null,
+      "customer_count": 22,
+      "employee_count": 371
+    },
+    {
+      "company_id": "PC-004",
+      "period": "2026Q2",
+      "revenue_usd": 92000000,
+      "ebitda_usd": 18000000,
+      "gross_margin_pct": 40.8,
+      "net_retention_pct": null,
+      "customer_count": 23,
+      "employee_count": 389
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2024Q3",
+      "revenue_usd": 48000000,
+      "ebitda_usd": 8000000,
+      "gross_margin_pct": 74.0,
+      "net_retention_pct": 118.0,
+      "customer_count": 86,
+      "employee_count": 249
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2024Q4",
+      "revenue_usd": 51000000,
+      "ebitda_usd": 9000000,
+      "gross_margin_pct": 74.2,
+      "net_retention_pct": 117.0,
+      "customer_count": 91,
+      "employee_count": 261
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2025Q1",
+      "revenue_usd": 55000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 74.5,
+      "net_retention_pct": 115.0,
+      "customer_count": 96,
+      "employee_count": 276
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2025Q2",
+      "revenue_usd": 60000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 74.8,
+      "net_retention_pct": 112.0,
+      "customer_count": 103,
+      "employee_count": 291
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2025Q3",
+      "revenue_usd": 64000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 75.0,
+      "net_retention_pct": 108.0,
+      "customer_count": 111,
+      "employee_count": 307
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2025Q4",
+      "revenue_usd": 68000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 75.2,
+      "net_retention_pct": 104.0,
+      "customer_count": 119,
+      "employee_count": 323
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2026Q1",
+      "revenue_usd": 73000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 75.4,
+      "net_retention_pct": 101.0,
+      "customer_count": 127,
+      "employee_count": 341
+    },
+    {
+      "company_id": "PC-005",
+      "period": "2026Q2",
+      "revenue_usd": 79000000,
+      "ebitda_usd": 17000000,
+      "gross_margin_pct": 75.5,
+      "net_retention_pct": 97.0,
+      "customer_count": 136,
+      "employee_count": 360
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2024Q3",
+      "revenue_usd": 83000000,
+      "ebitda_usd": 18000000,
+      "gross_margin_pct": 79.0,
+      "net_retention_pct": 121.0,
+      "customer_count": 321,
+      "employee_count": 512
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2024Q4",
+      "revenue_usd": 88000000,
+      "ebitda_usd": 19000000,
+      "gross_margin_pct": 79.2,
+      "net_retention_pct": 121.0,
+      "customer_count": 337,
+      "employee_count": 531
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2025Q1",
+      "revenue_usd": 92000000,
+      "ebitda_usd": 21000000,
+      "gross_margin_pct": 79.5,
+      "net_retention_pct": 120.0,
+      "customer_count": 352,
+      "employee_count": 550
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2025Q2",
+      "revenue_usd": 97000000,
+      "ebitda_usd": 23000000,
+      "gross_margin_pct": 79.7,
+      "net_retention_pct": 120.0,
+      "customer_count": 369,
+      "employee_count": 571
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2025Q3",
+      "revenue_usd": 102000000,
+      "ebitda_usd": 24000000,
+      "gross_margin_pct": 80.0,
+      "net_retention_pct": 119.0,
+      "customer_count": 386,
+      "employee_count": 592
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2025Q4",
+      "revenue_usd": 108000000,
+      "ebitda_usd": 26000000,
+      "gross_margin_pct": 80.2,
+      "net_retention_pct": 118.0,
+      "customer_count": 404,
+      "employee_count": 615
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2026Q1",
+      "revenue_usd": 114000000,
+      "ebitda_usd": 27000000,
+      "gross_margin_pct": 80.1,
+      "net_retention_pct": 115.0,
+      "customer_count": 421,
+      "employee_count": 637
+    },
+    {
+      "company_id": "PC-006",
+      "period": "2026Q2",
+      "revenue_usd": 121000000,
+      "ebitda_usd": 30000000,
+      "gross_margin_pct": 80.4,
+      "net_retention_pct": 117.0,
+      "customer_count": 440,
+      "employee_count": 661
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2024Q3",
+      "revenue_usd": 69000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 66.0,
+      "net_retention_pct": 109.0,
+      "customer_count": 144,
+      "employee_count": 395
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2024Q4",
+      "revenue_usd": 71000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 66.2,
+      "net_retention_pct": 109.0,
+      "customer_count": 148,
+      "employee_count": 402
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2025Q1",
+      "revenue_usd": 73000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 66.5,
+      "net_retention_pct": 108.0,
+      "customer_count": 151,
+      "employee_count": 410
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2025Q2",
+      "revenue_usd": 76000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 66.7,
+      "net_retention_pct": 108.0,
+      "customer_count": 155,
+      "employee_count": 418
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2025Q3",
+      "revenue_usd": 78000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 66.9,
+      "net_retention_pct": 107.0,
+      "customer_count": 158,
+      "employee_count": 425
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2025Q4",
+      "revenue_usd": 80000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 67.0,
+      "net_retention_pct": 107.0,
+      "customer_count": 161,
+      "employee_count": 432
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2026Q1",
+      "revenue_usd": 82000000,
+      "ebitda_usd": 15000000,
+      "gross_margin_pct": 67.1,
+      "net_retention_pct": 106.0,
+      "customer_count": 164,
+      "employee_count": 439
+    },
+    {
+      "company_id": "PC-007",
+      "period": "2026Q2",
+      "revenue_usd": 84000000,
+      "ebitda_usd": 16000000,
+      "gross_margin_pct": 67.3,
+      "net_retention_pct": 106.0,
+      "customer_count": 167,
+      "employee_count": 446
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2024Q3",
+      "revenue_usd": 57000000,
+      "ebitda_usd": 9000000,
+      "gross_margin_pct": 51.0,
+      "net_retention_pct": null,
+      "customer_count": 73,
+      "employee_count": 466
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2024Q4",
+      "revenue_usd": 60000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 51.2,
+      "net_retention_pct": null,
+      "customer_count": 75,
+      "employee_count": 474
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2025Q1",
+      "revenue_usd": 63000000,
+      "ebitda_usd": 10000000,
+      "gross_margin_pct": 51.5,
+      "net_retention_pct": null,
+      "customer_count": 78,
+      "employee_count": 483
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2025Q2",
+      "revenue_usd": 67000000,
+      "ebitda_usd": 11000000,
+      "gross_margin_pct": 51.8,
+      "net_retention_pct": null,
+      "customer_count": 81,
+      "employee_count": 493
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2025Q3",
+      "revenue_usd": 70000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 52.0,
+      "net_retention_pct": null,
+      "customer_count": 84,
+      "employee_count": 504
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2025Q4",
+      "revenue_usd": 74000000,
+      "ebitda_usd": 12000000,
+      "gross_margin_pct": 52.2,
+      "net_retention_pct": null,
+      "customer_count": 87,
+      "employee_count": 515
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2026Q1",
+      "revenue_usd": 78000000,
+      "ebitda_usd": 13000000,
+      "gross_margin_pct": 52.0,
+      "net_retention_pct": null,
+      "customer_count": 90,
+      "employee_count": 528
+    },
+    {
+      "company_id": "PC-008",
+      "period": "2026Q2",
+      "revenue_usd": 83000000,
+      "ebitda_usd": 14000000,
+      "gross_margin_pct": 51.9,
+      "net_retention_pct": null,
+      "customer_count": 94,
+      "employee_count": 542
+    }
+  ],
+  "operational_metrics": [
+    {
+      "metric_id": "OP-PC-001-2024Q3-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2024Q3",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 42.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2024Q4-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2024Q4",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 45.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2025Q1-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2025Q1",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 49.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2025Q2-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2025Q2",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 53.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2025Q3-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2025Q3",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 58.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2025Q4-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2025Q4",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 64.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2026Q1-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2026Q1",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 70.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-001-2026Q2-BACKLOG",
+      "company_id": "PC-001",
+      "period": "2026Q2",
+      "metric_name": "implementation_backlog_sites",
+      "metric_value": 76.0,
+      "unit": "sites"
+    },
+    {
+      "metric_id": "OP-PC-002-2024Q3-YIELD",
+      "company_id": "PC-002",
+      "period": "2024Q3",
+      "metric_name": "production_yield_pct",
+      "metric_value": 96.2,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2024Q4-YIELD",
+      "company_id": "PC-002",
+      "period": "2024Q4",
+      "metric_name": "production_yield_pct",
+      "metric_value": 96.5,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2025Q1-YIELD",
+      "company_id": "PC-002",
+      "period": "2025Q1",
+      "metric_name": "production_yield_pct",
+      "metric_value": 96.7,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2025Q2-YIELD",
+      "company_id": "PC-002",
+      "period": "2025Q2",
+      "metric_name": "production_yield_pct",
+      "metric_value": 96.8,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2025Q3-YIELD",
+      "company_id": "PC-002",
+      "period": "2025Q3",
+      "metric_name": "production_yield_pct",
+      "metric_value": 96.4,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2025Q4-YIELD",
+      "company_id": "PC-002",
+      "period": "2025Q4",
+      "metric_name": "production_yield_pct",
+      "metric_value": 95.9,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2026Q1-YIELD",
+      "company_id": "PC-002",
+      "period": "2026Q1",
+      "metric_name": "production_yield_pct",
+      "metric_value": 94.8,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-002-2026Q2-YIELD",
+      "company_id": "PC-002",
+      "period": "2026Q2",
+      "metric_name": "production_yield_pct",
+      "metric_value": 94.2,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-003-2024Q3-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2024Q3",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 12.4,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2024Q4-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2024Q4",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 12.8,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2025Q1-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2025Q1",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 13.0,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2025Q2-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2025Q2",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 13.3,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2025Q3-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2025Q3",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 13.5,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2025Q4-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2025Q4",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 13.4,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2026Q1-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2026Q1",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 13.0,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-003-2026Q2-FREIGHT",
+      "company_id": "PC-003",
+      "period": "2026Q2",
+      "metric_name": "freight_volume_million_shipments",
+      "metric_value": 12.7,
+      "unit": "million_shipments"
+    },
+    {
+      "metric_id": "OP-PC-004-2024Q3-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2024Q3",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 410.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2024Q4-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2024Q4",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 445.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2025Q1-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2025Q1",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 480.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2025Q2-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2025Q2",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 530.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2025Q3-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2025Q3",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 580.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2025Q4-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2025Q4",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 640.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2026Q1-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2026Q1",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 705.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-004-2026Q2-CAPACITY",
+      "company_id": "PC-004",
+      "period": "2026Q2",
+      "metric_name": "installed_capacity_mw",
+      "metric_value": 770.0,
+      "unit": "megawatts"
+    },
+    {
+      "metric_id": "OP-PC-005-2024Q3-JOBS",
+      "company_id": "PC-005",
+      "period": "2024Q3",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 44.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2024Q4-JOBS",
+      "company_id": "PC-005",
+      "period": "2024Q4",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 48.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2025Q1-JOBS",
+      "company_id": "PC-005",
+      "period": "2025Q1",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 53.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2025Q2-JOBS",
+      "company_id": "PC-005",
+      "period": "2025Q2",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 59.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2025Q3-JOBS",
+      "company_id": "PC-005",
+      "period": "2025Q3",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 66.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2025Q4-JOBS",
+      "company_id": "PC-005",
+      "period": "2025Q4",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 74.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2026Q1-JOBS",
+      "company_id": "PC-005",
+      "period": "2026Q1",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 83.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-005-2026Q2-JOBS",
+      "company_id": "PC-005",
+      "period": "2026Q2",
+      "metric_name": "forecast_jobs_million",
+      "metric_value": 93.0,
+      "unit": "million_jobs"
+    },
+    {
+      "metric_id": "OP-PC-006-2024Q3-UPTIME",
+      "company_id": "PC-006",
+      "period": "2024Q3",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.98,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2024Q4-UPTIME",
+      "company_id": "PC-006",
+      "period": "2024Q4",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.98,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2025Q1-UPTIME",
+      "company_id": "PC-006",
+      "period": "2025Q1",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.99,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2025Q2-UPTIME",
+      "company_id": "PC-006",
+      "period": "2025Q2",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.99,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2025Q3-UPTIME",
+      "company_id": "PC-006",
+      "period": "2025Q3",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.98,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2025Q4-UPTIME",
+      "company_id": "PC-006",
+      "period": "2025Q4",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.97,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2026Q1-UPTIME",
+      "company_id": "PC-006",
+      "period": "2026Q1",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.72,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-006-2026Q2-UPTIME",
+      "company_id": "PC-006",
+      "period": "2026Q2",
+      "metric_name": "platform_uptime_pct",
+      "metric_value": 99.97,
+      "unit": "percent"
+    },
+    {
+      "metric_id": "OP-PC-007-2024Q3-VOLUME",
+      "company_id": "PC-007",
+      "period": "2024Q3",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 24.0,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2024Q4-VOLUME",
+      "company_id": "PC-007",
+      "period": "2024Q4",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 25.6,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2025Q1-VOLUME",
+      "company_id": "PC-007",
+      "period": "2025Q1",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 27.1,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2025Q2-VOLUME",
+      "company_id": "PC-007",
+      "period": "2025Q2",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 28.9,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2025Q3-VOLUME",
+      "company_id": "PC-007",
+      "period": "2025Q3",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 30.5,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2025Q4-VOLUME",
+      "company_id": "PC-007",
+      "period": "2025Q4",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 32.2,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2026Q1-VOLUME",
+      "company_id": "PC-007",
+      "period": "2026Q1",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 33.8,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-007-2026Q2-VOLUME",
+      "company_id": "PC-007",
+      "period": "2026Q2",
+      "metric_name": "transaction_volume_billion_usd",
+      "metric_value": 35.7,
+      "unit": "usd_billions"
+    },
+    {
+      "metric_id": "OP-PC-008-2024Q3-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2024Q3",
+      "metric_name": "instrument_shipments",
+      "metric_value": 820.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2024Q4-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2024Q4",
+      "metric_name": "instrument_shipments",
+      "metric_value": 860.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2025Q1-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2025Q1",
+      "metric_name": "instrument_shipments",
+      "metric_value": 900.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2025Q2-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2025Q2",
+      "metric_name": "instrument_shipments",
+      "metric_value": 950.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2025Q3-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2025Q3",
+      "metric_name": "instrument_shipments",
+      "metric_value": 1000.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2025Q4-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2025Q4",
+      "metric_name": "instrument_shipments",
+      "metric_value": 1060.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2026Q1-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2026Q1",
+      "metric_name": "instrument_shipments",
+      "metric_value": 1110.0,
+      "unit": "units"
+    },
+    {
+      "metric_id": "OP-PC-008-2026Q2-SHIPMENTS",
+      "company_id": "PC-008",
+      "period": "2026Q2",
+      "metric_name": "instrument_shipments",
+      "metric_value": 1175.0,
+      "unit": "units"
+    }
+  ],
   "geographic_exposures": [
     {
       "exposure_id": "GEO-001",

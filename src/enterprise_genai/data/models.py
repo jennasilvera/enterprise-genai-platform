@@ -66,6 +66,26 @@ class CompanySupplier(BaseModel):
     relationship_status: Literal["active", "at_risk", "ended"]
 
 
+class FinancialMetric(BaseModel):
+    company_id: str
+    period: str = Field(pattern=r"^\d{4}Q[1-4]$")
+    revenue_usd: int = Field(ge=0)
+    ebitda_usd: int
+    gross_margin_pct: float = Field(ge=0, le=100)
+    net_retention_pct: float | None = Field(default=None, ge=0, le=300)
+    customer_count: int | None = Field(default=None, ge=0)
+    employee_count: int | None = Field(default=None, ge=0)
+
+
+class OperationalMetric(BaseModel):
+    metric_id: str
+    company_id: str
+    period: str = Field(pattern=r"^\d{4}Q[1-4]$")
+    metric_name: str
+    metric_value: float
+    unit: str
+
+
 class GeographicExposure(BaseModel):
     exposure_id: str
     company_id: str
@@ -110,6 +130,8 @@ class EnterpriseUniverse(BaseModel):
     suppliers: list[Supplier]
     company_customers: list[CompanyCustomer]
     company_suppliers: list[CompanySupplier]
+    financial_metrics: list[FinancialMetric]
+    operational_metrics: list[OperationalMetric]
     geographic_exposures: list[GeographicExposure]
     risks: list[Risk]
     transactions: list[Transaction]
@@ -148,6 +170,21 @@ class EnterpriseUniverse(BaseModel):
         self._assert_unique(
             [relationship.relationship_id for relationship in self.company_suppliers],
             "company-supplier relationship_id",
+        )
+        self._assert_unique(
+            [f"{metric.company_id}:{metric.period}" for metric in self.financial_metrics],
+            "financial company-period",
+        )
+        self._assert_unique(
+            [metric.metric_id for metric in self.operational_metrics],
+            "operational metric_id",
+        )
+        self._assert_unique(
+            [
+                f"{metric.company_id}:{metric.period}:{metric.metric_name}"
+                for metric in self.operational_metrics
+            ],
+            "operational company-period-metric",
         )
         self._assert_unique(
             [exposure.exposure_id for exposure in self.geographic_exposures],
@@ -189,6 +226,18 @@ class EnterpriseUniverse(BaseModel):
                 raise ValueError(f"{relationship.relationship_id} references unknown company.")
             if relationship.supplier_id not in supplier_ids:
                 raise ValueError(f"{relationship.relationship_id} references unknown supplier.")
+
+        for metric in self.financial_metrics:
+            if metric.company_id not in company_ids:
+                raise ValueError(
+                    f"Financial metric references unknown company {metric.company_id}."
+                )
+
+        for metric in self.operational_metrics:
+            if metric.company_id not in company_ids:
+                raise ValueError(
+                    f"{metric.metric_id} references unknown company {metric.company_id}."
+                )
 
         for exposure in self.geographic_exposures:
             if exposure.company_id not in company_ids:

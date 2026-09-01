@@ -1,5 +1,9 @@
 from datetime import date
 
+from enterprise_genai.data.metrics import (
+    build_financial_metrics,
+    build_operational_metrics,
+)
 from enterprise_genai.data.models import (
     Company,
     CompanyCustomer,
@@ -528,6 +532,8 @@ def build_universe() -> EnterpriseUniverse:
                 relationship_status="active",
             ),
         ],
+        financial_metrics=build_financial_metrics(),
+        operational_metrics=build_operational_metrics(),
         geographic_exposures=[
             GeographicExposure(
                 exposure_id="GEO-001",

@@ -20,6 +20,8 @@ def main() -> None:
     print(f"suppliers: {len(universe.suppliers)}")
     print(f"company_customer_relationships: {len(universe.company_customers)}")
     print(f"company_supplier_relationships: {len(universe.company_suppliers)}")
+    print(f"financial_metrics: {len(universe.financial_metrics)}")
+    print(f"operational_metrics: {len(universe.operational_metrics)}")
     print(f"geographic_exposures: {len(universe.geographic_exposures)}")
     print(f"risks: {len(universe.risks)}")
     print(f"transactions: {len(universe.transactions)}")
