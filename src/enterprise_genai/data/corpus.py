@@ -54,7 +54,7 @@ def build_pilot_corpus() -> DocumentCorpus:
                 company_id="PC-002",
                 document_type="supplier_review",
                 title="Alder Manufacturing Critical Supplier Review",
-                document_date=date(2026, 6, 24),
+                document_date=date(2026, 7, 6),
                 confidentiality="restricted",
                 version=1,
                 evidence=[
@@ -206,8 +206,8 @@ def build_pilot_corpus() -> DocumentCorpus:
                 document_id="DOC-PC006-INCIDENT-001",
                 company_id="PC-006",
                 document_type="incident_report",
-                title="Orbis Cybersecurity ORBIS-IDX-7 Incident Report",
-                document_date=date(2026, 3, 5),
+                title="Orbis Cybersecurity ORBIS-IDX-7 Post-Incident Report",
+                document_date=date(2026, 7, 7),
                 confidentiality="restricted",
                 version=1,
                 evidence=[
@@ -244,7 +244,7 @@ def build_pilot_corpus() -> DocumentCorpus:
                 company_id="PC-007",
                 document_type="risk_review",
                 title="Cedar Financial Technologies Q2 2026 Risk Review",
-                document_date=date(2026, 6, 28),
+                document_date=date(2026, 7, 6),
                 confidentiality="confidential",
                 version=1,
                 evidence=[
@@ -279,7 +279,7 @@ def build_pilot_corpus() -> DocumentCorpus:
                 company_id="PC-008",
                 document_type="supplier_review",
                 title="NovaBio Instruments Critical Supplier Review",
-                document_date=date(2026, 6, 21),
+                document_date=date(2026, 7, 8),
                 confidentiality="restricted",
                 version=1,
                 evidence=[

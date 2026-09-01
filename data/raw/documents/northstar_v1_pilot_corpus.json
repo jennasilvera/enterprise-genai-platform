@@ -34,7 +34,7 @@
       "company_id": "PC-002",
       "document_type": "supplier_review",
       "title": "Alder Manufacturing Critical Supplier Review",
-      "document_date": "2026-06-24",
+      "document_date": "2026-07-06",
       "confidentiality": "restricted",
       "version": 1,
       "evidence": [
@@ -150,8 +150,8 @@
       "document_id": "DOC-PC006-INCIDENT-001",
       "company_id": "PC-006",
       "document_type": "incident_report",
-      "title": "Orbis Cybersecurity ORBIS-IDX-7 Incident Report",
-      "document_date": "2026-03-05",
+      "title": "Orbis Cybersecurity ORBIS-IDX-7 Post-Incident Report",
+      "document_date": "2026-07-07",
       "confidentiality": "restricted",
       "version": 1,
       "evidence": [
@@ -179,7 +179,7 @@
       "company_id": "PC-007",
       "document_type": "risk_review",
       "title": "Cedar Financial Technologies Q2 2026 Risk Review",
-      "document_date": "2026-06-28",
+      "document_date": "2026-07-06",
       "confidentiality": "confidential",
       "version": 1,
       "evidence": [
@@ -207,7 +207,7 @@
       "company_id": "PC-008",
       "document_type": "supplier_review",
       "title": "NovaBio Instruments Critical Supplier Review",
-      "document_date": "2026-06-21",
+      "document_date": "2026-07-08",
       "confidentiality": "restricted",
       "version": 1,
       "evidence": [
