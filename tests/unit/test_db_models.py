@@ -8,6 +8,8 @@ import enterprise_genai.db.models  # noqa: F401
 from enterprise_genai.db.base import Base
 
 EXPECTED_TABLES = {
+    "chunk_source_facts",
+    "chunks",
     "dataset_versions",
     "canonical_facts",
     "firms",

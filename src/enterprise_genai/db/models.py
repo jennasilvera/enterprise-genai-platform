@@ -722,6 +722,12 @@ class EvidenceBlockRow(Base):
             "evidence_ordinal",
             name="uq_evidence_blocks_document_ordinal",
         ),
+        UniqueConstraint(
+            "dataset_version",
+            "document_id",
+            "evidence_id",
+            name="uq_evidence_blocks_document_evidence",
+        ),
         CheckConstraint(
             "evidence_ordinal >= 0",
             name="ck_evidence_blocks_ordinal",
@@ -791,6 +797,181 @@ class EvidenceSourceFactRow(Base):
 
     dataset_version: Mapped[str] = mapped_column(
         String(64),
+        primary_key=True,
+    )
+    evidence_id: Mapped[str] = mapped_column(
+        String(128),
+        primary_key=True,
+    )
+    source_fact_id: Mapped[str] = mapped_column(
+        String(128),
+        primary_key=True,
+    )
+    source_ordinal: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
+
+class ChunkRow(Base):
+    __tablename__ = "chunks"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            [
+                "dataset_version",
+                "document_id",
+                "evidence_id",
+            ],
+            [
+                "evidence_blocks.dataset_version",
+                "evidence_blocks.document_id",
+                "evidence_blocks.evidence_id",
+            ],
+            name="fk_chunks_evidence",
+        ),
+        UniqueConstraint(
+            "dataset_version",
+            "evidence_id",
+            "strategy_version",
+            "chunk_ordinal",
+            name="uq_chunks_evidence_strategy_ordinal",
+        ),
+        UniqueConstraint(
+            "dataset_version",
+            "chunk_id",
+            "evidence_id",
+            name="uq_chunks_chunk_evidence",
+        ),
+        CheckConstraint(
+            "chunk_ordinal >= 0",
+            name="ck_chunks_ordinal",
+        ),
+        CheckConstraint(
+            "char_length(strategy_version) > 0",
+            name="ck_chunks_strategy_version",
+        ),
+        CheckConstraint(
+            "char_length(text) > 0",
+            name="ck_chunks_text",
+        ),
+        CheckConstraint(
+            "character_count > 0",
+            name="ck_chunks_character_count",
+        ),
+        CheckConstraint(
+            "word_count > 0",
+            name="ck_chunks_word_count",
+        ),
+        CheckConstraint(
+            "text_sha256 ~ '^[0-9a-f]{64}$'",
+            name="ck_chunks_text_sha256",
+        ),
+        Index(
+            "ix_chunks_document",
+            "dataset_version",
+            "document_id",
+        ),
+        Index(
+            "ix_chunks_evidence",
+            "dataset_version",
+            "evidence_id",
+        ),
+        Index(
+            "ix_chunks_strategy",
+            "dataset_version",
+            "strategy_version",
+        ),
+    )
+
+    dataset_version: Mapped[str] = mapped_column(
+        String(64),
+        primary_key=True,
+    )
+    chunk_id: Mapped[str] = mapped_column(
+        String(68),
+        primary_key=True,
+    )
+    document_id: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+    evidence_id: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+    chunk_ordinal: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    strategy_version: Mapped[str] = mapped_column(
+        String(64),
+        nullable=False,
+    )
+    text: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+    text_sha256: Mapped[str] = mapped_column(
+        String(64),
+        nullable=False,
+    )
+    character_count: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+    word_count: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
+
+
+class ChunkSourceFactRow(Base):
+    __tablename__ = "chunk_source_facts"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            [
+                "dataset_version",
+                "chunk_id",
+                "evidence_id",
+            ],
+            [
+                "chunks.dataset_version",
+                "chunks.chunk_id",
+                "chunks.evidence_id",
+            ],
+            name="fk_chunk_source_facts_chunk",
+        ),
+        ForeignKeyConstraint(
+            [
+                "dataset_version",
+                "evidence_id",
+                "source_fact_id",
+            ],
+            [
+                "evidence_source_facts.dataset_version",
+                "evidence_source_facts.evidence_id",
+                "evidence_source_facts.source_fact_id",
+            ],
+            name="fk_chunk_source_facts_evidence_fact",
+        ),
+        UniqueConstraint(
+            "dataset_version",
+            "chunk_id",
+            "source_ordinal",
+            name="uq_chunk_source_facts_ordinal",
+        ),
+        CheckConstraint(
+            "source_ordinal >= 0",
+            name="ck_chunk_source_facts_ordinal",
+        ),
+    )
+
+    dataset_version: Mapped[str] = mapped_column(
+        String(64),
+        primary_key=True,
+    )
+    chunk_id: Mapped[str] = mapped_column(
+        String(68),
         primary_key=True,
     )
     evidence_id: Mapped[str] = mapped_column(
