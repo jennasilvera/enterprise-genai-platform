@@ -353,3 +353,60 @@ Resume-use constraint:
 Any percentage must be described as a development-set result on the synthetic
 Northstar benchmark. Do not claim test-set, production, dense, hybrid, or
 reranker improvement from this phase.
+
+## Phase 4C — BM25 Representation Test Confirmation
+
+**Status:** MEASURED / TEST-CONFIRMED
+
+Frozen before confirmation:
+- Phase 4B commit:
+  `d767c3775b8c7de1a024d6dcff3799f6bbe11fc5`;
+- representation: `document-title-text-v1`;
+- tokenizer: `lexical-tokenizer-v1`;
+- BM25: `bm25-v1`;
+- `k1=1.5`, `b=0.75`.
+
+Confirmation scope:
+- 4 retrieval-eligible seed test cases;
+- no representation-selection argument exposed by the confirmation API or CLI.
+
+Frozen text-only test reference:
+- canonical MRR: `0.666667`;
+- nDCG@10: `0.716916`;
+- Recall@5: `0.750000`;
+- Recall@10: `0.875000`.
+
+Selected representation test result:
+- canonical MRR: `0.675000`;
+- nDCG@10: `0.721614`;
+- Recall@5: `0.875000`;
+- Recall@10: `0.875000`.
+
+Absolute changes versus text-only:
+- canonical MRR: `+0.008333`;
+- nDCG@10: `+0.004698`;
+- Recall@10: `0.000000`.
+
+Relative nDCG@10 change:
+- approximately `+0.66%`.
+
+Artifact:
+- `artifacts/evaluation/phase4c/document-title-text-v1-test.json`;
+- SHA-256:
+  `72666dbd40d60061d33775a285b06e45eb3826f3ea121f8a7476c6f73d9786b3`;
+- size: `37199` bytes.
+
+Known limitation:
+- Q-0018 multi-source Recall@10 remains `0.5`;
+- multi-source retrieval is not considered solved.
+
+Evaluation qualification:
+The seed test split was not used to select the Phase 4B follow-on
+representation, but Phase 4A had exposed seed test results earlier. Therefore
+describe Phase 4C as a test-split confirmation, not a pristine unseen external
+holdout.
+
+Resume-use constraint:
+Do not generalize the small test improvement beyond the synthetic Northstar
+benchmark. Do not attribute it to dense retrieval, hybrid fusion, reranking,
+LLMs, or agents.
