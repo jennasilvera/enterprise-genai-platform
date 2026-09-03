@@ -291,3 +291,65 @@ Resume-use constraint:
 Do not claim dense, hybrid, reranked, or production-scale retrieval from
 this milestone. Any improvement percentage must be measured in a later
 controlled experiment against this frozen baseline.
+
+## Phase 4B — BM25 Lexical Representation Ablation
+
+**Status:** MEASURED / DEVELOPMENT-VERIFIED
+
+Controlled variables:
+- `bm25-v1` unchanged;
+- `lexical-tokenizer-v1` unchanged;
+- BM25 `k1=1.5`, `b=0.75` unchanged;
+- `evidence-block-v1` chunks unchanged;
+- 10 development retrieval cases used for representation selection;
+- test cases excluded from representation selection.
+
+Preregistered representations:
+- `text-only-v1`;
+- `company-text-v1`;
+- `document-context-text-v1`.
+
+Preregistered development winner:
+- `document-context-text-v1`;
+- canonical MRR: `0.709091`;
+- Recall@10: `0.800000`;
+- nDCG@10: `0.712286`;
+- lexical rank-1 guardrail: PASS.
+
+Frozen text-only development reference:
+- canonical MRR: `0.633175`;
+- Recall@10: `0.800000`;
+- nDCG@10: `0.657312`.
+
+Post-hoc decomposition:
+- `document-title-text-v1`:
+  canonical MRR `0.659091`,
+  Recall@10 `0.800000`,
+  nDCG@10 `0.677258`;
+- `evidence-heading-text-v1`:
+  canonical MRR `0.716286`,
+  Recall@10 `0.800000`,
+  nDCG@10 `0.697781`.
+
+Follow-on representation:
+- `document-title-text-v1`.
+
+Reason for follow-on selection:
+- legitimate source-level metadata;
+- measurable development improvement over text-only retrieval;
+- preserved lexical rank-1 behavior;
+- cleaner attribution than synthetic evidence-heading enrichment.
+
+Development nDCG@10 change for selected follow-on representation:
+- absolute: `+0.019946`;
+- relative: approximately `+3.03%`.
+
+Known limitation:
+- Q-0017 remains outside Recall@10;
+- title-plus-text places its two canonical evidence blocks at ranks 11 and 14;
+- further lexical tuning is not assumed to be the correct solution.
+
+Resume-use constraint:
+Any percentage must be described as a development-set result on the synthetic
+Northstar benchmark. Do not claim test-set, production, dense, hybrid, or
+reranker improvement from this phase.

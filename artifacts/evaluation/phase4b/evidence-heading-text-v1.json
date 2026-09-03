@@ -1,0 +1,1981 @@
+{
+  "benchmark": {
+    "benchmark_version": "northstar-bm25-baseline-v1",
+    "bm25_parameters": {
+      "b": 0.75,
+      "k1": 1.5
+    },
+    "bm25_version": "bm25-v1",
+    "cases": [
+      {
+        "difficulty": "easy",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.9173194127129571,
+          "ndcg_at_3": 0.9173194127129571,
+          "ndcg_at_5": 0.9173194127129571,
+          "recall_at_1": 0.5,
+          "recall_at_10": 0.5,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0001",
+        "query_type": "lexical",
+        "question": "What defect affected ORBIS-IDX-7?",
+        "retrieved_positive_score": 1,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-74b05f63883a4771ea10d984e455043bbb5ff7ce563c545ae0587e481c054adc",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+            "matched_terms": [
+              "defect",
+              "orbis-idx-7"
+            ],
+            "rank": 1,
+            "score": 8.131343738495378,
+            "source_fact_ids": [
+              "RISK-006"
+            ],
+            "text": "Primary risk\nThe ORBIS-IDX-7 service experienced an authentication defect that caused intermittent identity-validation failures for a subset of enterprise tenants."
+          }
+        ]
+      },
+      {
+        "difficulty": "easy",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 1.0,
+          "ndcg_at_3": 1.0,
+          "ndcg_at_5": 1.0,
+          "recall_at_1": 1.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0002",
+        "query_type": "lexical",
+        "question": "Which critical titanium supplier is Alder's only qualified source?",
+        "retrieved_positive_score": 27,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "matched_terms": [
+              "critical",
+              "titanium",
+              "supplier",
+              "is",
+              "alder",
+              "s",
+              "only",
+              "qualified",
+              "source"
+            ],
+            "rank": 1,
+            "score": 23.114801966635433,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Primary risk\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          },
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "matched_terms": [
+              "supplier",
+              "is",
+              "s",
+              "only",
+              "qualified"
+            ],
+            "rank": 2,
+            "score": 13.471821453194359,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "Primary risk\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "matched_terms": [
+              "critical",
+              "is",
+              "alder"
+            ],
+            "rank": 3,
+            "score": 7.480885945138167,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Risk context\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-7184e100db3135ae39cf55cef28b7c9cf945be30be356d2c8b074b5d483b4980",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-SIGNAL",
+            "matched_terms": [
+              "qualified",
+              "source"
+            ],
+            "rank": 4,
+            "score": 6.581860023915258,
+            "source_fact_ids": [
+              "RISK-008",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Management signal\nShipment growth remains healthy, but a precision-motion assembly still depends on a single qualified source."
+          },
+          {
+            "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+            "matched_terms": [
+              "qualified",
+              "source"
+            ],
+            "rank": 5,
+            "score": 6.581860023915258,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Management signal\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "matched_terms": [
+              "critical",
+              "supplier"
+            ],
+            "rank": 6,
+            "score": 5.13301236514767,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Primary board issue\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-9decc1a34d964d3a6adc490ec654e436e59e1f0115283ba20d9ae1767bbc99f6",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-CONTEXT",
+            "matched_terms": [
+              "critical",
+              "is"
+            ],
+            "rank": 7,
+            "score": 4.234161495434295,
+            "source_fact_ids": [
+              "CS-012",
+              "SUP-012",
+              "GEO-009"
+            ],
+            "text": "Risk context\nNovaBio also sources laboratory optics from Alpine Optics AG in Switzerland, but that relationship is classified as high criticality rather than single-source critical."
+          },
+          {
+            "chunk_id": "CHK-28c653438bcc081afd192fd044cd2a4ff9b1ae5ce1a02ee7b877567170767b6a",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+            "matched_terms": [
+              "is",
+              "s"
+            ],
+            "rank": 8,
+            "score": 3.7430042007916207,
+            "source_fact_ids": [
+              "RISK-001",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Primary board issue\nThe company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability."
+          },
+          {
+            "chunk_id": "CHK-96e5efff078ae033d7aa719652ad6f480a328408734e30a94ba16785644feb77",
+            "document_id": "DOC-CORE-PC002-IC-001",
+            "evidence_id": "EVID-CORE-PC002-IC-DILIGENCE",
+            "matched_terms": [
+              "alder"
+            ],
+            "rank": 9,
+            "score": 2.7079499779447933,
+            "source_fact_ids": [
+              "CC-003",
+              "CC-004",
+              "CUST-003",
+              "CUST-004"
+            ],
+            "text": "Commercial diligence\nSkyward Aerospace and Kestrel Industrial Group were established customers during underwriting, giving Alder exposure to both aerospace and broader industrial end markets."
+          },
+          {
+            "chunk_id": "CHK-b365b8bf8a4bfd8bdaf939f4e314e95458604b74eb86809ceb5c8b442b1b32ec",
+            "document_id": "DOC-CORE-PC002-IC-001",
+            "evidence_id": "EVID-CORE-PC002-IC-THESIS",
+            "matched_terms": [
+              "alder"
+            ],
+            "rank": 10,
+            "score": 2.654341949786415,
+            "source_fact_ids": [
+              "PC-002",
+              "FUND-001"
+            ],
+            "text": "Investment thesis\nAlder manufactures precision industrial components with meaningful exposure to aerospace demand. The investment thesis depends on durable customer relationships and specialized production capability."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 1.0,
+          "ndcg_at_3": 1.0,
+          "ndcg_at_5": 1.0,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0004",
+        "query_type": "semantic",
+        "question": "Which portfolio company is still growing even though newer customers are failing to settle into normal renewal behavior?",
+        "retrieved_positive_score": 54,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "matched_terms": [
+              "newer",
+              "are",
+              "to",
+              "settle",
+              "into",
+              "normal",
+              "renewal",
+              "behavior"
+            ],
+            "rank": 1,
+            "score": 28.091207585820698,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Management signal\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+          },
+          {
+            "chunk_id": "CHK-9fbe7afc0473638aee3ff82d5f50992e752b23f129247a2842e9e3fb26e96f4d",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+            "matched_terms": [
+              "even",
+              "though",
+              "newer"
+            ],
+            "rank": 2,
+            "score": 11.942928774850445,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary board issue\nTop-line expansion remains strong even though the quality of newer customer cohorts has weakened."
+          },
+          {
+            "chunk_id": "CHK-7c20d968207d98cd72bd3244a13b3128d30209068d82b9c6760c4ffa89c4f89e",
+            "document_id": "DOC-CORE-PC003-IC-001",
+            "evidence_id": "EVID-CORE-PC003-IC-THESIS",
+            "matched_terms": [
+              "growing",
+              "customers"
+            ],
+            "rank": 3,
+            "score": 6.100658519292932,
+            "source_fact_ids": [
+              "PC-003",
+              "FUND-001"
+            ],
+            "text": "Investment thesis\nBluePeak provides freight-management and routing software for logistics customers. The thesis combines workflow software adoption with growing complexity in cross-border freight operations."
+          },
+          {
+            "chunk_id": "CHK-28c653438bcc081afd192fd044cd2a4ff9b1ae5ce1a02ee7b877567170767b6a",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+            "matched_terms": [
+              "company",
+              "is"
+            ],
+            "rank": 4,
+            "score": 4.699311980132599,
+            "source_fact_ids": [
+              "RISK-001",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Primary board issue\nThe company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability."
+          },
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "company",
+              "is"
+            ],
+            "rank": 5,
+            "score": 4.699311980132599,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          },
+          {
+            "chunk_id": "CHK-b41906311246767f6e33f41450190d0a291c41675315e51aff234f8aad47a855",
+            "document_id": "DOC-CORE-PC007-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-BOARD-PRIORITY",
+            "matched_terms": [
+              "even",
+              "to"
+            ],
+            "rank": 6,
+            "score": 4.57450284686522,
+            "source_fact_ids": [
+              "RISK-007",
+              "FIN-PC-007-2026Q2",
+              "OP-PC-007-2026Q2-VOLUME"
+            ],
+            "text": "Primary board issue\nCustomer concentration remains the principal commercial risk even as transaction activity and quarterly revenue continue to increase."
+          },
+          {
+            "chunk_id": "CHK-442676662884e12cfd5a0cd7e035fe127740526a068f747b4cdc7b80eba9159a",
+            "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-QMR-SIGNAL",
+            "matched_terms": [
+              "still",
+              "to"
+            ],
+            "rank": 7,
+            "score": 4.326623575308105,
+            "source_fact_ids": [
+              "RISK-007",
+              "FIN-PC-007-2026Q2"
+            ],
+            "text": "Management signal\nThe business continues to grow, but a single regional-bank account still represents a substantial share of revenue."
+          },
+          {
+            "chunk_id": "CHK-c956a5e8423d5851c969e1f0d3749111cc49cdba44b8b5ce4f185bcaf90b9fc5",
+            "document_id": "DOC-CORE-PC007-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-RISK-PRIMARY",
+            "matched_terms": [
+              "company",
+              "to"
+            ],
+            "rank": 8,
+            "score": 3.975416041624733,
+            "source_fact_ids": [
+              "RISK-007",
+              "CC-011"
+            ],
+            "text": "Primary risk\nHarbor Regional Bank represents 26 percent of Cedar revenue, leaving the company materially exposed to one regional-bank relationship."
+          },
+          {
+            "chunk_id": "CHK-5d44078b5daebbccd56b1c6ea1789be8069c1dd219f52fa6151844b230b59963",
+            "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-BOARD-PRIORITY",
+            "matched_terms": [
+              "is",
+              "are"
+            ],
+            "rank": 9,
+            "score": 3.975159773709948,
+            "source_fact_ids": [
+              "RISK-004",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "Primary board issue\nRapid scale expansion and permitting friction are occurring simultaneously: installed capacity is rising while some projects remain behind their original schedules."
+          },
+          {
+            "chunk_id": "CHK-492004d5b9c7cfce7de0e0c7a0301ee43c98a3e163babf342ad2783baf4f07f6",
+            "document_id": "DOC-CORE-PC001-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-RISK-CONTEXT",
+            "matched_terms": [
+              "company",
+              "to"
+            ],
+            "rank": 10,
+            "score": 3.5819187155359504,
+            "source_fact_ids": [
+              "CC-002"
+            ],
+            "text": "Risk context\nAtlantic University Hospitals represents an additional 14 percent of revenue, making the two named health-system relationships important to the company's commercial profile."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.5,
+          "ndcg_at_1": 0.42857142857142855,
+          "ndcg_at_10": 0.8339912323981488,
+          "ndcg_at_3": 0.8339912323981488,
+          "ndcg_at_5": 0.8339912323981488,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0006",
+        "query_type": "semantic",
+        "question": "Which portfolio company is seeing freight momentum weaken in Canadian corridors?",
+        "retrieved_positive_score": 51,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-826f5fbf0e2123dc8e38213c7593d5127c28d38af770729848da66580f07be41",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-SIGNAL",
+            "matched_terms": [
+              "freight",
+              "canadian",
+              "corridors"
+            ],
+            "rank": 1,
+            "score": 9.916333283541682,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "Management signal\nSeveral customers have reduced shipment expectations as activity softened across selected Canadian freight corridors."
+          },
+          {
+            "chunk_id": "CHK-551e357dcbd238bdaad96e9100f4ab92e065f6e9b96fbb57b9c86c890bf75248",
+            "document_id": "DOC-CORE-PC003-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-BOARD-PRIORITY",
+            "matched_terms": [
+              "is",
+              "freight",
+              "momentum",
+              "in"
+            ],
+            "rank": 2,
+            "score": 8.585402308013503,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "Primary board issue\nThe main operating concern is a loss of freight momentum in Canada rather than a broad contraction in the customer base."
+          },
+          {
+            "chunk_id": "CHK-9d6f845a840b506a0011f2b2f3ed1ed16069799fc5ddef291c1c986d58420040",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-PRIMARY",
+            "matched_terms": [
+              "in",
+              "canadian",
+              "corridors"
+            ],
+            "rank": 3,
+            "score": 8.31900366822879,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "Primary risk\nCustomer shipment forecasts have weakened in selected Canadian corridors, creating demand sensitivity for BluePeak."
+          },
+          {
+            "chunk_id": "CHK-cc11326308cb92de4ac6c9d1a7344ce21c9b33c6733376fbda8a77e346d63309",
+            "document_id": "DOC-CORE-PC003-IC-001",
+            "evidence_id": "EVID-CORE-PC003-IC-DILIGENCE",
+            "matched_terms": [
+              "freight",
+              "canadian"
+            ],
+            "rank": 4,
+            "score": 6.029732704034734,
+            "source_fact_ids": [
+              "CC-005",
+              "CC-006",
+              "CUST-005",
+              "CUST-006"
+            ],
+            "text": "Commercial diligence\nMapleMart Canada and TransContinental Freight were established Canadian customer relationships before Northstar's investment."
+          },
+          {
+            "chunk_id": "CHK-28c653438bcc081afd192fd044cd2a4ff9b1ae5ce1a02ee7b877567170767b6a",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+            "matched_terms": [
+              "company",
+              "is"
+            ],
+            "rank": 5,
+            "score": 4.699311980132599,
+            "source_fact_ids": [
+              "RISK-001",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Primary board issue\nThe company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability."
+          },
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "company",
+              "is"
+            ],
+            "rank": 6,
+            "score": 4.699311980132599,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          },
+          {
+            "chunk_id": "CHK-c271322e2c2dfa4c112a31e1edbbfc4eabb697ff7a0327a551d530f1e2699edf",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-INDICATOR",
+            "matched_terms": [
+              "freight",
+              "in"
+            ],
+            "rank": 7,
+            "score": 3.5628278447732984,
+            "source_fact_ids": [
+              "OP-PC-003-2025Q2-FREIGHT",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "Operating indicator\nFor monitoring context, freight volume million shipments was 13.3 million_shipments in 2025Q2 and 12.7 million_shipments in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-347b9b48025fe3e351c27bee7bbc000e2fc3a31466a3da6ee7bc35ea376e28f3",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-OPERATING",
+            "matched_terms": [
+              "freight",
+              "in"
+            ],
+            "rank": 8,
+            "score": 3.4922695499950653,
+            "source_fact_ids": [
+              "OP-PC-003-2025Q2-FREIGHT",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "Operating indicator\nThe operating indicator 'freight volume million shipments' moved from 13.3 million_shipments in 2025Q2 to 12.7 million_shipments in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "matched_terms": [
+              "is",
+              "in"
+            ],
+            "rank": 9,
+            "score": 3.276556044663522,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "Primary risk\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-c956a5e8423d5851c969e1f0d3749111cc49cdba44b8b5ce4f185bcaf90b9fc5",
+            "document_id": "DOC-CORE-PC007-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-RISK-PRIMARY",
+            "matched_terms": [
+              "company"
+            ],
+            "rank": 10,
+            "score": 2.94593886828599,
+            "source_fact_ids": [
+              "RISK-007",
+              "CC-011"
+            ],
+            "text": "Primary risk\nHarbor Regional Bank represents 26 percent of Cedar revenue, leaving the company materially exposed to one regional-bank relationship."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.8175295903539446,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.6131471927654584,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0008",
+        "query_type": "hybrid",
+        "question": "What operational risk is associated with TitaniumWorks GmbH, and how has Alder's production yield changed?",
+        "retrieved_positive_score": 57,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "matched_terms": [
+              "risk",
+              "is",
+              "titaniumworks",
+              "gmbh",
+              "alder",
+              "s"
+            ],
+            "rank": 1,
+            "score": 13.004161000585388,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Primary risk\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          },
+          {
+            "chunk_id": "CHK-b365b8bf8a4bfd8bdaf939f4e314e95458604b74eb86809ceb5c8b442b1b32ec",
+            "document_id": "DOC-CORE-PC002-IC-001",
+            "evidence_id": "EVID-CORE-PC002-IC-THESIS",
+            "matched_terms": [
+              "with",
+              "and",
+              "alder",
+              "production"
+            ],
+            "rank": 2,
+            "score": 8.622529817584791,
+            "source_fact_ids": [
+              "PC-002",
+              "FUND-001"
+            ],
+            "text": "Investment thesis\nAlder manufactures precision industrial components with meaningful exposure to aerospace demand. The investment thesis depends on durable customer relationships and specialized production capability."
+          },
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "matched_terms": [
+              "risk",
+              "is",
+              "gmbh",
+              "s"
+            ],
+            "rank": 3,
+            "score": 8.250108712156347,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "Primary risk\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-5eaded1160df88d7c7912e428983dc14081fc57e8272f92f52ce8c810750104f",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-SCORECARD",
+            "matched_terms": [
+              "and",
+              "production",
+              "yield"
+            ],
+            "rank": 4,
+            "score": 7.0912444544863416,
+            "source_fact_ids": [
+              "FIN-PC-002-2026Q2",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $106 million of revenue and 94.2 percent for production yield pct."
+          },
+          {
+            "chunk_id": "CHK-fa104da5d8fdcb18553eb95e4a36272da53a4c6650e44c2b24f427b348c3a75d",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-INDICATOR",
+            "matched_terms": [
+              "and",
+              "production",
+              "yield"
+            ],
+            "rank": 5,
+            "score": 6.92827937286393,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Operating indicator\nFor monitoring context, production yield pct was 96.8 percent in 2025Q2 and 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "matched_terms": [
+              "risk",
+              "is",
+              "alder"
+            ],
+            "rank": 6,
+            "score": 6.1264122404288,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Risk context\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-9b6acdf921327862d76aca7d1ae70498e446025dff4fcc878052c541dde6dd5a",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-OPERATING",
+            "matched_terms": [
+              "production",
+              "yield"
+            ],
+            "rank": 7,
+            "score": 6.024238172463769,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Operating indicator\nThe operating indicator 'production yield pct' moved from 96.8 percent in 2025Q2 to 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "matched_terms": [
+              "and",
+              "has",
+              "yield"
+            ],
+            "rank": 8,
+            "score": 5.530267331256736,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Primary board issue\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-65862ef3d7b4dac85f612e092ed9a6b8a02ad3915825c7a1ff2a299bc67c02d0",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+            "matched_terms": [
+              "risk",
+              "is",
+              "and"
+            ],
+            "rank": 9,
+            "score": 4.165381414418802,
+            "source_fact_ids": [
+              "GEO-006",
+              "CC-010",
+              "CUST-010"
+            ],
+            "text": "Risk context\nGermany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency."
+          },
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "risk",
+              "is",
+              "and"
+            ],
+            "rank": 10,
+            "score": 4.047033522813296,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.6131471927654584,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.6131471927654584,
+          "recall_at_1": 0.5,
+          "recall_at_10": 0.5,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0009",
+        "query_type": "hybrid",
+        "question": "What is the risk around Crown Street Retail, and what broader customer-quality problem is Vantage experiencing?",
+        "retrieved_positive_score": 74,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "is",
+              "risk",
+              "crown",
+              "street",
+              "retail",
+              "and"
+            ],
+            "rank": 1,
+            "score": 16.435483655239338,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          },
+          {
+            "chunk_id": "CHK-9d9e626f1bc94d23b6f9026cfdf8336cc0104d5f8864d21f5465868f64d32ded",
+            "document_id": "DOC-CORE-PC005-IC-001",
+            "evidence_id": "EVID-CORE-PC005-IC-DILIGENCE",
+            "matched_terms": [
+              "crown",
+              "street",
+              "retail",
+              "and"
+            ],
+            "rank": 2,
+            "score": 11.430389553374967,
+            "source_fact_ids": [
+              "CC-008",
+              "CC-009",
+              "CUST-008",
+              "CUST-009"
+            ],
+            "text": "Commercial diligence\nCrown Street Retail and Hartwell Department Stores were established customers before Northstar's investment and represented meaningful enterprise-retail relationships."
+          },
+          {
+            "chunk_id": "CHK-2a5d7e23d23f43041c61c8cec1664d20153afb3994306d28c803f5dd1693a422",
+            "document_id": "DOC-CORE-PC005-IC-001",
+            "evidence_id": "EVID-CORE-PC005-IC-THESIS",
+            "matched_terms": [
+              "is",
+              "the",
+              "and",
+              "vantage"
+            ],
+            "rank": 3,
+            "score": 7.75417740425182,
+            "source_fact_ids": [
+              "PC-005",
+              "FUND-001"
+            ],
+            "text": "Investment thesis\nVantage provides demand-forecasting and merchandising analytics for large retailers. The investment thesis is based on increasing adoption of data-driven merchandising workflows."
+          },
+          {
+            "chunk_id": "CHK-65862ef3d7b4dac85f612e092ed9a6b8a02ad3915825c7a1ff2a299bc67c02d0",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+            "matched_terms": [
+              "is",
+              "risk",
+              "and"
+            ],
+            "rank": 4,
+            "score": 6.379990659946395,
+            "source_fact_ids": [
+              "GEO-006",
+              "CC-010",
+              "CUST-010"
+            ],
+            "text": "Risk context\nGermany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency."
+          },
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "matched_terms": [
+              "is",
+              "the",
+              "risk"
+            ],
+            "rank": 5,
+            "score": 6.365694983536314,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "Primary risk\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-25cbc2c089d4fd1db42454c50f89930363ee7d62861d27db225bea1434f47d9d",
+            "document_id": "DOC-CORE-PC007-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-RISK-CONTEXT",
+            "matched_terms": [
+              "is",
+              "the",
+              "risk"
+            ],
+            "rank": 6,
+            "score": 5.877345668347769,
+            "source_fact_ids": [
+              "CC-012",
+              "CC-011"
+            ],
+            "text": "Risk context\nPioneer Community Bank represents another 13 percent of revenue, although the Harbor relationship is the larger concentration."
+          },
+          {
+            "chunk_id": "CHK-b2d6d623e2c0d035f1d9b5d5429fd2f77f95f5a85d541bcf4dcc56861d61c3b7",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-CONTEXT",
+            "matched_terms": [
+              "risk",
+              "around",
+              "and"
+            ],
+            "rank": 7,
+            "score": 5.729868540627581,
+            "source_fact_ids": [
+              "CS-005",
+              "SUP-004",
+              "CS-006",
+              "SUP-007"
+            ],
+            "text": "Risk context\nHelioGrid depends on Pacific Battery Cells for battery cells and SolarCore Modules for solar modules, creating additional supply-chain exposures around its deployment program."
+          },
+          {
+            "chunk_id": "CHK-61b1d2c4f6998dc75b7e9d66108dc6f44d444d7893e3c45868c193876988eef0",
+            "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-BOARD-PRIORITY",
+            "matched_terms": [
+              "the",
+              "and",
+              "problem"
+            ],
+            "rank": 8,
+            "score": 5.6004364760285155,
+            "source_fact_ids": [
+              "RISK-006",
+              "OP-PC-006-2026Q1-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Primary board issue\nThe authentication reliability problem has been remediated, and service availability recovered materially in the following quarter."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "matched_terms": [
+              "is",
+              "risk"
+            ],
+            "rank": 9,
+            "score": 4.959485401416602,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Risk context\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "matched_terms": [
+              "risk",
+              "vantage"
+            ],
+            "rank": 10,
+            "score": 4.790941416103002,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary risk\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.02,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.0,
+          "ndcg_at_3": 0.0,
+          "ndcg_at_5": 0.0,
+          "recall_at_1": 0.0,
+          "recall_at_10": 0.0,
+          "recall_at_3": 0.0,
+          "recall_at_5": 0.0
+        },
+        "query_id": "Q-0017",
+        "query_type": "multi_source",
+        "question": "Summarize HelioGrid's Q2 revenue growth and principal operating risk.",
+        "retrieved_positive_score": 75,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "matched_terms": [
+              "s",
+              "q2",
+              "revenue",
+              "growth",
+              "risk"
+            ],
+            "rank": 1,
+            "score": 9.954645723673357,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary risk\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-b41906311246767f6e33f41450190d0a291c41675315e51aff234f8aad47a855",
+            "document_id": "DOC-CORE-PC007-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-BOARD-PRIORITY",
+            "matched_terms": [
+              "revenue",
+              "and",
+              "principal",
+              "risk"
+            ],
+            "rank": 2,
+            "score": 7.4603633821367765,
+            "source_fact_ids": [
+              "RISK-007",
+              "FIN-PC-007-2026Q2",
+              "OP-PC-007-2026Q2-VOLUME"
+            ],
+            "text": "Primary board issue\nCustomer concentration remains the principal commercial risk even as transaction activity and quarterly revenue continue to increase."
+          },
+          {
+            "chunk_id": "CHK-28c653438bcc081afd192fd044cd2a4ff9b1ae5ce1a02ee7b877567170767b6a",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+            "matched_terms": [
+              "s",
+              "growth",
+              "operating"
+            ],
+            "rank": 3,
+            "score": 6.336009706051195,
+            "source_fact_ids": [
+              "RISK-001",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Primary board issue\nThe company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability."
+          },
+          {
+            "chunk_id": "CHK-b2d6d623e2c0d035f1d9b5d5429fd2f77f95f5a85d541bcf4dcc56861d61c3b7",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-CONTEXT",
+            "matched_terms": [
+              "heliogrid",
+              "and",
+              "risk"
+            ],
+            "rank": 4,
+            "score": 5.260757299665686,
+            "source_fact_ids": [
+              "CS-005",
+              "SUP-004",
+              "CS-006",
+              "SUP-007"
+            ],
+            "text": "Risk context\nHelioGrid depends on Pacific Battery Cells for battery cells and SolarCore Modules for solar modules, creating additional supply-chain exposures around its deployment program."
+          },
+          {
+            "chunk_id": "CHK-4e75608491b685a5f172f11431cf68fd654fb1561229b1a933df9dba44f6e5fd",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-SCORECARD",
+            "matched_terms": [
+              "q2",
+              "revenue",
+              "and"
+            ],
+            "rank": 5,
+            "score": 4.292593399503497,
+            "source_fact_ids": [
+              "FIN-PC-008-2026Q2",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $83 million of revenue and 1175 units for instrument shipments."
+          },
+          {
+            "chunk_id": "CHK-492004d5b9c7cfce7de0e0c7a0301ee43c98a3e163babf342ad2783baf4f07f6",
+            "document_id": "DOC-CORE-PC001-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-RISK-CONTEXT",
+            "matched_terms": [
+              "s",
+              "revenue",
+              "risk"
+            ],
+            "rank": 6,
+            "score": 4.191863963094318,
+            "source_fact_ids": [
+              "CC-002"
+            ],
+            "text": "Risk context\nAtlantic University Hospitals represents an additional 14 percent of revenue, making the two named health-system relationships important to the company's commercial profile."
+          },
+          {
+            "chunk_id": "CHK-377631ae1ec20656814df7f14768d840ec7276677b9f3c482ab28cfaec45402d",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-SCORECARD",
+            "matched_terms": [
+              "q2",
+              "revenue",
+              "and"
+            ],
+            "rank": 7,
+            "score": 4.191624198339088,
+            "source_fact_ids": [
+              "FIN-PC-001-2026Q2",
+              "OP-PC-001-2026Q2-BACKLOG"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $98 million of revenue and 76 sites for implementation backlog sites."
+          },
+          {
+            "chunk_id": "CHK-4289049e6023b7d521a6ff6eb227d77399d36ddc2f8fdae665c3d8293a5afea9",
+            "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-BOARD-SCORECARD",
+            "matched_terms": [
+              "q2",
+              "revenue",
+              "and"
+            ],
+            "rank": 8,
+            "score": 4.191624198339088,
+            "source_fact_ids": [
+              "FIN-PC-006-2026Q2",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $121 million of revenue and 99.97 percent for platform uptime pct."
+          },
+          {
+            "chunk_id": "CHK-5eaded1160df88d7c7912e428983dc14081fc57e8272f92f52ce8c810750104f",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-SCORECARD",
+            "matched_terms": [
+              "q2",
+              "revenue",
+              "and"
+            ],
+            "rank": 9,
+            "score": 4.191624198339088,
+            "source_fact_ids": [
+              "FIN-PC-002-2026Q2",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $106 million of revenue and 94.2 percent for production yield pct."
+          },
+          {
+            "chunk_id": "CHK-be57b96e8ebb4d956275405d07b19d195080ed0a6a3635b0a580c944ab71e705",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-SCORECARD",
+            "matched_terms": [
+              "q2",
+              "revenue",
+              "and"
+            ],
+            "rank": 10,
+            "score": 4.191624198339088,
+            "source_fact_ids": [
+              "FIN-PC-005-2026Q2",
+              "OP-PC-005-2026Q2-JOBS"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $79 million of revenue and 93 million_jobs for forecast jobs million."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.8315546295836226,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.6131471927654584,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0019",
+        "query_type": "multi_source",
+        "question": "What critical supplier risk does NovaBio face, and how have instrument shipments changed?",
+        "retrieved_positive_score": 54,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "matched_terms": [
+              "supplier",
+              "risk",
+              "novabio"
+            ],
+            "rank": 1,
+            "score": 8.096046677986173,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "Primary risk\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "matched_terms": [
+              "critical",
+              "supplier",
+              "risk"
+            ],
+            "rank": 2,
+            "score": 7.6308673697023925,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Primary risk\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          },
+          {
+            "chunk_id": "CHK-4e75608491b685a5f172f11431cf68fd654fb1561229b1a933df9dba44f6e5fd",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-SCORECARD",
+            "matched_terms": [
+              "and",
+              "instrument",
+              "shipments"
+            ],
+            "rank": 3,
+            "score": 7.1319801605963065,
+            "source_fact_ids": [
+              "FIN-PC-008-2026Q2",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $83 million of revenue and 1175 units for instrument shipments."
+          },
+          {
+            "chunk_id": "CHK-25d228083b2bdfafbfdbe7fe0da44369dcf337f4cff70d9eaebb3e02ec1f43f0",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-INDICATOR",
+            "matched_terms": [
+              "and",
+              "instrument",
+              "shipments"
+            ],
+            "rank": 4,
+            "score": 6.964223685077542,
+            "source_fact_ids": [
+              "OP-PC-008-2025Q2-SHIPMENTS",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Operating indicator\nFor monitoring context, instrument shipments was 950 units in 2025Q2 and 1175 units in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-9decc1a34d964d3a6adc490ec654e436e59e1f0115283ba20d9ae1767bbc99f6",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-CONTEXT",
+            "matched_terms": [
+              "critical",
+              "risk",
+              "novabio"
+            ],
+            "rank": 5,
+            "score": 6.946599606133112,
+            "source_fact_ids": [
+              "CS-012",
+              "SUP-012",
+              "GEO-009"
+            ],
+            "text": "Risk context\nNovaBio also sources laboratory optics from Alpine Optics AG in Switzerland, but that relationship is classified as high criticality rather than single-source critical."
+          },
+          {
+            "chunk_id": "CHK-54726c1b09b0a6ad6da40348394e90e15fd18b2fb4e7dc71bf82687d49dc86ed",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-OPERATING",
+            "matched_terms": [
+              "instrument",
+              "shipments"
+            ],
+            "rank": 6,
+            "score": 6.038580519497621,
+            "source_fact_ids": [
+              "OP-PC-008-2025Q2-SHIPMENTS",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Operating indicator\nThe operating indicator 'instrument shipments' moved from 950 units in 2025Q2 to 1175 units in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "matched_terms": [
+              "critical",
+              "supplier",
+              "and"
+            ],
+            "rank": 7,
+            "score": 5.744124704621889,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Primary board issue\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-9d6f845a840b506a0011f2b2f3ed1ed16069799fc5ddef291c1c986d58420040",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-PRIMARY",
+            "matched_terms": [
+              "risk",
+              "have"
+            ],
+            "rank": 8,
+            "score": 5.598781654883838,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "Primary risk\nCustomer shipment forecasts have weakened in selected Canadian corridors, creating demand sensitivity for BluePeak."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "matched_terms": [
+              "critical",
+              "risk"
+            ],
+            "rank": 9,
+            "score": 4.410734818057543,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Risk context\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-826f5fbf0e2123dc8e38213c7593d5127c28d38af770729848da66580f07be41",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-SIGNAL",
+            "matched_terms": [
+              "have"
+            ],
+            "rank": 10,
+            "score": 3.8866005795069483,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "Management signal\nSeveral customers have reduced shipment expectations as activity softened across selected Canadian freight corridors."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.5,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.6309297535714575,
+          "ndcg_at_3": 0.6309297535714575,
+          "ndcg_at_5": 0.6309297535714575,
+          "recall_at_1": 0.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0020",
+        "query_type": "mixed_tool",
+        "question": "Which company had net retention below 100 percent in 2026 Q2 and also has document evidence that newer customer cohorts are failing to normalize?",
+        "retrieved_positive_score": 78,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "2026",
+              "q2",
+              "to"
+            ],
+            "rank": 1,
+            "score": 15.472393703635658,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary risk\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "matched_terms": [
+              "newer",
+              "customer",
+              "cohorts",
+              "are",
+              "to"
+            ],
+            "rank": 2,
+            "score": 12.723600485054464,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Management signal\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+          },
+          {
+            "chunk_id": "CHK-9fbe7afc0473638aee3ff82d5f50992e752b23f129247a2842e9e3fb26e96f4d",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+            "matched_terms": [
+              "has",
+              "newer",
+              "customer",
+              "cohorts"
+            ],
+            "rank": 3,
+            "score": 12.62128181090724,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary board issue\nTop-line expansion remains strong even though the quality of newer customer cohorts has weakened."
+          },
+          {
+            "chunk_id": "CHK-73b2927af4ef2af243804ffe092876a44596e0ae7e417ec96e6ec4949008d38a",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-CONTEXT",
+            "matched_terms": [
+              "percent",
+              "in",
+              "and",
+              "that",
+              "customer",
+              "are"
+            ],
+            "rank": 4,
+            "score": 9.228085301958997,
+            "source_fact_ids": [
+              "GEO-003",
+              "CC-005",
+              "CC-006"
+            ],
+            "text": "Risk context\nCanada represents 36 percent of BluePeak revenue exposure, while MapleMart Canada and TransContinental Freight are two named customer relationships in that market."
+          },
+          {
+            "chunk_id": "CHK-1111f0f694517d55a449186b2517e782805f5e06fbd6d8b9b7b84e40342a74c9",
+            "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-QMR-FINANCIAL",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "to"
+            ],
+            "rank": 5,
+            "score": 7.711314094623125,
+            "source_fact_ids": [
+              "FIN-PC-007-2025Q2",
+              "FIN-PC-007-2026Q2"
+            ],
+            "text": "Financial performance\nRevenue increased from $76 million in 2025Q2 to $84 million in 2026Q2. EBITDA in the current quarter was $16 million. Net retention in 2026Q2 was 106 percent."
+          },
+          {
+            "chunk_id": "CHK-19c8f5e40a19f3b6eaeca1e57d15803785285a759954420bc3ccd6cb0c0170e9",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-FINANCIAL",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "to"
+            ],
+            "rank": 6,
+            "score": 7.711314094623125,
+            "source_fact_ids": [
+              "FIN-PC-003-2025Q2",
+              "FIN-PC-003-2026Q2"
+            ],
+            "text": "Financial performance\nRevenue increased from $66 million in 2025Q2 to $72 million in 2026Q2. EBITDA in the current quarter was $13 million. Net retention in 2026Q2 was 101 percent."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "to"
+            ],
+            "rank": 7,
+            "score": 7.711314094623125,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Financial performance\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-d6b6dec9def16c6f6ba818ad1589ab9ae7d0022323cc2180e5c157465bb06f3c",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-FINANCIAL",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "to"
+            ],
+            "rank": 8,
+            "score": 7.711314094623125,
+            "source_fact_ids": [
+              "FIN-PC-006-2025Q2",
+              "FIN-PC-006-2026Q2"
+            ],
+            "text": "Financial performance\nRevenue increased from $97 million in 2025Q2 to $121 million in 2026Q2. EBITDA in the current quarter was $30 million. Net retention in 2026Q2 was 117 percent."
+          },
+          {
+            "chunk_id": "CHK-e3373a18cd241469a3d52235f4cbcfa0e5a0d095fb5405f43b967e4366ab5e13",
+            "document_id": "DOC-CORE-PC001-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-QMR-FINANCIAL",
+            "matched_terms": [
+              "net",
+              "retention",
+              "percent",
+              "in",
+              "to"
+            ],
+            "rank": 9,
+            "score": 7.711314094623125,
+            "source_fact_ids": [
+              "FIN-PC-001-2025Q2",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Financial performance\nRevenue increased from $82 million in 2025Q2 to $98 million in 2026Q2. EBITDA in the current quarter was $20 million. Net retention in 2026Q2 was 111 percent."
+          },
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "company",
+              "percent",
+              "and",
+              "customer"
+            ],
+            "rank": 10,
+            "score": 6.831706545076172,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.14285714285714285,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.33333333333333337,
+          "ndcg_at_3": 0.0,
+          "ndcg_at_5": 0.0,
+          "recall_at_1": 0.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.0,
+          "recall_at_5": 0.0
+        },
+        "query_id": "Q-0021",
+        "query_type": "mixed_tool",
+        "question": "Which company had the highest year-over-year revenue growth in 2026 Q2 and also has a documented permitting problem?",
+        "retrieved_positive_score": 78,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "matched_terms": [
+              "revenue",
+              "growth",
+              "in",
+              "2026",
+              "q2"
+            ],
+            "rank": 1,
+            "score": 11.578289973851888,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Primary risk\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-61b1d2c4f6998dc75b7e9d66108dc6f44d444d7893e3c45868c193876988eef0",
+            "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-BOARD-PRIORITY",
+            "matched_terms": [
+              "the",
+              "in",
+              "and",
+              "has",
+              "problem"
+            ],
+            "rank": 2,
+            "score": 9.472218891545321,
+            "source_fact_ids": [
+              "RISK-006",
+              "OP-PC-006-2026Q1-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Primary board issue\nThe authentication reliability problem has been remediated, and service availability recovered materially in the following quarter."
+          },
+          {
+            "chunk_id": "CHK-28c653438bcc081afd192fd044cd2a4ff9b1ae5ce1a02ee7b877567170767b6a",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-PRIORITY",
+            "matched_terms": [
+              "company",
+              "the",
+              "growth"
+            ],
+            "rank": 3,
+            "score": 6.373436855713377,
+            "source_fact_ids": [
+              "RISK-001",
+              "FIN-PC-001-2026Q2"
+            ],
+            "text": "Primary board issue\nThe company's strongest operating trend is continued growth, while single-account exposure remains its clearest commercial vulnerability."
+          },
+          {
+            "chunk_id": "CHK-7184e100db3135ae39cf55cef28b7c9cf945be30be356d2c8b074b5d483b4980",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-SIGNAL",
+            "matched_terms": [
+              "growth",
+              "a"
+            ],
+            "rank": 4,
+            "score": 6.257693481490376,
+            "source_fact_ids": [
+              "RISK-008",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Management signal\nShipment growth remains healthy, but a precision-motion assembly still depends on a single qualified source."
+          },
+          {
+            "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+            "matched_terms": [
+              "has",
+              "a"
+            ],
+            "rank": 5,
+            "score": 6.257693481490376,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Management signal\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "matched_terms": [
+              "the",
+              "in",
+              "and",
+              "has",
+              "a"
+            ],
+            "rank": 6,
+            "score": 6.111134028618575,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Primary board issue\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-34d5d6a823f02b15bb98ad5044f4b4566affc2988daac217fa76e6d7d31844f2",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+            "matched_terms": [
+              "the",
+              "in",
+              "permitting"
+            ],
+            "rank": 7,
+            "score": 5.336346382044428,
+            "source_fact_ids": [
+              "RISK-004"
+            ],
+            "text": "Primary risk\nPermitting delays are affecting the schedule of several distributed storage projects in western states."
+          },
+          {
+            "chunk_id": "CHK-4e75608491b685a5f172f11431cf68fd654fb1561229b1a933df9dba44f6e5fd",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-SCORECARD",
+            "matched_terms": [
+              "the",
+              "revenue",
+              "q2",
+              "and"
+            ],
+            "rank": 8,
+            "score": 4.820552326712048,
+            "source_fact_ids": [
+              "FIN-PC-008-2026Q2",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $83 million of revenue and 1175 units for instrument shipments."
+          },
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "matched_terms": [
+              "company",
+              "revenue",
+              "and"
+            ],
+            "rank": 9,
+            "score": 4.77892478633177,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Risk context\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          },
+          {
+            "chunk_id": "CHK-377631ae1ec20656814df7f14768d840ec7276677b9f3c482ab28cfaec45402d",
+            "document_id": "DOC-CORE-PC001-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC001-BOARD-SCORECARD",
+            "matched_terms": [
+              "the",
+              "revenue",
+              "q2",
+              "and"
+            ],
+            "rank": 10,
+            "score": 4.707164620889352,
+            "source_fact_ids": [
+              "FIN-PC-001-2026Q2",
+              "OP-PC-001-2026Q2-BACKLOG"
+            ],
+            "text": "Quarter-end scorecard\nThe Q2 scorecard records $98 million of revenue and 76 sites for implementation backlog sites."
+          }
+        ]
+      }
+    ],
+    "chunk_strategy_version": "evidence-block-v1",
+    "corpus": {
+      "average_document_length": 20.875,
+      "chunks": 80,
+      "unique_terms": 449
+    },
+    "dataset_version": "northstar-v1",
+    "evaluation": {
+      "all_cases": 10,
+      "excluded_cases": [],
+      "retrieval_eligible_cases": 10
+    },
+    "evaluation_version": "northstar-eval-v1-seed",
+    "summary": {
+      "by_difficulty": {
+        "easy": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.9586597063564786,
+          "mean_ndcg_at_3": 0.9586597063564786,
+          "mean_ndcg_at_5": 0.9586597063564786,
+          "mean_recall_at_1": 0.75,
+          "mean_recall_at_10": 0.75,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 0.75
+        },
+        "hard": {
+          "cases": 4,
+          "mean_canonical_reciprocal_rank": 0.6607142857142857,
+          "mean_ndcg_at_1": 0.5,
+          "mean_ndcg_at_10": 0.5987349675060485,
+          "mean_ndcg_at_3": 0.46430603477559357,
+          "mean_ndcg_at_5": 0.46430603477559357,
+          "mean_recall_at_1": 0.25,
+          "mean_recall_at_10": 0.875,
+          "mean_recall_at_3": 0.5,
+          "mean_recall_at_5": 0.5
+        },
+        "medium": {
+          "cases": 4,
+          "mean_canonical_reciprocal_rank": 0.63,
+          "mean_ndcg_at_1": 0.6071428571428571,
+          "mean_ndcg_at_10": 0.6663864654954428,
+          "mean_ndcg_at_3": 0.6117846062909018,
+          "mean_ndcg_at_5": 0.6117846062909018,
+          "mean_recall_at_1": 0.375,
+          "mean_recall_at_10": 0.75,
+          "mean_recall_at_3": 0.625,
+          "mean_recall_at_5": 0.625
+        }
+      },
+      "by_query_type": {
+        "hybrid": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.7153383915597015,
+          "mean_ndcg_at_3": 0.6131471927654584,
+          "mean_ndcg_at_5": 0.6131471927654584,
+          "mean_recall_at_1": 0.5,
+          "mean_recall_at_10": 0.75,
+          "mean_recall_at_3": 0.5,
+          "mean_recall_at_5": 0.5
+        },
+        "lexical": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.9586597063564786,
+          "mean_ndcg_at_3": 0.9586597063564786,
+          "mean_ndcg_at_5": 0.9586597063564786,
+          "mean_recall_at_1": 0.75,
+          "mean_recall_at_10": 0.75,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 0.75
+        },
+        "mixed_tool": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.3214285714285714,
+          "mean_ndcg_at_1": 0.0,
+          "mean_ndcg_at_10": 0.48213154345239545,
+          "mean_ndcg_at_3": 0.31546487678572877,
+          "mean_ndcg_at_5": 0.31546487678572877,
+          "mean_recall_at_1": 0.0,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 0.5,
+          "mean_recall_at_5": 0.5
+        },
+        "multi_source": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.51,
+          "mean_ndcg_at_1": 0.5,
+          "mean_ndcg_at_10": 0.4157773147918113,
+          "mean_ndcg_at_3": 0.3065735963827292,
+          "mean_ndcg_at_5": 0.3065735963827292,
+          "mean_recall_at_1": 0.25,
+          "mean_recall_at_10": 0.5,
+          "mean_recall_at_3": 0.25,
+          "mean_recall_at_5": 0.25
+        },
+        "semantic": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.75,
+          "mean_ndcg_at_1": 0.7142857142857143,
+          "mean_ndcg_at_10": 0.9169956161990744,
+          "mean_ndcg_at_3": 0.9169956161990744,
+          "mean_ndcg_at_5": 0.9169956161990744,
+          "mean_recall_at_1": 0.5,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 1.0,
+          "mean_recall_at_5": 1.0
+        }
+      },
+      "by_split": {
+        "development": {
+          "cases": 10,
+          "mean_canonical_reciprocal_rank": 0.7162857142857143,
+          "mean_ndcg_at_1": 0.6428571428571429,
+          "mean_ndcg_at_10": 0.6977805144718923,
+          "mean_ndcg_at_3": 0.6221681976978939,
+          "mean_ndcg_at_5": 0.6221681976978939,
+          "mean_recall_at_1": 0.4,
+          "mean_recall_at_10": 0.8,
+          "mean_recall_at_3": 0.6,
+          "mean_recall_at_5": 0.6
+        }
+      },
+      "retrieval_eligible": {
+        "cases": 10,
+        "mean_canonical_reciprocal_rank": 0.7162857142857143,
+        "mean_ndcg_at_1": 0.6428571428571429,
+        "mean_ndcg_at_10": 0.6977805144718923,
+        "mean_ndcg_at_3": 0.6221681976978939,
+        "mean_ndcg_at_5": 0.6221681976978939,
+        "mean_recall_at_1": 0.4,
+        "mean_recall_at_10": 0.8,
+        "mean_recall_at_3": 0.6,
+        "mean_recall_at_5": 0.6
+      }
+    },
+    "tokenizer_version": "lexical-tokenizer-v1"
+  },
+  "experiment_version": "bm25-lexical-representation-ablation-v1",
+  "lexical_rank_one_guardrail": true,
+  "representation_version": "evidence-heading-text-v1",
+  "scope": "development-only",
+  "selection_policy": {
+    "guardrail": "all development lexical canonical evidence remains rank 1",
+    "primary": "mean_ndcg_at_10",
+    "secondary": [
+      "mean_canonical_reciprocal_rank",
+      "mean_recall_at_10"
+    ]
+  }
+}
