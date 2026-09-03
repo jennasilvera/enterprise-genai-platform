@@ -224,3 +224,70 @@ Status: NOT STARTED
 Evidence:
 
 - None.
+
+## Phase 4A — BM25 Lexical Retrieval Baseline
+
+**Status:** MEASURED / VERIFIED
+
+Implementation:
+- deterministic Unicode-aware lexical tokenizer;
+- compound identifier preservation;
+- from-scratch BM25 ranker;
+- deterministic score tie-breaking;
+- evidence-level qrel adapter;
+- Recall@k, graded nDCG@k, and canonical reciprocal-rank metrics;
+- query-type and split-level benchmark reporting;
+- reproducible JSON evaluation artifact.
+
+Verified corpus:
+- 80 deterministic `evidence-block-v1` retrieval chunks;
+- chunk corpus fingerprint:
+  `c4283f4789c83e947634b9d04b0af57f60ba77c2255604ee287cedf40c4900ea`.
+
+Evaluation:
+- 24 total evaluation cases;
+- 14 standalone retrieval-eligible cases;
+- 10 system-level SQL/graph/unanswerable cases excluded from pure-retrieval
+  aggregates.
+
+Fixed baseline:
+- BM25 `k1=1.5`;
+- BM25 `b=0.75`;
+- no tuning before first measurement.
+
+Measured retrieval-eligible results:
+- canonical MRR: `0.642744`;
+- Recall@1: `0.357143`;
+- Recall@3: `0.642857`;
+- Recall@5: `0.678571`;
+- Recall@10: `0.821429`;
+- nDCG@1: `0.530612`;
+- nDCG@3: `0.602388`;
+- nDCG@5: `0.619331`;
+- nDCG@10: `0.674342`.
+
+Lexical-query subset:
+- canonical MRR: `1.000000`;
+- nDCG@1: `1.000000`;
+- nDCG@10: `0.972440`.
+
+Reproducibility:
+- canonical report:
+  `artifacts/evaluation/bm25_baseline.json`;
+- report SHA-256:
+  `77398447c9a183863c6d2d29ca2fa9a493b418487d0648d378c6f46424e408c3`;
+- independent rerun was byte-identical;
+- quality gate: `122 passed`.
+
+Observed limitations:
+- weak multi-source lexical retrieval;
+- evidence text can omit entity metadata useful for query discrimination;
+- generic lexical terms can influence rankings;
+- semantic seed cases retain meaningful surface-form overlap;
+- mixed-tool questions confirm a need for SQL/graph routing rather than
+  standalone document retrieval.
+
+Resume-use constraint:
+Do not claim dense, hybrid, reranked, or production-scale retrieval from
+this milestone. Any improvement percentage must be measured in a later
+controlled experiment against this frozen baseline.
