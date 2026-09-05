@@ -410,3 +410,74 @@ Resume-use constraint:
 Do not generalize the small test improvement beyond the synthetic Northstar
 benchmark. Do not attribute it to dense retrieval, hybrid fusion, reranking,
 LLMs, or agents.
+
+## Phase 5A — Dense Retrieval Baseline
+
+**Status:** MEASURED / DEVELOPMENT-VERIFIED
+
+Implemented:
+- independent dense retrieval index;
+- `intfloat/e5-small-v2`;
+- immutable model revision
+  `ffb93f3bd4047442299a41ebb6fa998a38507c52`;
+- 384-dimensional embeddings;
+- E5 `query:` / `passage:` asymmetric representation;
+- evidence-text-only passage representation;
+- L2 normalization;
+- normalized inner-product similarity;
+- deterministic `(-score, chunk_id)` ordering;
+- CPU execution;
+- development-only benchmark integration.
+
+Runtime:
+- NumPy `2.5.2`;
+- PyTorch `2.13.0+cpu`;
+- Transformers `5.16.1`;
+- Sentence Transformers `6.0.1`;
+- CUDA unavailable.
+
+Real-model invariance:
+- corpus shape: `(80, 384)`;
+- batch-size-1 vs batch-size-16 maximum absolute difference:
+  `1.7136335372924805e-07`;
+- batch comparison passes `1e-6` tolerance;
+- repeated batch-size-16 maximum difference: `0.0`;
+- embedding norms remain approximately `1.0`.
+
+Development evaluation:
+- cases: `10`;
+- canonical MRR: `0.611003`;
+- nDCG@10: `0.608430`;
+- Recall@10: `0.800000`.
+
+Frozen Phase 4B BM25 development reference:
+- representation: `document-title-text-v1`;
+- canonical MRR: `0.659091`;
+- nDCG@10: `0.677258`;
+- Recall@10: `0.800000`.
+
+Dense-minus-BM25:
+- canonical MRR: approximately `-7.30%` relative;
+- nDCG@10: approximately `-10.16%` relative;
+- Recall@10: unchanged.
+
+Diagnostic behavior:
+- Q-0017 gains partial top-10 recovery under dense retrieval;
+- Q-0021 remains a severe evidence-text-only dense failure;
+- the observed error differences motivate controlled dense metadata testing and
+  later hybrid retrieval rather than post-hoc tuning of this baseline.
+
+Artifact:
+- `artifacts/evaluation/phase5a/e5-small-v2-development.json`;
+- SHA-256:
+  `b388e10207467018434a26c54cf5002953c698a9988b7a23d2194919e43fa11a`;
+- size: `68512` bytes;
+- independent `/tmp` rerun: byte-identical.
+
+Tests:
+- `150` passing.
+
+Resume-use constraint:
+Describe these as development-set measurements on the synthetic Northstar
+benchmark. Do not claim test-set performance, production generalization,
+hybrid retrieval, pgvector search, reranking, or agent behavior from Phase 5A.
