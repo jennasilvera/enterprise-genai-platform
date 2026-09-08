@@ -12,9 +12,9 @@ from enterprise_genai.evaluation.bm25_benchmark import (
     is_retrieval_eligible,
 )
 from enterprise_genai.retrieval.bm25 import (
+    BM25_VERSION,
     BM25Config,
     BM25Index,
-    BM25_VERSION,
 )
 from enterprise_genai.retrieval.dense import (
     DENSE_VERSION,
@@ -25,8 +25,8 @@ from enterprise_genai.retrieval.dense_representation import (
     DENSE_DOCUMENT_TITLE_TEXT_VERSION,
 )
 from enterprise_genai.retrieval.rrf import (
-    RRFConfig,
     RRF_VERSION,
+    RRFConfig,
     fuse_ranked_results,
 )
 from enterprise_genai.retrieval.tokenization import (
