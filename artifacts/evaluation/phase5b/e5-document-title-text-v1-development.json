@@ -1,0 +1,1643 @@
+{
+  "baseline_representation": "e5-evidence-text-v1",
+  "candidate_benchmark": {
+    "benchmark_version": "northstar-dense-baseline-v1",
+    "cases": [
+      {
+        "difficulty": "easy",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.9680147827042069,
+          "ndcg_at_3": 0.9173194127129571,
+          "ndcg_at_5": 0.9680147827042069,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0001",
+        "query_type": "lexical",
+        "question": "What defect affected ORBIS-IDX-7?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-74b05f63883a4771ea10d984e455043bbb5ff7ce563c545ae0587e481c054adc",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+            "rank": 1,
+            "score": 0.8941740989685059,
+            "source_fact_ids": [
+              "RISK-006"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nThe ORBIS-IDX-7 service experienced an authentication defect that caused intermittent identity-validation failures for a subset of enterprise tenants."
+          },
+          {
+            "chunk_id": "CHK-2b8cabf72cec9d0b238064758faf2e8a7f9284036cb443908b296c6bb28d2455",
+            "document_id": "DOC-CORE-PC006-IC-001",
+            "evidence_id": "EVID-CORE-PC006-IC-THESIS",
+            "rank": 2,
+            "score": 0.8147203922271729,
+            "source_fact_ids": [
+              "PC-006",
+              "FUND-001"
+            ],
+            "text": "Orbis Cybersecurity Investment Committee Memorandum\nOrbis provides enterprise identity and threat-detection software. The investment thesis is based on durable cybersecurity demand and expansion of recurring enterprise deployments."
+          },
+          {
+            "chunk_id": "CHK-61b1d2c4f6998dc75b7e9d66108dc6f44d444d7893e3c45868c193876988eef0",
+            "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-BOARD-PRIORITY",
+            "rank": 3,
+            "score": 0.8110458254814148,
+            "source_fact_ids": [
+              "RISK-006",
+              "OP-PC-006-2026Q1-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Board Update\nThe authentication reliability problem has been remediated, and service availability recovered materially in the following quarter."
+          },
+          {
+            "chunk_id": "CHK-65862ef3d7b4dac85f612e092ed9a6b8a02ad3915825c7a1ff2a299bc67c02d0",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+            "rank": 4,
+            "score": 0.8043662309646606,
+            "source_fact_ids": [
+              "GEO-006",
+              "CC-010",
+              "CUST-010"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nGermany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency."
+          },
+          {
+            "chunk_id": "CHK-c451794bcfc162dff9461f81f291993126268ae8e07aee16aad028c6185106aa",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+            "rank": 5,
+            "score": 0.8028014898300171,
+            "source_fact_ids": [
+              "RISK-006",
+              "OP-PC-006-2026Q1-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nAuthentication reliability deteriorated during the first quarter before service performance recovered during Q2."
+          },
+          {
+            "chunk_id": "CHK-d6b6dec9def16c6f6ba818ad1589ab9ae7d0022323cc2180e5c157465bb06f3c",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-FINANCIAL",
+            "rank": 6,
+            "score": 0.8007367849349976,
+            "source_fact_ids": [
+              "FIN-PC-006-2025Q2",
+              "FIN-PC-006-2026Q2"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nRevenue increased from $97 million in 2025Q2 to $121 million in 2026Q2. EBITDA in the current quarter was $30 million. Net retention in 2026Q2 was 117 percent."
+          },
+          {
+            "chunk_id": "CHK-8ae014b9b5939e6e0cab284dc01d09b843c32eb1585bb463c2fed90b7f8de324",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-INDICATOR",
+            "rank": 7,
+            "score": 0.7833379507064819,
+            "source_fact_ids": [
+              "OP-PC-006-2025Q2-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nFor monitoring context, platform uptime pct was 99.99 percent in 2025Q2 and 99.97 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-ae5b524e76fcbe807b46670a961187b98b5c31091b29ad0d5bca21e1daccd813",
+            "document_id": "DOC-CORE-PC006-IC-001",
+            "evidence_id": "EVID-CORE-PC006-IC-DILIGENCE",
+            "rank": 8,
+            "score": 0.7735838890075684,
+            "source_fact_ids": [
+              "CC-010",
+              "CUST-010",
+              "GEO-006"
+            ],
+            "text": "Orbis Cybersecurity Investment Committee Memorandum\nRheinwerk AG was an established enterprise customer before Northstar's investment, providing direct exposure to the German market."
+          },
+          {
+            "chunk_id": "CHK-4289049e6023b7d521a6ff6eb227d77399d36ddc2f8fdae665c3d8293a5afea9",
+            "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-BOARD-SCORECARD",
+            "rank": 9,
+            "score": 0.7700558304786682,
+            "source_fact_ids": [
+              "FIN-PC-006-2026Q2",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Board Update\nThe Q2 scorecard records $121 million of revenue and 99.97 percent for platform uptime pct."
+          },
+          {
+            "chunk_id": "CHK-275d08a8e1d5f1cf77ed2785df87228e3ae17058377d4fc952878309adac1bd2",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-OPERATING",
+            "rank": 10,
+            "score": 0.7644393444061279,
+            "source_fact_ids": [
+              "OP-PC-006-2025Q2-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nThe operating indicator 'platform uptime pct' moved from 99.99 percent in 2025Q2 to 99.97 percent in 2026Q2."
+          }
+        ]
+      },
+      {
+        "difficulty": "easy",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 1.0,
+          "ndcg_at_3": 1.0,
+          "ndcg_at_5": 1.0,
+          "recall_at_1": 1.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0002",
+        "query_type": "lexical",
+        "question": "Which critical titanium supplier is Alder's only qualified source?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "rank": 1,
+            "score": 0.9056417942047119,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "rank": 2,
+            "score": 0.8541768789291382,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+            "rank": 3,
+            "score": 0.8224135041236877,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "rank": 4,
+            "score": 0.820075273513794,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Board Update\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-b365b8bf8a4bfd8bdaf939f4e314e95458604b74eb86809ceb5c8b442b1b32ec",
+            "document_id": "DOC-CORE-PC002-IC-001",
+            "evidence_id": "EVID-CORE-PC002-IC-THESIS",
+            "rank": 5,
+            "score": 0.8178288340568542,
+            "source_fact_ids": [
+              "PC-002",
+              "FUND-001"
+            ],
+            "text": "Alder Manufacturing Investment Committee Memorandum\nAlder manufactures precision industrial components with meaningful exposure to aerospace demand. The investment thesis depends on durable customer relationships and specialized production capability."
+          },
+          {
+            "chunk_id": "CHK-fa104da5d8fdcb18553eb95e4a36272da53a4c6650e44c2b24f427b348c3a75d",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-INDICATOR",
+            "rank": 6,
+            "score": 0.7987989783287048,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nFor monitoring context, production yield pct was 96.8 percent in 2025Q2 and 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-9decc1a34d964d3a6adc490ec654e436e59e1f0115283ba20d9ae1767bbc99f6",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-CONTEXT",
+            "rank": 7,
+            "score": 0.7955605387687683,
+            "source_fact_ids": [
+              "CS-012",
+              "SUP-012",
+              "GEO-009"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Risk Review\nNovaBio also sources laboratory optics from Alpine Optics AG in Switzerland, but that relationship is classified as high criticality rather than single-source critical."
+          },
+          {
+            "chunk_id": "CHK-9b6acdf921327862d76aca7d1ae70498e446025dff4fcc878052c541dde6dd5a",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-OPERATING",
+            "rank": 8,
+            "score": 0.7940411567687988,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nThe operating indicator 'production yield pct' moved from 96.8 percent in 2025Q2 to 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-cefafe880537cc2a4402fb89f775fcd4b6ef71e631390997a5ac4e1816852829",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-FINANCIAL",
+            "rank": 9,
+            "score": 0.791565477848053,
+            "source_fact_ids": [
+              "FIN-PC-002-2025Q2",
+              "FIN-PC-002-2026Q2"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nRevenue increased from $100 million in 2025Q2 to $106 million in 2026Q2. EBITDA in the current quarter was $16 million."
+          },
+          {
+            "chunk_id": "CHK-5eaded1160df88d7c7912e428983dc14081fc57e8272f92f52ce8c810750104f",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-SCORECARD",
+            "rank": 10,
+            "score": 0.7879009246826172,
+            "source_fact_ids": [
+              "FIN-PC-002-2026Q2",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Board Update\nThe Q2 scorecard records $106 million of revenue and 94.2 percent for production yield pct."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.95583058934618,
+          "ndcg_at_3": 0.95583058934618,
+          "ndcg_at_5": 0.95583058934618,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0004",
+        "query_type": "semantic",
+        "question": "Which portfolio company is still growing even though newer customers are failing to settle into normal renewal behavior?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "rank": 1,
+            "score": 0.838126003742218,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+          },
+          {
+            "chunk_id": "CHK-b41906311246767f6e33f41450190d0a291c41675315e51aff234f8aad47a855",
+            "document_id": "DOC-CORE-PC007-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-BOARD-PRIORITY",
+            "rank": 2,
+            "score": 0.8058107495307922,
+            "source_fact_ids": [
+              "RISK-007",
+              "FIN-PC-007-2026Q2",
+              "OP-PC-007-2026Q2-VOLUME"
+            ],
+            "text": "Cedar Financial Technologies Q2 2026 Board Update\nCustomer concentration remains the principal commercial risk even as transaction activity and quarterly revenue continue to increase."
+          },
+          {
+            "chunk_id": "CHK-9fbe7afc0473638aee3ff82d5f50992e752b23f129247a2842e9e3fb26e96f4d",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+            "rank": 3,
+            "score": 0.8051737546920776,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Board Update\nTop-line expansion remains strong even though the quality of newer customer cohorts has weakened."
+          },
+          {
+            "chunk_id": "CHK-5d44078b5daebbccd56b1c6ea1789be8069c1dd219f52fa6151844b230b59963",
+            "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-BOARD-PRIORITY",
+            "rank": 4,
+            "score": 0.7974660396575928,
+            "source_fact_ids": [
+              "RISK-004",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Board Update\nRapid scale expansion and permitting friction are occurring simultaneously: installed capacity is rising while some projects remain behind their original schedules."
+          },
+          {
+            "chunk_id": "CHK-2c9abf152366da90b23e15baedfbc454d94bd10a705289b1c03ea6dc7668af51",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-SIGNAL",
+            "rank": 5,
+            "score": 0.7962309718132019,
+            "source_fact_ids": [
+              "RISK-004",
+              "FIN-PC-004-2026Q2"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nGrowth remains strong, but several western storage projects are progressing more slowly because local approvals are taking longer than planned."
+          },
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "rank": 6,
+            "score": 0.7954728603363037,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "rank": 7,
+            "score": 0.7898455858230591,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Board Update\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-b7c9accfcb86f7466a0404839e04ff4a6dc39b0ea985dcd24cdd732ae0a944e9",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-PRIORITY",
+            "rank": 8,
+            "score": 0.7845630645751953,
+            "source_fact_ids": [
+              "RISK-008",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Board Update\nCommercial activity continues to expand while an unresolved single-source dependency remains embedded in the automation platform."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "rank": 9,
+            "score": 0.7844305038452148,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-74b05f63883a4771ea10d984e455043bbb5ff7ce563c545ae0587e481c054adc",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+            "rank": 10,
+            "score": 0.7827130556106567,
+            "source_fact_ids": [
+              "RISK-006"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nThe ORBIS-IDX-7 service experienced an authentication defect that caused intermittent identity-validation failures for a subset of enterprise tenants."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.3333333333333333,
+          "ndcg_at_1": 0.42857142857142855,
+          "ndcg_at_10": 0.7309292742059024,
+          "ndcg_at_3": 0.7309292742059024,
+          "ndcg_at_5": 0.7309292742059024,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0006",
+        "query_type": "semantic",
+        "question": "Which portfolio company is seeing freight momentum weaken in Canadian corridors?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-826f5fbf0e2123dc8e38213c7593d5127c28d38af770729848da66580f07be41",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-SIGNAL",
+            "rank": 1,
+            "score": 0.8458054065704346,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Management Report\nSeveral customers have reduced shipment expectations as activity softened across selected Canadian freight corridors."
+          },
+          {
+            "chunk_id": "CHK-9d6f845a840b506a0011f2b2f3ed1ed16069799fc5ddef291c1c986d58420040",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-PRIMARY",
+            "rank": 2,
+            "score": 0.8450595736503601,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Risk Review\nCustomer shipment forecasts have weakened in selected Canadian corridors, creating demand sensitivity for BluePeak."
+          },
+          {
+            "chunk_id": "CHK-551e357dcbd238bdaad96e9100f4ab92e065f6e9b96fbb57b9c86c890bf75248",
+            "document_id": "DOC-CORE-PC003-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-BOARD-PRIORITY",
+            "rank": 3,
+            "score": 0.8395711779594421,
+            "source_fact_ids": [
+              "RISK-003",
+              "GEO-003",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Board Update\nThe main operating concern is a loss of freight momentum in Canada rather than a broad contraction in the customer base."
+          },
+          {
+            "chunk_id": "CHK-73b2927af4ef2af243804ffe092876a44596e0ae7e417ec96e6ec4949008d38a",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-CONTEXT",
+            "rank": 4,
+            "score": 0.8157169818878174,
+            "source_fact_ids": [
+              "GEO-003",
+              "CC-005",
+              "CC-006"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Risk Review\nCanada represents 36 percent of BluePeak revenue exposure, while MapleMart Canada and TransContinental Freight are two named customer relationships in that market."
+          },
+          {
+            "chunk_id": "CHK-7c20d968207d98cd72bd3244a13b3128d30209068d82b9c6760c4ffa89c4f89e",
+            "document_id": "DOC-CORE-PC003-IC-001",
+            "evidence_id": "EVID-CORE-PC003-IC-THESIS",
+            "rank": 5,
+            "score": 0.8033502697944641,
+            "source_fact_ids": [
+              "PC-003",
+              "FUND-001"
+            ],
+            "text": "BluePeak Logistics Investment Committee Memorandum\nBluePeak provides freight-management and routing software for logistics customers. The thesis combines workflow software adoption with growing complexity in cross-border freight operations."
+          },
+          {
+            "chunk_id": "CHK-cc11326308cb92de4ac6c9d1a7344ce21c9b33c6733376fbda8a77e346d63309",
+            "document_id": "DOC-CORE-PC003-IC-001",
+            "evidence_id": "EVID-CORE-PC003-IC-DILIGENCE",
+            "rank": 6,
+            "score": 0.7991131544113159,
+            "source_fact_ids": [
+              "CC-005",
+              "CC-006",
+              "CUST-005",
+              "CUST-006"
+            ],
+            "text": "BluePeak Logistics Investment Committee Memorandum\nMapleMart Canada and TransContinental Freight were established Canadian customer relationships before Northstar's investment."
+          },
+          {
+            "chunk_id": "CHK-347b9b48025fe3e351c27bee7bbc000e2fc3a31466a3da6ee7bc35ea376e28f3",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-OPERATING",
+            "rank": 7,
+            "score": 0.7914117574691772,
+            "source_fact_ids": [
+              "OP-PC-003-2025Q2-FREIGHT",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Management Report\nThe operating indicator 'freight volume million shipments' moved from 13.3 million_shipments in 2025Q2 to 12.7 million_shipments in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-c271322e2c2dfa4c112a31e1edbbfc4eabb697ff7a0327a551d530f1e2699edf",
+            "document_id": "DOC-CORE-PC003-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-RISK-INDICATOR",
+            "rank": 8,
+            "score": 0.7888190150260925,
+            "source_fact_ids": [
+              "OP-PC-003-2025Q2-FREIGHT",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Risk Review\nFor monitoring context, freight volume million shipments was 13.3 million_shipments in 2025Q2 and 12.7 million_shipments in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+            "rank": 9,
+            "score": 0.7820281386375427,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+          },
+          {
+            "chunk_id": "CHK-b0102db6598f040554d8172beffd91656c772afc1827a9382d515e28303ede3f",
+            "document_id": "DOC-CORE-PC003-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-BOARD-SCORECARD",
+            "rank": 10,
+            "score": 0.7794574499130249,
+            "source_fact_ids": [
+              "FIN-PC-003-2026Q2",
+              "OP-PC-003-2026Q2-FREIGHT"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Board Update\nThe Q2 scorecard records $72 million of revenue and 12.7 million_shipments for freight volume million shipments."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.8772153153380492,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.8772153153380492,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0008",
+        "query_type": "hybrid",
+        "question": "What operational risk is associated with TitaniumWorks GmbH, and how has Alder's production yield changed?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "rank": 1,
+            "score": 0.8797959089279175,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          },
+          {
+            "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+            "rank": 2,
+            "score": 0.8487331867218018,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Board Update\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+          },
+          {
+            "chunk_id": "CHK-fa104da5d8fdcb18553eb95e4a36272da53a4c6650e44c2b24f427b348c3a75d",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-INDICATOR",
+            "rank": 3,
+            "score": 0.8454073667526245,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nFor monitoring context, production yield pct was 96.8 percent in 2025Q2 and 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-9b6acdf921327862d76aca7d1ae70498e446025dff4fcc878052c541dde6dd5a",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-OPERATING",
+            "rank": 4,
+            "score": 0.8420279026031494,
+            "source_fact_ids": [
+              "OP-PC-002-2025Q2-YIELD",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nThe operating indicator 'production yield pct' moved from 96.8 percent in 2025Q2 to 94.2 percent in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+            "rank": 5,
+            "score": 0.8164846301078796,
+            "source_fact_ids": [
+              "CS-014",
+              "SUP-002"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+          },
+          {
+            "chunk_id": "CHK-b365b8bf8a4bfd8bdaf939f4e314e95458604b74eb86809ceb5c8b442b1b32ec",
+            "document_id": "DOC-CORE-PC002-IC-001",
+            "evidence_id": "EVID-CORE-PC002-IC-THESIS",
+            "rank": 6,
+            "score": 0.8097047209739685,
+            "source_fact_ids": [
+              "PC-002",
+              "FUND-001"
+            ],
+            "text": "Alder Manufacturing Investment Committee Memorandum\nAlder manufactures precision industrial components with meaningful exposure to aerospace demand. The investment thesis depends on durable customer relationships and specialized production capability."
+          },
+          {
+            "chunk_id": "CHK-cefafe880537cc2a4402fb89f775fcd4b6ef71e631390997a5ac4e1816852829",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-FINANCIAL",
+            "rank": 7,
+            "score": 0.8029900193214417,
+            "source_fact_ids": [
+              "FIN-PC-002-2025Q2",
+              "FIN-PC-002-2026Q2"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nRevenue increased from $100 million in 2025Q2 to $106 million in 2026Q2. EBITDA in the current quarter was $16 million."
+          },
+          {
+            "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+            "rank": 8,
+            "score": 0.8005678057670593,
+            "source_fact_ids": [
+              "RISK-002",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+          },
+          {
+            "chunk_id": "CHK-65862ef3d7b4dac85f612e092ed9a6b8a02ad3915825c7a1ff2a299bc67c02d0",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+            "rank": 9,
+            "score": 0.7998936176300049,
+            "source_fact_ids": [
+              "GEO-006",
+              "CC-010",
+              "CUST-010"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nGermany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency."
+          },
+          {
+            "chunk_id": "CHK-5eaded1160df88d7c7912e428983dc14081fc57e8272f92f52ce8c810750104f",
+            "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-BOARD-SCORECARD",
+            "rank": 10,
+            "score": 0.7998162508010864,
+            "source_fact_ids": [
+              "FIN-PC-002-2026Q2",
+              "OP-PC-002-2026Q2-YIELD"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Board Update\nThe Q2 scorecard records $106 million of revenue and 94.2 percent for production yield pct."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.8175295903539446,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.6131471927654584,
+          "recall_at_1": 0.5,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0009",
+        "query_type": "hybrid",
+        "question": "What is the risk around Crown Street Retail, and what broader customer-quality problem is Vantage experiencing?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+            "rank": 1,
+            "score": 0.9013938307762146,
+            "source_fact_ids": [
+              "CC-008"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+          },
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "rank": 2,
+            "score": 0.8361517190933228,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "rank": 3,
+            "score": 0.8287819623947144,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-9d9e626f1bc94d23b6f9026cfdf8336cc0104d5f8864d21f5465868f64d32ded",
+            "document_id": "DOC-CORE-PC005-IC-001",
+            "evidence_id": "EVID-CORE-PC005-IC-DILIGENCE",
+            "rank": 4,
+            "score": 0.8283891677856445,
+            "source_fact_ids": [
+              "CC-008",
+              "CC-009",
+              "CUST-008",
+              "CUST-009"
+            ],
+            "text": "Vantage Retail Analytics Investment Committee Memorandum\nCrown Street Retail and Hartwell Department Stores were established customers before Northstar's investment and represented meaningful enterprise-retail relationships."
+          },
+          {
+            "chunk_id": "CHK-2a5d7e23d23f43041c61c8cec1664d20153afb3994306d28c803f5dd1693a422",
+            "document_id": "DOC-CORE-PC005-IC-001",
+            "evidence_id": "EVID-CORE-PC005-IC-THESIS",
+            "rank": 5,
+            "score": 0.8252698183059692,
+            "source_fact_ids": [
+              "PC-005",
+              "FUND-001"
+            ],
+            "text": "Vantage Retail Analytics Investment Committee Memorandum\nVantage provides demand-forecasting and merchandising analytics for large retailers. The investment thesis is based on increasing adoption of data-driven merchandising workflows."
+          },
+          {
+            "chunk_id": "CHK-a6619c82c7c8092bea325fc6866bd0efa581eac94fbc60bee78c2cf98beca5f6",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-INDICATOR",
+            "rank": 6,
+            "score": 0.8167710900306702,
+            "source_fact_ids": [
+              "OP-PC-005-2025Q2-JOBS",
+              "OP-PC-005-2026Q2-JOBS"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nFor monitoring context, forecast jobs million was 59 million_jobs in 2025Q2 and 93 million_jobs in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "rank": 7,
+            "score": 0.8138090968132019,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+          },
+          {
+            "chunk_id": "CHK-be57b96e8ebb4d956275405d07b19d195080ed0a6a3635b0a580c944ab71e705",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-SCORECARD",
+            "rank": 8,
+            "score": 0.8102439641952515,
+            "source_fact_ids": [
+              "FIN-PC-005-2026Q2",
+              "OP-PC-005-2026Q2-JOBS"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Board Update\nThe Q2 scorecard records $79 million of revenue and 93 million_jobs for forecast jobs million."
+          },
+          {
+            "chunk_id": "CHK-9fbe7afc0473638aee3ff82d5f50992e752b23f129247a2842e9e3fb26e96f4d",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+            "rank": 9,
+            "score": 0.8042687177658081,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Board Update\nTop-line expansion remains strong even though the quality of newer customer cohorts has weakened."
+          },
+          {
+            "chunk_id": "CHK-be157fc5ea166b982bdaaa496aad311d58c4cb43f6be505c76c7f213cbcc3a58",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-OPERATING",
+            "rank": 10,
+            "score": 0.7916824221611023,
+            "source_fact_ids": [
+              "OP-PC-005-2025Q2-JOBS",
+              "OP-PC-005-2026Q2-JOBS"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nThe operating indicator 'forecast jobs million' moved from 59 million_jobs in 2025Q2 to 93 million_jobs in 2026Q2."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 1.0,
+          "ndcg_at_1": 1.0,
+          "ndcg_at_10": 0.6131471927654584,
+          "ndcg_at_3": 0.6131471927654584,
+          "ndcg_at_5": 0.6131471927654584,
+          "recall_at_1": 0.5,
+          "recall_at_10": 0.5,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0017",
+        "query_type": "multi_source",
+        "question": "Summarize HelioGrid's Q2 revenue growth and principal operating risk.",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-45b6037a6753b65bd98675b205ab1e1fea29ad359d8382188854d3358c162a20",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-FINANCIAL",
+            "rank": 1,
+            "score": 0.8979297876358032,
+            "source_fact_ids": [
+              "FIN-PC-004-2025Q2",
+              "FIN-PC-004-2026Q2"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nRevenue increased from $68 million in 2025Q2 to $92 million in 2026Q2. EBITDA in the current quarter was $18 million."
+          },
+          {
+            "chunk_id": "CHK-d68a80c955d899f696f4b2e0c6ee36f8363bfbb319efa2cc26808eaaeedda0e6",
+            "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-BOARD-SCORECARD",
+            "rank": 2,
+            "score": 0.8749369978904724,
+            "source_fact_ids": [
+              "FIN-PC-004-2026Q2",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Board Update\nThe Q2 scorecard records $92 million of revenue and 770 megawatts for installed capacity mw."
+          },
+          {
+            "chunk_id": "CHK-67d94d77b4791c5017b4a4207800f7eba022d6ec8c5965ed9e667995c7bfb420",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-INDICATOR",
+            "rank": 3,
+            "score": 0.8545411825180054,
+            "source_fact_ids": [
+              "OP-PC-004-2025Q2-CAPACITY",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Risk Review\nFor monitoring context, installed capacity mw was 530 megawatts in 2025Q2 and 770 megawatts in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-b2d6d623e2c0d035f1d9b5d5429fd2f77f95f5a85d541bcf4dcc56861d61c3b7",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-CONTEXT",
+            "rank": 4,
+            "score": 0.8496524691581726,
+            "source_fact_ids": [
+              "CS-005",
+              "SUP-004",
+              "CS-006",
+              "SUP-007"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Risk Review\nHelioGrid depends on Pacific Battery Cells for battery cells and SolarCore Modules for solar modules, creating additional supply-chain exposures around its deployment program."
+          },
+          {
+            "chunk_id": "CHK-2c9abf152366da90b23e15baedfbc454d94bd10a705289b1c03ea6dc7668af51",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-SIGNAL",
+            "rank": 5,
+            "score": 0.8488049507141113,
+            "source_fact_ids": [
+              "RISK-004",
+              "FIN-PC-004-2026Q2"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nGrowth remains strong, but several western storage projects are progressing more slowly because local approvals are taking longer than planned."
+          },
+          {
+            "chunk_id": "CHK-5d44078b5daebbccd56b1c6ea1789be8069c1dd219f52fa6151844b230b59963",
+            "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-BOARD-PRIORITY",
+            "rank": 6,
+            "score": 0.8475041389465332,
+            "source_fact_ids": [
+              "RISK-004",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Board Update\nRapid scale expansion and permitting friction are occurring simultaneously: installed capacity is rising while some projects remain behind their original schedules."
+          },
+          {
+            "chunk_id": "CHK-bfbb55e30223f9a08b629112f52f039f70231873590b5791dd2701f08c7cc50c",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-OPERATING",
+            "rank": 7,
+            "score": 0.8439832925796509,
+            "source_fact_ids": [
+              "OP-PC-004-2025Q2-CAPACITY",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nThe operating indicator 'installed capacity mw' moved from 530 megawatts in 2025Q2 to 770 megawatts in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-5ba7422a37f08033a5f9b7b989063f7498e5ab4f843e6add68aab7d51c4aa9c3",
+            "document_id": "DOC-CORE-PC004-IC-001",
+            "evidence_id": "EVID-CORE-PC004-IC-THESIS",
+            "rank": 8,
+            "score": 0.8425583839416504,
+            "source_fact_ids": [
+              "PC-004",
+              "FUND-001"
+            ],
+            "text": "HelioGrid Energy Investment Committee Memorandum\nHelioGrid develops distributed solar and battery infrastructure. The underwriting thesis is based on continued deployment of distributed energy assets and expansion of installed capacity."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "rank": 9,
+            "score": 0.8388201594352722,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-be57b96e8ebb4d956275405d07b19d195080ed0a6a3635b0a580c944ab71e705",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-SCORECARD",
+            "rank": 10,
+            "score": 0.8370898962020874,
+            "source_fact_ids": [
+              "FIN-PC-005-2026Q2",
+              "OP-PC-005-2026Q2-JOBS"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Board Update\nThe Q2 scorecard records $79 million of revenue and 93 million_jobs for forecast jobs million."
+          }
+        ]
+      },
+      {
+        "difficulty": "medium",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.5,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.6052602440527057,
+          "ndcg_at_3": 0.38685280723454163,
+          "ndcg_at_5": 0.38685280723454163,
+          "recall_at_1": 0.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 0.5,
+          "recall_at_5": 0.5
+        },
+        "query_id": "Q-0019",
+        "query_type": "multi_source",
+        "question": "What critical supplier risk does NovaBio face, and how have instrument shipments changed?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-25d228083b2bdfafbfdbe7fe0da44369dcf337f4cff70d9eaebb3e02ec1f43f0",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-INDICATOR",
+            "rank": 1,
+            "score": 0.8925724029541016,
+            "source_fact_ids": [
+              "OP-PC-008-2025Q2-SHIPMENTS",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Risk Review\nFor monitoring context, instrument shipments was 950 units in 2025Q2 and 1175 units in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-54726c1b09b0a6ad6da40348394e90e15fd18b2fb4e7dc71bf82687d49dc86ed",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-OPERATING",
+            "rank": 2,
+            "score": 0.880078136920929,
+            "source_fact_ids": [
+              "OP-PC-008-2025Q2-SHIPMENTS",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Management Report\nThe operating indicator 'instrument shipments' moved from 950 units in 2025Q2 to 1175 units in 2026Q2."
+          },
+          {
+            "chunk_id": "CHK-9decc1a34d964d3a6adc490ec654e436e59e1f0115283ba20d9ae1767bbc99f6",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-CONTEXT",
+            "rank": 3,
+            "score": 0.8703729510307312,
+            "source_fact_ids": [
+              "CS-012",
+              "SUP-012",
+              "GEO-009"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Risk Review\nNovaBio also sources laboratory optics from Alpine Optics AG in Switzerland, but that relationship is classified as high criticality rather than single-source critical."
+          },
+          {
+            "chunk_id": "CHK-bf164866eae35c84caa13d526b33f6e842334385630d9391fed5b11bde579285",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-FINANCIAL",
+            "rank": 4,
+            "score": 0.8456544280052185,
+            "source_fact_ids": [
+              "FIN-PC-008-2025Q2",
+              "FIN-PC-008-2026Q2"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Management Report\nRevenue increased from $67 million in 2025Q2 to $83 million in 2026Q2. EBITDA in the current quarter was $14 million."
+          },
+          {
+            "chunk_id": "CHK-4e75608491b685a5f172f11431cf68fd654fb1561229b1a933df9dba44f6e5fd",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-SCORECARD",
+            "rank": 5,
+            "score": 0.8436099290847778,
+            "source_fact_ids": [
+              "FIN-PC-008-2026Q2",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Board Update\nThe Q2 scorecard records $83 million of revenue and 1175 units for instrument shipments."
+          },
+          {
+            "chunk_id": "CHK-cfc2685937bae40cb69f5736edfe0086f482daaee4fb559719911dd4b42bcef2",
+            "document_id": "DOC-CORE-PC008-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-RISK-PRIMARY",
+            "rank": 6,
+            "score": 0.8389899730682373,
+            "source_fact_ids": [
+              "RISK-008",
+              "CS-011",
+              "SUP-011",
+              "GEO-008"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Risk Review\nHelix Motion GmbH is the only currently qualified supplier for a precision motion assembly used in NovaBio's automation platform. The supplier is located in Germany."
+          },
+          {
+            "chunk_id": "CHK-be128b2fc5729f475cb6521f26047bf9a035ea386b2388fec4f65ab033d680c5",
+            "document_id": "DOC-CORE-PC008-IC-001",
+            "evidence_id": "EVID-CORE-PC008-IC-THESIS",
+            "rank": 7,
+            "score": 0.8374927043914795,
+            "source_fact_ids": [
+              "PC-008",
+              "FUND-001"
+            ],
+            "text": "NovaBio Instruments Investment Committee Memorandum\nNovaBio develops laboratory automation and diagnostic instrumentation. The investment thesis combines automation demand with recurring needs for high-precision life-sciences equipment."
+          },
+          {
+            "chunk_id": "CHK-7184e100db3135ae39cf55cef28b7c9cf945be30be356d2c8b074b5d483b4980",
+            "document_id": "DOC-CORE-PC008-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-QMR-SIGNAL",
+            "rank": 8,
+            "score": 0.8358150720596313,
+            "source_fact_ids": [
+              "RISK-008",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Management Report\nShipment growth remains healthy, but a precision-motion assembly still depends on a single qualified source."
+          },
+          {
+            "chunk_id": "CHK-b7c9accfcb86f7466a0404839e04ff4a6dc39b0ea985dcd24cdd732ae0a944e9",
+            "document_id": "DOC-CORE-PC008-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC008-BOARD-PRIORITY",
+            "rank": 9,
+            "score": 0.8192626237869263,
+            "source_fact_ids": [
+              "RISK-008",
+              "OP-PC-008-2026Q2-SHIPMENTS"
+            ],
+            "text": "NovaBio Instruments Q2 2026 Board Update\nCommercial activity continues to expand while an unresolved single-source dependency remains embedded in the automation platform."
+          },
+          {
+            "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+            "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+            "rank": 10,
+            "score": 0.8107108473777771,
+            "source_fact_ids": [
+              "RISK-002",
+              "CS-003",
+              "SUP-005",
+              "GEO-002"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Risk Review\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.5,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.6309297535714575,
+          "ndcg_at_3": 0.6309297535714575,
+          "ndcg_at_5": 0.6309297535714575,
+          "recall_at_1": 0.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0020",
+        "query_type": "mixed_tool",
+        "question": "Which company had net retention below 100 percent in 2026 Q2 and also has document evidence that newer customer cohorts are failing to normalize?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "rank": 1,
+            "score": 0.8660835027694702,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "rank": 2,
+            "score": 0.8338323831558228,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+          },
+          {
+            "chunk_id": "CHK-c451794bcfc162dff9461f81f291993126268ae8e07aee16aad028c6185106aa",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+            "rank": 3,
+            "score": 0.8283710479736328,
+            "source_fact_ids": [
+              "RISK-006",
+              "OP-PC-006-2026Q1-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nAuthentication reliability deteriorated during the first quarter before service performance recovered during Q2."
+          },
+          {
+            "chunk_id": "CHK-1111f0f694517d55a449186b2517e782805f5e06fbd6d8b9b7b84e40342a74c9",
+            "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-QMR-FINANCIAL",
+            "rank": 4,
+            "score": 0.8227691650390625,
+            "source_fact_ids": [
+              "FIN-PC-007-2025Q2",
+              "FIN-PC-007-2026Q2"
+            ],
+            "text": "Cedar Financial Technologies Q2 2026 Management Report\nRevenue increased from $76 million in 2025Q2 to $84 million in 2026Q2. EBITDA in the current quarter was $16 million. Net retention in 2026Q2 was 106 percent."
+          },
+          {
+            "chunk_id": "CHK-d6b6dec9def16c6f6ba818ad1589ab9ae7d0022323cc2180e5c157465bb06f3c",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-FINANCIAL",
+            "rank": 5,
+            "score": 0.8226872682571411,
+            "source_fact_ids": [
+              "FIN-PC-006-2025Q2",
+              "FIN-PC-006-2026Q2"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nRevenue increased from $97 million in 2025Q2 to $121 million in 2026Q2. EBITDA in the current quarter was $30 million. Net retention in 2026Q2 was 117 percent."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "rank": 6,
+            "score": 0.8219537734985352,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-19c8f5e40a19f3b6eaeca1e57d15803785285a759954420bc3ccd6cb0c0170e9",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-FINANCIAL",
+            "rank": 7,
+            "score": 0.8152959942817688,
+            "source_fact_ids": [
+              "FIN-PC-003-2025Q2",
+              "FIN-PC-003-2026Q2"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Management Report\nRevenue increased from $66 million in 2025Q2 to $72 million in 2026Q2. EBITDA in the current quarter was $13 million. Net retention in 2026Q2 was 101 percent."
+          },
+          {
+            "chunk_id": "CHK-9fbe7afc0473638aee3ff82d5f50992e752b23f129247a2842e9e3fb26e96f4d",
+            "document_id": "DOC-CORE-PC005-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-BOARD-PRIORITY",
+            "rank": 8,
+            "score": 0.8152911067008972,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Board Update\nTop-line expansion remains strong even though the quality of newer customer cohorts has weakened."
+          },
+          {
+            "chunk_id": "CHK-b41906311246767f6e33f41450190d0a291c41675315e51aff234f8aad47a855",
+            "document_id": "DOC-CORE-PC007-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-BOARD-PRIORITY",
+            "rank": 9,
+            "score": 0.8148804903030396,
+            "source_fact_ids": [
+              "RISK-007",
+              "FIN-PC-007-2026Q2",
+              "OP-PC-007-2026Q2-VOLUME"
+            ],
+            "text": "Cedar Financial Technologies Q2 2026 Board Update\nCustomer concentration remains the principal commercial risk even as transaction activity and quarterly revenue continue to increase."
+          },
+          {
+            "chunk_id": "CHK-8ae014b9b5939e6e0cab284dc01d09b843c32eb1585bb463c2fed90b7f8de324",
+            "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-RISK-INDICATOR",
+            "rank": 10,
+            "score": 0.8091394901275635,
+            "source_fact_ids": [
+              "OP-PC-006-2025Q2-UPTIME",
+              "OP-PC-006-2026Q2-UPTIME"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Risk Review\nFor monitoring context, platform uptime pct was 99.99 percent in 2025Q2 and 99.97 percent in 2026Q2."
+          }
+        ]
+      },
+      {
+        "difficulty": "hard",
+        "metrics": {
+          "canonical_reciprocal_rank": 0.5,
+          "ndcg_at_1": 0.0,
+          "ndcg_at_10": 0.6309297535714575,
+          "ndcg_at_3": 0.6309297535714575,
+          "ndcg_at_5": 0.6309297535714575,
+          "recall_at_1": 0.0,
+          "recall_at_10": 1.0,
+          "recall_at_3": 1.0,
+          "recall_at_5": 1.0
+        },
+        "query_id": "Q-0021",
+        "query_type": "mixed_tool",
+        "question": "Which company had the highest year-over-year revenue growth in 2026 Q2 and also has a documented permitting problem?",
+        "retrieved": 80,
+        "split": "development",
+        "top_results": [
+          {
+            "chunk_id": "CHK-5d44078b5daebbccd56b1c6ea1789be8069c1dd219f52fa6151844b230b59963",
+            "document_id": "DOC-CORE-PC004-BOARD-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-BOARD-PRIORITY",
+            "rank": 1,
+            "score": 0.836078405380249,
+            "source_fact_ids": [
+              "RISK-004",
+              "OP-PC-004-2026Q2-CAPACITY"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Board Update\nRapid scale expansion and permitting friction are occurring simultaneously: installed capacity is rising while some projects remain behind their original schedules."
+          },
+          {
+            "chunk_id": "CHK-34d5d6a823f02b15bb98ad5044f4b4566affc2988daac217fa76e6d7d31844f2",
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+            "rank": 2,
+            "score": 0.8290852308273315,
+            "source_fact_ids": [
+              "RISK-004"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Risk Review\nPermitting delays are affecting the schedule of several distributed storage projects in western states."
+          },
+          {
+            "chunk_id": "CHK-19c8f5e40a19f3b6eaeca1e57d15803785285a759954420bc3ccd6cb0c0170e9",
+            "document_id": "DOC-CORE-PC003-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC003-QMR-FINANCIAL",
+            "rank": 3,
+            "score": 0.8266880512237549,
+            "source_fact_ids": [
+              "FIN-PC-003-2025Q2",
+              "FIN-PC-003-2026Q2"
+            ],
+            "text": "BluePeak Logistics Q2 2026 Management Report\nRevenue increased from $66 million in 2025Q2 to $72 million in 2026Q2. EBITDA in the current quarter was $13 million. Net retention in 2026Q2 was 101 percent."
+          },
+          {
+            "chunk_id": "CHK-a4d589d7c15960901acdadc0bd94307d9ca5b47000edfc0aa9baea4789517961",
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-FINANCIAL",
+            "rank": 4,
+            "score": 0.8239209651947021,
+            "source_fact_ids": [
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Management Report\nRevenue increased from $60 million in 2025Q2 to $79 million in 2026Q2. EBITDA in the current quarter was $17 million. Net retention in 2026Q2 was 97 percent."
+          },
+          {
+            "chunk_id": "CHK-1111f0f694517d55a449186b2517e782805f5e06fbd6d8b9b7b84e40342a74c9",
+            "document_id": "DOC-CORE-PC007-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC007-QMR-FINANCIAL",
+            "rank": 5,
+            "score": 0.8238873481750488,
+            "source_fact_ids": [
+              "FIN-PC-007-2025Q2",
+              "FIN-PC-007-2026Q2"
+            ],
+            "text": "Cedar Financial Technologies Q2 2026 Management Report\nRevenue increased from $76 million in 2025Q2 to $84 million in 2026Q2. EBITDA in the current quarter was $16 million. Net retention in 2026Q2 was 106 percent."
+          },
+          {
+            "chunk_id": "CHK-2c9abf152366da90b23e15baedfbc454d94bd10a705289b1c03ea6dc7668af51",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-SIGNAL",
+            "rank": 6,
+            "score": 0.8236469626426697,
+            "source_fact_ids": [
+              "RISK-004",
+              "FIN-PC-004-2026Q2"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nGrowth remains strong, but several western storage projects are progressing more slowly because local approvals are taking longer than planned."
+          },
+          {
+            "chunk_id": "CHK-45b6037a6753b65bd98675b205ab1e1fea29ad359d8382188854d3358c162a20",
+            "document_id": "DOC-CORE-PC004-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-QMR-FINANCIAL",
+            "rank": 7,
+            "score": 0.8224009275436401,
+            "source_fact_ids": [
+              "FIN-PC-004-2025Q2",
+              "FIN-PC-004-2026Q2"
+            ],
+            "text": "HelioGrid Energy Q2 2026 Management Report\nRevenue increased from $68 million in 2025Q2 to $92 million in 2026Q2. EBITDA in the current quarter was $18 million."
+          },
+          {
+            "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+            "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+            "rank": 8,
+            "score": 0.8215563297271729,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ],
+            "text": "Vantage Retail Analytics Q2 2026 Risk Review\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+          },
+          {
+            "chunk_id": "CHK-d6b6dec9def16c6f6ba818ad1589ab9ae7d0022323cc2180e5c157465bb06f3c",
+            "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC006-QMR-FINANCIAL",
+            "rank": 9,
+            "score": 0.8213621377944946,
+            "source_fact_ids": [
+              "FIN-PC-006-2025Q2",
+              "FIN-PC-006-2026Q2"
+            ],
+            "text": "Orbis Cybersecurity Q2 2026 Management Report\nRevenue increased from $97 million in 2025Q2 to $121 million in 2026Q2. EBITDA in the current quarter was $30 million. Net retention in 2026Q2 was 117 percent."
+          },
+          {
+            "chunk_id": "CHK-cefafe880537cc2a4402fb89f775fcd4b6ef71e631390997a5ac4e1816852829",
+            "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC002-QMR-FINANCIAL",
+            "rank": 10,
+            "score": 0.8209765553474426,
+            "source_fact_ids": [
+              "FIN-PC-002-2025Q2",
+              "FIN-PC-002-2026Q2"
+            ],
+            "text": "Alder Manufacturing Q2 2026 Management Report\nRevenue increased from $100 million in 2025Q2 to $106 million in 2026Q2. EBITDA in the current quarter was $16 million."
+          }
+        ]
+      }
+    ],
+    "chunk_strategy_version": "evidence-block-v1",
+    "corpus": {
+      "chunks": 80,
+      "embedding_dimension": 384
+    },
+    "dataset_version": "northstar-v1",
+    "dense_version": "dense-e5-small-v2-v1",
+    "encoder": {
+      "batch_size": 16,
+      "dense_version": "dense-e5-small-v2-v1",
+      "device": "cpu",
+      "embedding_dimension": 384,
+      "max_sequence_length": 512,
+      "model_id": "intfloat/e5-small-v2",
+      "model_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+      "normalize_embeddings": true,
+      "numpy_version": "2.5.2",
+      "passage_prefix": "passage: ",
+      "query_prefix": "query: ",
+      "representation_version": "e5-document-title-text-v1",
+      "sentence_transformers_version": "6.0.1",
+      "similarity": "inner_product_of_l2_normalized_vectors",
+      "torch_version": "2.13.0+cpu",
+      "transformers_version": "5.16.1"
+    },
+    "evaluation": {
+      "all_cases": 10,
+      "excluded_cases": [],
+      "retrieval_eligible_cases": 10
+    },
+    "evaluation_version": "northstar-eval-v1-seed",
+    "representation_version": "e5-document-title-text-v1",
+    "summary": {
+      "by_difficulty": {
+        "easy": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.9840073913521035,
+          "mean_ndcg_at_3": 0.9586597063564786,
+          "mean_ndcg_at_5": 0.9840073913521035,
+          "mean_recall_at_1": 0.75,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 1.0
+        },
+        "hard": {
+          "cases": 4,
+          "mean_canonical_reciprocal_rank": 0.75,
+          "mean_ndcg_at_1": 0.5,
+          "mean_ndcg_at_10": 0.7391511032087272,
+          "mean_ndcg_at_3": 0.622038473168458,
+          "mean_ndcg_at_5": 0.6880555038116056,
+          "mean_recall_at_1": 0.25,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 0.875
+        },
+        "medium": {
+          "cases": 4,
+          "mean_canonical_reciprocal_rank": 0.7083333333333334,
+          "mean_ndcg_at_1": 0.6071428571428571,
+          "mean_ndcg_at_10": 0.7262918250925616,
+          "mean_ndcg_at_3": 0.6716899658880207,
+          "mean_ndcg_at_5": 0.6716899658880207,
+          "mean_recall_at_1": 0.375,
+          "mean_recall_at_10": 0.875,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 0.75
+        }
+      },
+      "by_query_type": {
+        "hybrid": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.8473724528459969,
+          "mean_ndcg_at_3": 0.6131471927654584,
+          "mean_ndcg_at_5": 0.7451812540517537,
+          "mean_recall_at_1": 0.5,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 0.5,
+          "mean_recall_at_5": 0.75
+        },
+        "lexical": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 1.0,
+          "mean_ndcg_at_1": 1.0,
+          "mean_ndcg_at_10": 0.9840073913521035,
+          "mean_ndcg_at_3": 0.9586597063564786,
+          "mean_ndcg_at_5": 0.9840073913521035,
+          "mean_recall_at_1": 0.75,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 1.0
+        },
+        "mixed_tool": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.5,
+          "mean_ndcg_at_1": 0.0,
+          "mean_ndcg_at_10": 0.6309297535714575,
+          "mean_ndcg_at_3": 0.6309297535714575,
+          "mean_ndcg_at_5": 0.6309297535714575,
+          "mean_recall_at_1": 0.0,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 1.0,
+          "mean_recall_at_5": 1.0
+        },
+        "multi_source": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.75,
+          "mean_ndcg_at_1": 0.5,
+          "mean_ndcg_at_10": 0.609203718409082,
+          "mean_ndcg_at_3": 0.5,
+          "mean_ndcg_at_5": 0.5,
+          "mean_recall_at_1": 0.25,
+          "mean_recall_at_10": 0.75,
+          "mean_recall_at_3": 0.5,
+          "mean_recall_at_5": 0.5
+        },
+        "semantic": {
+          "cases": 2,
+          "mean_canonical_reciprocal_rank": 0.6666666666666666,
+          "mean_ndcg_at_1": 0.7142857142857143,
+          "mean_ndcg_at_10": 0.8433799317760412,
+          "mean_ndcg_at_3": 0.8433799317760412,
+          "mean_ndcg_at_5": 0.8433799317760412,
+          "mean_recall_at_1": 0.5,
+          "mean_recall_at_10": 1.0,
+          "mean_recall_at_3": 1.0,
+          "mean_recall_at_5": 1.0
+        }
+      },
+      "by_split": {
+        "development": {
+          "cases": 10,
+          "mean_canonical_reciprocal_rank": 0.7833333333333333,
+          "mean_ndcg_at_1": 0.6428571428571429,
+          "mean_ndcg_at_10": 0.7829786495909362,
+          "mean_ndcg_at_3": 0.7092233168938872,
+          "mean_ndcg_at_5": 0.7406996661502712,
+          "mean_recall_at_1": 0.4,
+          "mean_recall_at_10": 0.95,
+          "mean_recall_at_3": 0.75,
+          "mean_recall_at_5": 0.85
+        }
+      },
+      "retrieval_eligible": {
+        "cases": 10,
+        "mean_canonical_reciprocal_rank": 0.7833333333333333,
+        "mean_ndcg_at_1": 0.6428571428571429,
+        "mean_ndcg_at_10": 0.7829786495909362,
+        "mean_ndcg_at_3": 0.7092233168938872,
+        "mean_ndcg_at_5": 0.7406996661502712,
+        "mean_recall_at_1": 0.4,
+        "mean_recall_at_10": 0.95,
+        "mean_recall_at_3": 0.75,
+        "mean_recall_at_5": 0.85
+      }
+    }
+  },
+  "candidate_representation": "e5-document-title-text-v1",
+  "comparison": {
+    "mean_canonical_reciprocal_rank": {
+      "absolute_delta": 0.17233044733044733,
+      "baseline": 0.611002886002886,
+      "candidate": 0.7833333333333333,
+      "relative_delta": 0.2820452264273484
+    },
+    "mean_ndcg_at_10": {
+      "absolute_delta": 0.17454904206459243,
+      "baseline": 0.6084296075263438,
+      "candidate": 0.7829786495909362,
+      "relative_delta": 0.28688453011720805
+    },
+    "mean_recall_at_10": {
+      "absolute_delta": 0.1499999999999999,
+      "baseline": 0.8,
+      "candidate": 0.95,
+      "relative_delta": 0.1874999999999999
+    }
+  },
+  "experiment_version": "dense-representation-ablation-v1",
+  "scope": "development-only",
+  "selected_representation": "e5-document-title-text-v1",
+  "selection_policy": {
+    "exact_tie": "e5-evidence-text-v1",
+    "primary": "mean_ndcg_at_10",
+    "secondary": "mean_canonical_reciprocal_rank",
+    "tertiary": "mean_recall_at_10"
+  }
+}

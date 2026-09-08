@@ -481,3 +481,150 @@ Resume-use constraint:
 Describe these as development-set measurements on the synthetic Northstar
 benchmark. Do not claim test-set performance, production generalization,
 hybrid retrieval, pgvector search, reranking, or agent behavior from Phase 5A.
+
+## Phase 5B — Dense Representation Ablation
+
+**Status:** MEASURED / VERIFIED
+
+Experimental design:
+- preregistered before candidate measurement;
+- baseline: `e5-evidence-text-v1`;
+- candidate: `e5-document-title-text-v1`;
+- only document-title context changed;
+- E5 model, immutable revision, normalization, scorer, corpus, development
+  cases, and retrieval configuration held fixed;
+- primary selection metric: development nDCG@10;
+- canonical MRR and Recall@10 used only as ordered tie-breakers;
+- exact tie retained D0.
+
+Pre-measurement boundary:
+- commit:
+  `c51d88d2b5ec2062a0d28aaeb5484499d541631f`;
+- tag:
+  `phase-5b-dense-ablation-preregistered`;
+- 162 tests passing;
+- Phase 5A baseline reproduced byte-identically;
+- zero Phase 5B measurement artifacts existed before candidate measurement;
+- the experiment CLI exposed only `--output`;
+- representation candidates and the selection policy were frozen before D1
+  was measured.
+
+Selected representation:
+
+```text
+e5-document-title-text-v1
+```
+
+Development metrics:
+- canonical MRR: `0.783333`;
+- nDCG@10: `0.782979`;
+- Recall@10: `0.950000`.
+
+Improvement over frozen evidence-text dense baseline:
+- canonical MRR absolute delta: `+0.172330`;
+- canonical MRR relative delta: approximately `+28.20%`;
+- nDCG@10 absolute delta: `+0.174549`;
+- nDCG@10 relative delta: approximately `+28.69%`;
+- Recall@10 absolute delta: `+0.150000`;
+- Recall@10 relative delta: approximately `+18.75%`.
+
+Preregistered selection result:
+- primary criterion was development nDCG@10;
+- D1 exceeded D0 on the primary criterion;
+- no tie-breaker was required;
+- selected representation:
+  `e5-document-title-text-v1`.
+
+Diagnostic behavior:
+- Q-0017 canonical evidence moved from rank 9 under D0 to rank 1 under D1;
+- Q-0017 Recall@10 remained `0.5`, so title enrichment repaired canonical
+  ordering without recovering every relevant item;
+- Q-0021 canonical evidence moved from approximately rank 44 under D0 to rank
+  2 under D1;
+- Q-0021 Recall@10 moved from `0.0` to `1.0`;
+- Q-0021 nDCG@10 moved from `0.0` to approximately `0.630930`;
+- not all individual query metrics improved, so the result is an aggregate
+  development-set selection rather than universal per-query dominance.
+
+Descriptive comparison with frozen BM25 `document-title-text-v1`:
+- BM25 canonical MRR: `0.659091`;
+- dense D1 canonical MRR: `0.783333`;
+- dense relative improvement: approximately `+18.85%`;
+- BM25 nDCG@10: `0.677258`;
+- dense D1 nDCG@10: `0.782979`;
+- dense relative improvement: approximately `+15.61%`;
+- BM25 Recall@10: `0.800000`;
+- dense D1 Recall@10: `0.950000`;
+- dense relative improvement: approximately `+18.75%`.
+
+This BM25 comparison was descriptive only and was performed after D1 had
+already been selected under the preregistered dense representation experiment.
+It was not part of the Phase 5B selection policy.
+
+Artifact:
+- `artifacts/evaluation/phase5b/e5-document-title-text-v1-development.json`;
+- SHA-256:
+  `ed406dacfec38bd97de7ccb42ad84b6d2ab6e00332e3b52b1cec171593d67f87`;
+- size: `76204` bytes;
+- independent CPU rerun: byte-identical.
+
+Reproducibility:
+- canonical artifact and independent `/tmp` rerun were byte-identical;
+- both artifacts produced SHA-256
+  `ed406dacfec38bd97de7ccb42ad84b6d2ab6e00332e3b52b1cec171593d67f87`;
+- both artifacts were `76204` bytes.
+
+Integrity:
+- experiment version verified as
+  `dense-representation-ablation-v1`;
+- scope verified as `development-only`;
+- baseline verified as `e5-evidence-text-v1`;
+- candidate verified as `e5-document-title-text-v1`;
+- selected representation verified as `e5-document-title-text-v1`;
+- primary selection metric verified as `mean_ndcg_at_10`;
+- secondary selection metric verified as
+  `mean_canonical_reciprocal_rank`;
+- tertiary selection metric verified as `mean_recall_at_10`;
+- exact-tie policy verified to retain `e5-evidence-text-v1`;
+- exact 10 development query IDs verified;
+- every evaluated case verified as development;
+- model verified as `intfloat/e5-small-v2`;
+- immutable model revision verified as
+  `ffb93f3bd4047442299a41ebb6fa998a38507c52`;
+- candidate and encoder representation metadata verified.
+
+Quality:
+- 162 tests passing;
+- Ruff clean;
+- formatting clean;
+- dependency lock valid;
+- Alembic head current at `8a0f69a3baf1`;
+- no schema drift;
+- exactly one Phase 5B evaluation artifact.
+
+Resume-use constraint:
+Describe these as controlled development-set measurements on the synthetic
+Northstar benchmark.
+
+Supported resume/interview claims include:
+- implemented and evaluated a controlled dense retrieval representation
+  ablation;
+- preregistered the candidate and metric-selection policy before measurement;
+- held model, revision, embedding configuration, corpus, scorer, and
+  evaluation cases fixed while changing document-title context;
+- selected `e5-document-title-text-v1` using development nDCG@10;
+- measured approximately `0.7833` canonical MRR, `0.7830` nDCG@10, and
+  `0.95` Recall@10;
+- measured approximately `28.69%` relative nDCG@10 improvement over the
+  evidence-text-only dense baseline;
+- reproduced the measured artifact byte-identically.
+
+Do not claim from Phase 5B:
+- test-set confirmation;
+- production or real-enterprise generalization;
+- that dense retrieval is universally superior to BM25;
+- hybrid retrieval or reciprocal-rank fusion;
+- pgvector serving;
+- cross-encoder reranking;
+- production latency, throughput, or scalability;
+- end-to-end RAG or agent performance.
