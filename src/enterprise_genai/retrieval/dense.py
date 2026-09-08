@@ -30,6 +30,7 @@ PASSAGE_PREFIX = "passage: "
 class DenseConfig:
     batch_size: int = 16
     device: str = "cpu"
+    representation_version: str = DENSE_REPRESENTATION_VERSION
 
     def __post_init__(self) -> None:
         if self.batch_size <= 0:
@@ -37,6 +38,9 @@ class DenseConfig:
 
         if not self.device.strip():
             raise ValueError("Dense device must be non-empty.")
+
+        if not self.representation_version.strip():
+            raise ValueError("Dense representation_version must be non-empty.")
 
 
 @dataclass(frozen=True)
@@ -104,7 +108,7 @@ class DenseEncoder:
     def metadata(self) -> dict[str, object]:
         return {
             "dense_version": DENSE_VERSION,
-            "representation_version": (DENSE_REPRESENTATION_VERSION),
+            "representation_version": (self.config.representation_version),
             "model_id": MODEL_ID,
             "model_revision": MODEL_REVISION,
             "embedding_dimension": (self.embedding_dimension),

@@ -247,3 +247,11 @@ def test_dense_search_empty_query_returns_no_results() -> None:
     )
 
     assert index.search("   ") == []
+
+
+def test_dense_config_requires_representation_version() -> None:
+    with pytest.raises(
+        ValueError,
+        match="representation_version",
+    ):
+        DenseConfig(representation_version="   ")

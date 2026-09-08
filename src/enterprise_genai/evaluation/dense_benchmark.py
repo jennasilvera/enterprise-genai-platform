@@ -134,7 +134,16 @@ def run_dense_benchmark(
     chunks: ChunkCorpus,
     *,
     encoder: DenseEncoderProtocol,
+    representation_version: str = (DENSE_REPRESENTATION_VERSION),
 ) -> dict[str, Any]:
+    if not representation_version.strip():
+        raise ValueError("Dense representation_version must be non-empty.")
+
+    encoder_representation = encoder.metadata.get("representation_version")
+
+    if encoder_representation is not None and encoder_representation != representation_version:
+        raise ValueError("Encoder and benchmark representation versions differ.")
+
     _validate_qrel_chunk_mapping(
         evaluation,
         chunks,
@@ -221,7 +230,7 @@ def run_dense_benchmark(
         "evaluation_version": (evaluation.evaluation_version),
         "chunk_strategy_version": (chunks.strategy_version),
         "dense_version": (DENSE_VERSION),
-        "representation_version": (DENSE_REPRESENTATION_VERSION),
+        "representation_version": (representation_version),
         "encoder": (encoder.metadata),
         "corpus": {
             "chunks": len(chunks.chunks),

@@ -1,6 +1,7 @@
 import hashlib
 
 import numpy as np
+import pytest
 
 from enterprise_genai.data.core_corpus import (
     build_core_corpus,
@@ -113,3 +114,59 @@ def test_dense_development_scope_has_expected_case_ids() -> None:
         "Q-0020",
         "Q-0021",
     }
+
+
+class RepresentationAwareHashEncoder(HashEncoder):
+    def __init__(
+        self,
+        representation_version: str,
+    ) -> None:
+        self.representation_version = representation_version
+
+    @property
+    def metadata(self):
+        return {
+            "model_id": "hash-test",
+            "embedding_dimension": 16,
+            "representation_version": (self.representation_version),
+        }
+
+
+def test_dense_benchmark_records_supplied_representation() -> None:
+    documents = build_core_corpus()
+
+    chunks = build_evidence_chunks(documents)
+
+    evaluation = build_development_retrieval_evaluation(build_seed_evaluation())
+
+    representation = "e5-document-title-text-v1"
+
+    report = run_dense_benchmark(
+        evaluation,
+        chunks,
+        encoder=(RepresentationAwareHashEncoder(representation)),
+        representation_version=(representation),
+    )
+
+    assert report["representation_version"] == representation
+
+    assert report["encoder"]["representation_version"] == representation
+
+
+def test_dense_benchmark_rejects_representation_mismatch() -> None:
+    documents = build_core_corpus()
+
+    chunks = build_evidence_chunks(documents)
+
+    evaluation = build_development_retrieval_evaluation(build_seed_evaluation())
+
+    with pytest.raises(
+        ValueError,
+        match=("Encoder and benchmark representation versions differ"),
+    ):
+        run_dense_benchmark(
+            evaluation,
+            chunks,
+            encoder=(RepresentationAwareHashEncoder("e5-evidence-text-v1")),
+            representation_version=("e5-document-title-text-v1"),
+        )
