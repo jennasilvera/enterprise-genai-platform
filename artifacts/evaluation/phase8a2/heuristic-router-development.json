@@ -1,0 +1,757 @@
+{
+  "benchmark": {
+    "cases": 28,
+    "dataset_version": "northstar-v1",
+    "routing_sha256": "995f707a4cc6393f0e916f903cc57f9aec6fbabb3c43a00a78e318ca505b6912",
+    "routing_version": "northstar-routing-v1",
+    "split": "development"
+  },
+  "cases": [
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval",
+      "predicted_tools": [
+        "retrieval"
+      ],
+      "question": "What is management's explanation for why St. Anne revenue concentration matters at Meridian Health Systems?",
+      "routing_id": "RTE-B0E21CECB344191B",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval",
+      "predicted_tools": [
+        "retrieval"
+      ],
+      "question": "What is management's explanation for why TitaniumWorks single-source dependency matters at Alder Manufacturing?",
+      "routing_id": "RTE-BB9E09EE90799681",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval",
+      "predicted_tools": [
+        "retrieval"
+      ],
+      "question": "What is management's explanation for why Weak early-cohort retention matters at Vantage Retail Analytics?",
+      "routing_id": "RTE-F156FA8D04D01E87",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval",
+      "predicted_tools": [
+        "retrieval"
+      ],
+      "question": "What is management's explanation for why Helix Motion single-source dependency matters at NovaBio Instruments?",
+      "routing_id": "RTE-F9D70B8BCF68C677",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "matched_rules": [
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql",
+      "predicted_tools": [
+        "sql"
+      ],
+      "question": "By what percentage did Meridian Health Systems's revenue change from 2025Q2 to 2026Q2?",
+      "routing_id": "RTE-784675D01B7D83E2",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "matched_rules": [
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql",
+      "predicted_tools": [
+        "sql"
+      ],
+      "question": "By what percentage did Alder Manufacturing's revenue change from 2025Q2 to 2026Q2?",
+      "routing_id": "RTE-A9058CEB397DAB32",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "matched_rules": [
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql",
+      "predicted_tools": [
+        "sql"
+      ],
+      "question": "By what percentage did Vantage Retail Analytics's revenue change from 2025Q2 to 2026Q2?",
+      "routing_id": "RTE-1F5DF3DE145E282F",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "matched_rules": [
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql",
+      "predicted_tools": [
+        "sql"
+      ],
+      "question": "By what percentage did NovaBio Instruments's revenue change from 2025Q2 to 2026Q2?",
+      "routing_id": "RTE-553BC548245DBD77",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "matched_rules": [
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "graph",
+      "predicted_tools": [
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves St. Anne Health Network?",
+      "routing_id": "RTE-845A1A14498C92E2",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "matched_rules": [
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "graph",
+      "predicted_tools": [
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Skyward Aerospace?",
+      "routing_id": "RTE-5830C0169C3AA776",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "matched_rules": [
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "graph",
+      "predicted_tools": [
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Crown Street Retail?",
+      "routing_id": "RTE-5D5CA675EECA837A",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "matched_rules": [
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "graph",
+      "predicted_tools": [
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Alpine Diagnostics?",
+      "routing_id": "RTE-81AAB27F64843692",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql",
+      "predicted_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "question": "How many customers did Meridian Health Systems have in 2026Q2, and what explanation did management give for St. Anne revenue concentration?",
+      "routing_id": "RTE-9FBA1AB6A24335CB",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql",
+      "predicted_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "question": "How many customers did Alder Manufacturing have in 2026Q2, and what explanation did management give for TitaniumWorks single-source dependency?",
+      "routing_id": "RTE-382179B3E410A637",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql",
+      "predicted_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "question": "How many customers did Vantage Retail Analytics have in 2026Q2, and what explanation did management give for Weak early-cohort retention?",
+      "routing_id": "RTE-9958875885D1DB20",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql",
+      "predicted_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "question": "How many customers did NovaBio Instruments have in 2026Q2, and what explanation did management give for Helix Motion single-source dependency?",
+      "routing_id": "RTE-2FDC9D1B30181E51",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+graph",
+      "predicted_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "question": "Who supplies Meridian Health Systems, and what explanation has management given for St. Anne revenue concentration?",
+      "routing_id": "RTE-6E6F5F221E8B841D",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+graph",
+      "predicted_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "question": "Who supplies Alder Manufacturing, and what explanation has management given for TitaniumWorks single-source dependency?",
+      "routing_id": "RTE-FC35C0AB54C45542",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+graph",
+      "predicted_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "question": "Who supplies Vantage Retail Analytics, and what explanation has management given for Weak early-cohort retention?",
+      "routing_id": "RTE-B8EFE79762E2EE59",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+graph",
+      "predicted_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "question": "Who supplies NovaBio Instruments, and what explanation has management given for Helix Motion single-source dependency?",
+      "routing_id": "RTE-A116819E8B1CB68B",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql+graph",
+      "predicted_tools": [
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves St. Anne Health Network, what was its EBITDA in 2026Q2, and who supplies it?",
+      "routing_id": "RTE-F4C3CCEC43BA5E8C",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql+graph",
+      "predicted_tools": [
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Skyward Aerospace, what was its EBITDA in 2026Q2, and who supplies it?",
+      "routing_id": "RTE-D851416128810F0E",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql+graph",
+      "predicted_tools": [
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Crown Street Retail, what was its EBITDA in 2026Q2, and who supplies it?",
+      "routing_id": "RTE-A8C2C0DDC07B5C0B",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "sql+graph",
+      "predicted_tools": [
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Alpine Diagnostics, what was its EBITDA in 2026Q2, and who supplies it?",
+      "routing_id": "RTE-7280BA5C28E7333A",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Meridian Health Systems's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for St. Anne revenue concentration?",
+      "routing_id": "RTE-4F89E80D37C53733",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Alder Manufacturing's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for TitaniumWorks single-source dependency?",
+      "routing_id": "RTE-3B9433660253BCB4",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Vantage Retail Analytics's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for Weak early-cohort retention?",
+      "routing_id": "RTE-78A74D18AEE94A00",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "fallback_used": false,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "matched_rules": [
+        "retrieval-intent-v1",
+        "sql-intent-v1",
+        "graph-intent-v1"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are NovaBio Instruments's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for Helix Motion single-source dependency?",
+      "routing_id": "RTE-A8051C4621567790",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    }
+  ],
+  "experiment_version": "heuristic-router-development-v1",
+  "ground_truth_source": {
+    "commit": "e0755e81d3d1fa24577dbe4e0dd7a92c00247863",
+    "development_cases": 28,
+    "locked_holdout_used": false,
+    "sha256": "995f707a4cc6393f0e916f903cc57f9aec6fbabb3c43a00a78e318ca505b6912",
+    "tag": "phase-8a1-routing-ground-truth"
+  },
+  "metrics": {
+    "cases": 28,
+    "exact_route_set_accuracy": 1.0,
+    "hamming_loss": 0.0,
+    "macro_f1": 1.0,
+    "macro_precision": 1.0,
+    "macro_recall": 1.0,
+    "over_routing_case_rate": 0.0,
+    "per_tool": {
+      "graph": {
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "true_positive": 16
+      },
+      "retrieval": {
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "true_positive": 16
+      },
+      "sql": {
+        "f1": 1.0,
+        "false_negative": 0,
+        "false_positive": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "true_positive": 16
+      }
+    },
+    "required_tool_omission_rate": 0.0,
+    "under_routing_case_rate": 0.0,
+    "unnecessary_tool_addition_rate": 0.0
+  },
+  "router": {
+    "fallback_tool": "retrieval",
+    "graph_relation_cues": [
+      "which portfolio company buys from",
+      "which portfolio company serves",
+      "who supplies",
+      "which suppliers",
+      "which customers",
+      "customers and suppliers",
+      "customers does",
+      "suppliers does",
+      "same portfolio company",
+      "buys from",
+      "served by",
+      "serves"
+    ],
+    "period_pattern": "\\b20\\d{2}q[1-4]\\b",
+    "question_representation_version": "question-text-v1",
+    "retrieval_intent_cues": [
+      "explanation",
+      "concern",
+      "concerned",
+      "worried",
+      "highlighted",
+      "characterize",
+      "impact",
+      "why"
+    ],
+    "router_version": "heuristic-router-v1",
+    "sql_customer_count_cues": [
+      "how many customers",
+      "customer count"
+    ],
+    "sql_metric_cues": [
+      "revenue",
+      "ebitda",
+      "net retention",
+      "ownership stake"
+    ],
+    "sql_quantitative_cues": [
+      "what percentage",
+      "by what percentage",
+      "how much",
+      "below",
+      "above",
+      "exceed",
+      "account for more than",
+      "margin",
+      "change from"
+    ]
+  },
+  "scope": "development-routing-baseline"
+}

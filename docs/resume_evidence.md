@@ -1341,3 +1341,135 @@ Do not claim:
 - real-enterprise generalization;
 - generation quality;
 - agent quality.
+
+## Phase 8A2 — Deterministic Heuristic Tool Router
+
+**Status:** MEASURED / REPRODUCIBLE / VERIFIED
+
+Implemented a deterministic multi-label enterprise tool router over three
+canonical tool families:
+
+- retrieval
+- sql
+- graph
+
+Supported route combinations:
+
+- retrieval
+- sql
+- graph
+- retrieval+sql
+- retrieval+graph
+- sql+graph
+- retrieval+sql+graph
+
+Frozen routing benchmark:
+
+northstar-routing-v1
+
+Frozen routing SHA-256:
+
+995f707a4cc6393f0e916f903cc57f9aec6fbabb3c43a00a78e318ca505b6912
+
+Ground-truth commit:
+
+e0755e81d3d1fa24577dbe4e0dd7a92c00247863
+
+Phase 8A2 preregistration commit:
+
+331c7f7aa1a637411d5a842530c7f10008052a5b
+
+Input representation:
+
+question-text-v1
+
+Router:
+
+heuristic-router-v1
+
+Development cases:
+
+28
+
+Locked-holdout cases evaluated:
+
+0
+
+Measured development performance:
+
+- exact route-set accuracy: 1.0000
+- macro precision: 1.0000
+- macro recall: 1.0000
+- macro F1: 1.0000
+- Hamming loss: 0.0000
+- required-tool omission rate: 0.0000
+- unnecessary-tool addition rate: 0.0000
+- under-routing case rate: 0.0000
+- over-routing case rate: 0.0000
+- error cases: 0 of 28
+
+Per-tool development performance:
+
+- retrieval precision / recall / F1: 1.0 / 1.0 / 1.0
+- SQL precision / recall / F1: 1.0 / 1.0 / 1.0
+- graph precision / recall / F1: 1.0 / 1.0 / 1.0
+
+Canonical artifact:
+
+artifacts/evaluation/phase8a2/heuristic-router-development.json
+
+SHA-256:
+
+222b731e602cfa6a5d38fd9c2c86d87fc8017caac56131b18ce4292628142c40
+
+Size:
+
+22077 bytes
+
+Reproducibility:
+
+BYTE-IDENTICAL independent rerun
+
+Development membership:
+
+VERIFIED
+
+Holdout membership:
+
+0 cases
+
+Methodological limitation:
+
+The heuristic was preregistered before any routing-performance measurement,
+but the routing benchmark language had been constructed and human-reviewed
+before the heuristic rules were authored.
+
+Therefore the 1.0 development result must not be presented as evidence of
+perfect out-of-sample generalization.
+
+Interview evidence:
+
+- designed a multi-label tool-routing ontology;
+- distinguished routing from downstream abstention;
+- implemented deterministic retrieval / SQL / graph intent detection;
+- prevented qualitative financial terminology from automatically forcing SQL;
+- implemented exact-set and per-tool routing metrics;
+- measured required-tool omission and unnecessary-tool addition separately;
+- enforced frozen benchmark fingerprint verification before canonical
+  evaluation;
+- preregistered rules before development measurement;
+- verified exact development-set membership;
+- preserved locked-holdout performance;
+- generated deterministic byte-reproducible evaluation artifacts.
+
+Do not claim:
+
+- perfect generalization;
+- locked-holdout performance;
+- learned-router superiority;
+- pretrained-classifier performance;
+- LoRA / PEFT performance;
+- SQL execution correctness;
+- graph execution correctness;
+- production serving performance;
+- end-to-end agent quality.
