@@ -628,3 +628,145 @@ Do not claim from Phase 5B:
 - cross-encoder reranking;
 - production latency, throughput, or scalability;
 - end-to-end RAG or agent performance.
+
+## Phase 6A — Hybrid Reciprocal Rank Fusion
+
+**Status:** MEASURED / VERIFIED
+
+Experiment:
+- preregistered fixed equal-weight Reciprocal Rank Fusion;
+- lexical input:
+  `BM25 document-title-text-v1`;
+- dense input:
+  `E5 e5-document-title-text-v1`;
+- fixed fusion constant:
+  `k=60`;
+- deterministic final ordering:
+  `(-rrf_score, chunk_id)`;
+- absent retriever ranks contribute zero;
+- no score interpolation or normalization;
+- no parameter sweep;
+- development-only measurement.
+
+Clean preregistration boundary:
+
+```text
+2f11268a3e17e02d5fd8f2e9cedccc5358dc52ed
+```
+
+Tag:
+
+```text
+phase-6a-hybrid-rrf-preregistered-clean
+```
+
+Frozen lexical artifact SHA-256:
+
+```text
+c1d36faf093d18053a733beb868933da71e902d741ae81ed885efb8f0104b3c2
+```
+
+Frozen dense artifact SHA-256:
+
+```text
+ed406dacfec38bd97de7ccb42ad84b6d2ab6e00332e3b52b1cec171593d67f87
+```
+
+Selected retriever:
+
+```text
+hybrid:rrf-k60-v1
+```
+
+Development metrics:
+- canonical MRR: `0.816667`;
+- nDCG@10: `0.831207`;
+- Recall@10: `0.950000`.
+
+Improvement versus frozen Dense D1:
+- canonical MRR absolute delta: `+0.033333`;
+- canonical MRR relative delta: approximately `+4.26%`;
+- nDCG@10 absolute delta: `+0.048228`;
+- nDCG@10 relative delta: approximately `+6.16%`;
+- Recall@10 delta: `0.0`.
+
+Per-query primary-metric comparison versus Dense D1:
+- hybrid wins: `5`;
+- ties: `3`;
+- hybrid losses: `2`.
+
+Diagnostics:
+- Q-0006 improved nDCG@10 from approximately `0.730929` to `0.833991`;
+- Q-0009 regressed from approximately `0.817530` to `0.613147` and
+  Recall@10 decreased from `1.0` to `0.5`;
+- Q-0017 Recall@10 increased from `0.5` to `1.0`, but canonical reciprocal
+  rank decreased from `1.0` to approximately `0.166667`;
+- Q-0019 produced a modest nDCG@10 improvement while preserving coverage;
+- Q-0020 improved nDCG@10 from approximately `0.630930` to `1.0`;
+- Q-0021 improved nDCG@10 from approximately `0.630930` to `1.0`.
+
+The negative cases are retained and were not used to retune `k`.
+
+Artifact:
+
+```text
+artifacts/evaluation/phase6a/rrf-k60-development.json
+```
+
+SHA-256:
+
+```text
+c0f850e21d25f993f26c58b44d0ace057fbcd23380dce85039f2b4d6c2593c21
+```
+
+Size:
+
+```text
+103859 bytes
+```
+
+Reproducibility:
+- independent CPU rerun completed;
+- rerun was byte-identical;
+- rerun SHA-256 matched canonical artifact exactly;
+- rerun size matched canonical artifact exactly.
+
+Integrity:
+- exact 10 development query IDs verified;
+- exact frozen source hashes verified;
+- exact `k=60` verified;
+- BM25 and dense representation identities verified;
+- E5 model and immutable revision verified;
+- 80-chunk corpus verified;
+- dense and fused rankings both return 80 chunks;
+- no seed test case was used.
+
+Quality:
+- Ruff clean;
+- formatting clean;
+- 177 tests passing;
+- dependency lock valid;
+- Alembic head current;
+- no schema drift;
+- exactly one Phase 6A measurement artifact.
+
+Supported resume/interview claim:
+Implemented deterministic BM25 + E5 Reciprocal Rank Fusion and, in a
+preregistered development experiment with fixed `k=60`, improved nDCG@10 from
+approximately `0.7830` to `0.8312` (`+6.16%` relative) over the strongest
+frozen standalone dense retriever while maintaining `0.95` Recall@10.
+
+Resume-use constraint:
+Describe the metrics as measurements on the 10 retrieval-eligible development
+queries of the synthetic Northstar benchmark.
+
+Do not claim:
+- test-set confirmation;
+- optimal RRF hyperparameters;
+- universal superiority of hybrid retrieval;
+- real-enterprise generalization;
+- cross-encoder reranking;
+- pgvector serving performance;
+- production latency or throughput;
+- generation quality;
+- end-to-end agent performance.
