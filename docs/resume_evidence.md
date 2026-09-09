@@ -770,3 +770,426 @@ Do not claim:
 - production latency or throughput;
 - generation quality;
 - end-to-end agent performance.
+
+## Phase 6B — Frozen Hybrid Test Confirmation
+
+**Status:** MEASURED / VERIFIED
+
+Purpose:
+Evaluate the already-selected Phase 6A BM25 + E5 RRF retriever on the existing
+retrieval-eligible Northstar test split without retrieval retuning.
+
+Methodological limitation:
+
+```text
+test_split_status = previously-inspected-non-pristine
+```
+
+The retrieval-eligible test queries had already been inspected during earlier
+retrieval work, including Phase 4C.
+
+Therefore Phase 6B is a frozen test confirmation, not a pristine unseen,
+untouched, blinded, or fully independent holdout.
+
+Preregistration boundary:
+
+```text
+7d86ec84c5233e568af1e634e21c5a36e0e2e620
+```
+
+Preregistration tag:
+
+```text
+phase-6b-hybrid-test-confirmation-preregistered
+```
+
+Before measurement:
+- Phase 6B artifact count: `0`;
+- worktree: clean;
+- retrieval configuration: frozen;
+- exact four-query confirmation scope: frozen.
+
+Frozen Phase 6A source:
+
+```text
+artifacts/evaluation/phase6a/rrf-k60-development.json
+```
+
+Frozen Phase 6A SHA-256:
+
+```text
+c0f850e21d25f993f26c58b44d0ace057fbcd23380dce85039f2b4d6c2593c21
+```
+
+Frozen Phase 6A result commit:
+
+```text
+689818d1168f46a06c7b189ab81bbfe5f168fc07
+```
+
+Frozen Phase 6A result tag:
+
+```text
+phase-6a-hybrid-rrf-baseline
+```
+
+Frozen retriever:
+
+```text
+hybrid:rrf-k60-v1
+```
+
+Frozen lexical configuration:
+- retriever: `BM25`;
+- BM25 version: `bm25-v1`;
+- tokenizer: `lexical-tokenizer-v1`;
+- representation: `document-title-text-v1`;
+- `k1=1.5`;
+- `b=0.75`;
+- zero-overlap chunks excluded;
+- absent BM25 ranks contribute zero to RRF.
+
+Frozen dense configuration:
+- dense version: `dense-e5-small-v2-v1`;
+- representation: `e5-document-title-text-v1`;
+- model: `intfloat/e5-small-v2`;
+- immutable model revision:
+  `ffb93f3bd4047442299a41ebb6fa998a38507c52`;
+- embedding dimension: `384`;
+- normalized embeddings;
+- inner-product similarity;
+- device: CPU;
+- batch size: `16`.
+
+Frozen fusion configuration:
+- fusion version: `rrf-k60-v1`;
+- fixed RRF constant: `k=60`;
+- lexical rank weight: `1`;
+- dense rank weight: `1`;
+- missing source-rank contribution: `0`;
+- deterministic final ordering:
+  `(-rrf_score, chunk_id)`;
+- no raw-score interpolation;
+- no score normalization;
+- no query-type routing;
+- no learned fusion;
+- no post-test parameter tuning.
+
+Exact retrieval-eligible test cases:
+
+```text
+Q-0003  lexical
+Q-0005  semantic
+Q-0007  hybrid
+Q-0018  multi_source
+```
+
+Exactly four test cases were evaluated.
+
+Frozen Dense D1 test metrics:
+- canonical MRR: `1.000000`;
+- nDCG@10: `0.9378188547`;
+- Recall@10: `1.000000`.
+
+Frozen Hybrid RRF test metrics:
+- canonical MRR: `0.750000`;
+- nDCG@1: `0.500000`;
+- nDCG@3: `0.7700698027`;
+- nDCG@5: `0.7700698027`;
+- nDCG@10: `0.8184264036`;
+- Recall@1: `0.375000`;
+- Recall@3: `0.875000`;
+- Recall@5: `0.875000`;
+- Recall@10: `1.000000`.
+
+Hybrid versus frozen Dense D1:
+- canonical MRR absolute delta: `-0.250000`;
+- canonical MRR relative delta: `-25.00%`;
+- nDCG@10 absolute delta: `-0.1193924511`;
+- nDCG@10 relative delta: approximately `-12.73%`;
+- Recall@10 absolute delta: `0.0`;
+- Recall@10 relative delta: `0.0%`.
+
+Per-query outcome:
+- Q-0003: tie versus Dense D1;
+- Q-0005: tie versus Dense D1;
+- Q-0007: RRF ranking regression;
+- Q-0018: RRF ranking regression.
+
+Q-0003:
+- dense nDCG@10: `1.0`;
+- hybrid nDCG@10: `1.0`;
+- dense canonical RR: `1.0`;
+- hybrid canonical RR: `1.0`;
+- dense Recall@10: `1.0`;
+- hybrid Recall@10: `1.0`.
+
+Q-0005:
+- dense nDCG@10: `1.0`;
+- hybrid nDCG@10: `1.0`;
+- dense canonical RR: `1.0`;
+- hybrid canonical RR: `1.0`;
+- dense Recall@10: `1.0`;
+- hybrid Recall@10: `1.0`.
+
+Q-0007 diagnostic:
+- dense canonical rank: `1`;
+- hybrid canonical rank: `2`;
+- dense nDCG@10: approximately `0.919721`;
+- hybrid nDCG@10: approximately `0.693426`;
+- dense Recall@10: `1.0`;
+- hybrid Recall@10: `1.0`.
+
+Q-0007 hybrid top-two explanation:
+
+```text
+rank 1:
+EVID-CORE-PC006-BOARD-PRIORITY
+BM25 rank  = 1
+dense rank = 2
+RRF score  = 0.03252247488101534
+
+rank 2:
+EVID-CORE-PC006-RISK-PRIMARY
+BM25 rank  = 3
+dense rank = 1
+RRF score  = 0.032266458495966696
+```
+
+Interpretation for Q-0007:
+The lexical rank-1 support for the board-priority evidence, combined with dense
+rank 2, was enough under equal-weight RRF to displace the dense-rank-1
+canonical evidence.
+
+The canonical evidence remained in the top 10, so Recall@10 stayed at `1.0`.
+The regression was primarily in ordering, not candidate coverage.
+
+Q-0018 diagnostic:
+- dense canonical rank: `1`;
+- hybrid canonical rank: `2`;
+- dense nDCG@10: approximately `0.831555`;
+- hybrid nDCG@10: approximately `0.580279`;
+- dense Recall@10: `1.0`;
+- hybrid Recall@10: `1.0`.
+
+Q-0018 hybrid top-two explanation:
+
+```text
+rank 1:
+EVID-CORE-PC007-BOARD-PRIORITY
+BM25 rank  = 1
+dense rank = 2
+RRF score  = 0.03252247488101534
+
+rank 2:
+EVID-CORE-PC007-QMR-FINANCIAL
+BM25 rank  = 5
+dense rank = 1
+RRF score  = 0.03177805800756621
+```
+
+Interpretation for Q-0018:
+Equal-weight RRF favored the evidence item with BM25 rank 1 and dense rank 2
+over the dense-rank-1 canonical evidence whose lexical rank was 5.
+
+Again, the canonical evidence remained in the top 10, so the failure was
+primarily in final ordering.
+
+Development/test contrast:
+
+Phase 6A development:
+- canonical MRR delta versus Dense D1:
+  `+0.0333333333` absolute;
+- canonical MRR relative delta:
+  approximately `+4.26%`;
+- nDCG@10 delta versus Dense D1:
+  `+0.0482279271` absolute;
+- nDCG@10 relative delta:
+  approximately `+6.16%`;
+- Recall@10 delta:
+  `0.0`.
+
+Phase 6B test confirmation:
+- canonical MRR delta versus Dense D1:
+  `-0.2500000000` absolute;
+- canonical MRR relative delta:
+  `-25.00%`;
+- nDCG@10 delta versus Dense D1:
+  `-0.1193924511` absolute;
+- nDCG@10 relative delta:
+  approximately `-12.73%`;
+- Recall@10 delta:
+  `0.0`.
+
+Key contrast:
+
+```text
+development nDCG@10 relative delta:       +6.16%
+test-confirmation nDCG@10 relative delta: -12.73%
+```
+
+Recall@10 remained unchanged relative to Dense D1 in both experiments.
+
+Scientific interpretation:
+The development-selected equal-weight RRF improvement did not reproduce on the
+four-case test confirmation.
+
+The negative confirmation was retained exactly as measured.
+
+No Phase 6B retuning was performed.
+
+No change was made to:
+- RRF `k`;
+- lexical weight;
+- dense weight;
+- BM25 parameters;
+- lexical representation;
+- dense representation;
+- embedding model;
+- embedding revision;
+- query set;
+- evaluation metrics;
+- fusion formula.
+
+No weighted RRF, alternative `k`, score interpolation, query routing, learned
+fusion, or reranking experiment was run against the Phase 6B test cases.
+
+Engineering lesson:
+Equal-weight hybrid fusion can preserve broad candidate coverage while
+degrading final ordering.
+
+This motivates separating:
+
+```text
+candidate generation
+```
+
+from:
+
+```text
+final relevance ordering
+```
+
+A later cross-encoder reranking experiment can test whether broad retrieval
+coverage can be retained while correcting ordering failures such as Q-0007
+and Q-0018.
+
+This future motivation does not alter the frozen Phase 6B result.
+
+Canonical artifact:
+
+```text
+artifacts/evaluation/phase6b/rrf-k60-test-confirmation.json
+```
+
+Canonical SHA-256:
+
+```text
+21f7c2a354ca2e928b33eea6f7dfb17ff87ed0b93f3e35451fc3576c196a5843
+```
+
+Canonical size:
+
+```text
+77199 bytes
+```
+
+Reproducibility:
+- independent CPU rerun completed;
+- rerun path:
+  `/tmp/rrf-k60-test-confirmation.json`;
+- canonical and rerun artifacts were byte-identical;
+- rerun SHA-256 matched canonical SHA-256 exactly;
+- rerun file size matched canonical size exactly;
+- temporary rerun was removed after verification.
+
+Integrity verification:
+- confirmation version:
+  `hybrid-rrf-test-confirmation-v1`;
+- frozen selected retriever:
+  `hybrid:rrf-k60-v1`;
+- selection status:
+  `frozen-before-test-confirmation`;
+- scope:
+  `test-confirmation`;
+- test split status:
+  `previously-inspected-non-pristine`;
+- exact expected test query IDs verified;
+- exactly four dense cases verified;
+- exactly four hybrid cases verified;
+- all cases verified as split `test`;
+- frozen Phase 6A source SHA-256 verified;
+- fusion version `rrf-k60-v1` verified;
+- fixed `k=60` verified;
+- lexical representation verified;
+- dense representation verified;
+- E5 model verified;
+- immutable E5 revision verified.
+
+Quality:
+- Ruff clean;
+- formatting clean;
+- `181` tests passing;
+- dependency lock valid;
+- Alembic current:
+  `8a0f69a3baf1 (head)`;
+- no schema drift;
+- exactly one Phase 6B canonical artifact.
+
+Phase 6B preregistration boundary remained:
+
+```text
+7d86ec84c5233e568af1e634e21c5a36e0e2e620
+```
+
+throughout measurement and reproducibility verification.
+
+Interview-use lesson:
+A development-set retrieval gain is not sufficient evidence of generalization.
+
+The Phase 6A development result was positive, while the frozen Phase 6B
+confirmation reversed direction on ranking quality.
+
+This is useful evidence of:
+- controlled experimental design;
+- preregistration discipline;
+- split-aware evaluation;
+- negative-result retention;
+- diagnostic retrieval analysis;
+- separation of recall from ranking quality;
+- avoidance of test-set retuning.
+
+Resume-use constraint:
+The positive Phase 6A metric may be used only when explicitly described as a
+development-benchmark result on the synthetic Northstar benchmark.
+
+The Phase 6B result must not be represented as successful validation.
+
+The four-query test confirmation must not be described as pristine, unseen,
+untouched, blinded, statistically representative, or large-scale.
+
+Supported interview claims:
+- implemented deterministic BM25 + E5 RRF;
+- froze the RRF configuration before test confirmation;
+- evaluated exactly four retrieval-eligible test cases;
+- retained a negative confirmation rather than retuning against test queries;
+- observed unchanged top-10 recall despite worse final ordering;
+- reproduced the Phase 6B artifact byte-identically;
+- diagnosed concrete rank-fusion failure modes.
+
+Do not claim:
+- statistical significance;
+- universal Dense superiority;
+- universal RRF inferiority;
+- optimal RRF `k`;
+- optimal source weights;
+- real-enterprise generalization;
+- pristine holdout validation;
+- learned-fusion results;
+- cross-encoder reranking results;
+- pgvector serving performance;
+- production latency;
+- production throughput;
+- production scalability;
+- generation quality;
+- agent quality.
