@@ -1193,3 +1193,151 @@ Do not claim:
 - production scalability;
 - generation quality;
 - agent quality.
+
+## Phase 7A — Cross-Encoder Reranker Development Baseline
+
+**Status:** MEASURED / VERIFIED
+
+Experiment:
+One preregistered cross-encoder reranker over the frozen Phase 6A hybrid RRF
+candidate generator.
+
+Preregistration commit:
+
+7197b85b4a7f8f61043ec5dab8e0e263dd52a92b
+
+Preregistration tag:
+
+phase-7a-cross-encoder-reranker-preregistered
+
+Model:
+
+cross-encoder/ms-marco-MiniLM-L6-v2
+
+Immutable revision:
+
+233902d25c440f23af6f7d6e94d2946bac0bee0a
+
+Representation:
+
+cross-encoder-document-title-text-v1
+
+Fixed candidate cutoff:
+
+20
+
+Device:
+
+CPU
+
+Evaluation:
+- synthetic Northstar benchmark;
+- 10 retrieval-eligible development cases;
+- test split not used;
+- full corpus: 80 chunks;
+- RRF ranks 1 through 20 reranked;
+- ranks 21 through 80 preserved;
+- no score blending;
+- no model or cutoff sweep.
+
+Frozen Phase 6A regeneration:
+
+VERIFIED
+
+Frozen RRF development:
+- canonical MRR: 0.816667;
+- nDCG@10: 0.831207;
+- Recall@10: 0.950000.
+
+Cross-encoder reranked development:
+- canonical MRR: 0.703869;
+- nDCG@10: 0.709559;
+- Recall@10: 0.900000.
+
+Relative change versus frozen RRF:
+- canonical MRR: approximately -13.81 percent;
+- nDCG@10: approximately -14.64 percent;
+- Recall@10: approximately -5.26 percent.
+
+Preregistered selection result:
+
+REJECTED
+
+Selection reason:
+
+recall_at_10_guardrail_failed
+
+Selected retriever remains:
+
+hybrid:rrf-k60-v1
+
+Important positive diagnostics:
+- Q-0009 nDCG@10 improved from approximately 0.6131 to 0.8316 and Recall@10
+  improved from 0.5 to 1.0;
+- Q-0017 nDCG@10 improved from approximately 0.3956 to 0.8175;
+- Q-0017 canonical reciprocal rank improved from 1/6 to 1;
+- canonical financial evidence for Q-0017 moved from RRF rank 6 to reranked
+  rank 1.
+
+Important negative diagnostics:
+- Q-0020 canonical evidence moved from RRF rank 1 to reranked rank 7;
+- Q-0021 canonical evidence moved from RRF rank 1 to reranked rank 16;
+- Q-0021 Recall@10 fell from 1.0 to 0.0.
+
+Interpretation:
+The fixed generic cross-encoder demonstrated query-level complementarity but
+did not provide reliable aggregate ordering for the Northstar development
+benchmark.
+
+The result was retained without post-measurement retuning.
+
+The rejected candidate was not evaluated on the Phase 6B test split.
+
+Canonical artifact:
+
+artifacts/evaluation/phase7a/cross-encoder-reranker-development.json
+
+SHA-256:
+
+101e826b06efacf5f01dad237ccc64db13328308645552281b17cf9494b37ce4
+
+Size:
+
+580704 bytes
+
+Reproducibility:
+- repeat execution completed;
+- canonical and repeat artifacts were byte-identical;
+- SHA-256 matched exactly;
+- size matched exactly.
+
+Quality:
+- Ruff clean;
+- formatting clean;
+- 195 tests passing;
+- dependency lock valid;
+- Alembic current at 8a0f69a3baf1;
+- no schema drift;
+- exactly one canonical Phase 7A artifact.
+
+Interview evidence:
+- implemented second-stage cross-encoder reranking;
+- pinned immutable pretrained model revision;
+- enforced candidate-set and tail-order invariants;
+- preregistered candidate cutoff and selection policy;
+- verified frozen baseline regeneration;
+- separated Recall@10 guardrail from ranking-quality metrics;
+- retained a negative model result instead of tuning against it;
+- diagnosed query-level model failures;
+- reproduced the measured artifact byte-identically.
+
+Do not claim:
+- cross-encoders are generally inferior;
+- the reranker improved the retrieval stack overall;
+- unseen-test improvement;
+- statistical significance;
+- optimal model or candidate cutoff;
+- production serving performance;
+- real-enterprise generalization;
+- generation quality;
+- agent quality.
