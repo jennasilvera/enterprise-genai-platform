@@ -80,6 +80,12 @@ ExecutionStatus = Literal[
     "error",
 ]
 
+StructuredEmptyReason = Literal[
+    "row_not_found",
+    "metric_is_null",
+    "zero_denominator",
+]
+
 
 class FrozenContractModel(BaseModel):
     """Strict immutable base for execution contracts."""
@@ -390,10 +396,24 @@ class StructuredPayload(FrozenContractModel):
 
     unit: NonEmptyStr | None = None
 
+    empty_reason: StructuredEmptyReason | None = None
+
     source_rows: tuple[
         DatabaseRowReference,
         ...,
     ]
+
+    @model_validator(mode="after")
+    def validate_empty_semantics(
+        self,
+    ) -> StructuredPayload:
+        if self.value is None and self.empty_reason is None:
+            raise ValueError("Structured payload with no value requires empty_reason.")
+
+        if self.value is not None and self.empty_reason is not None:
+            raise ValueError("Structured payload with a value must not contain empty_reason.")
+
+        return self
 
 
 class GraphNode(FrozenContractModel):
