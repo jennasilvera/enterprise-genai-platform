@@ -219,11 +219,35 @@ Evidence:
 
 ## LoRA / PEFT Fine-Tuning
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/routing/lora_training_config.py`
+- `src/enterprise_genai/routing/lora_trainer.py`
+- `src/enterprise_genai/evaluation/lora_routing_benchmark.py`
+- `docs/evaluation/lora_router_plan.md`
+- `docs/evaluation/lora_router_results.md`
+- `docs/evaluation/routing_confirmation_plan.md`
+- `artifacts/models/phase8c/lora-router-development/training-report.json`
+- `artifacts/models/phase8c/lora-router-development/seed-1729/best_adapter/`
+- `artifacts/evaluation/phase8c/routing-confirmation.json`
+- deterministic three-seed CPU training and byte-identical full-tree reproduction
+- frozen development and locked-confirmation protocols
+
+Supports:
+
+> Built and evaluated a PEFT/LoRA seven-class tool router across retrieval, SQL,
+> and graph execution paths; fine-tuned 150K parameters (~0.21% of the model)
+> in deterministic multi-seed CPU experiments, achieving 82.1% development and
+> 78.6% held-out exact routing accuracy.
+
+Limitation:
+
+The separate 84-case robustness challenge reached 32.1% exact route-set
+accuracy and exposed materially weaker out-of-template retrieval/graph
+generalization. The experiment also does not isolate the causal contribution of
+LoRA adapters from the effect of supervised seven-class task adaptation.
 
 ## Phase 4A — BM25 Lexical Retrieval Baseline
 
@@ -1582,3 +1606,276 @@ Do not claim:
 - SQL execution correctness;
 - graph execution correctness;
 - production latency or throughput.
+
+## Phase 8C — PEFT/LoRA Supervised Tool Router
+
+**Status:** MEASURED / REPRODUCIBLE / CONFIRMED / VERIFIED / FROZEN
+
+Model:
+
+- `cross-encoder/nli-deberta-v3-xsmall`
+- immutable revision:
+  `a150876415327c80daeff35ca6f68f5ed8cf5c24`
+
+Task:
+
+- direct seven-class route classification;
+- route space covers all non-empty combinations of retrieval, SQL, and graph;
+- question text only is provided to the classifier.
+
+PEFT configuration:
+
+- PEFT 0.20.0;
+- LoRA rank: 8;
+- LoRA alpha: 16;
+- LoRA dropout: 0.05;
+- target modules: `query_proj`, `value_proj`;
+- explicit saved classifier head;
+- training configuration SHA-256:
+  `bd2f9f65decf4e5d6b8d2b7dc9908c778f081cc20b2ade3ce78e502ab50c39cf`.
+
+Parameter audit:
+
+- seven-class base parameters: 70,832,647;
+- PEFT-wrapped total parameters: 70,982,798;
+- trainable parameters: 150,151;
+- trainable share: approximately 0.2115%;
+- 24 LoRA-A tensors;
+- 24 LoRA-B tensors;
+- 2 classifier tensors;
+- unexpected trainable tensors: 0;
+- trainable pooler tensors: 0.
+
+Runtime:
+
+- CPU;
+- FP32;
+- CUDA: false;
+- deterministic PyTorch algorithms enabled;
+- six intra-op and six inter-op threads.
+
+Frozen experiment:
+
+- training cases: 112;
+- development cases: 28;
+- 16 training cases per route;
+- 4 development cases per route;
+- train/development template-family overlap: 0;
+- training seeds: 1729, 2718, 31415;
+- 20 epochs per seed;
+- 140 optimizer steps per seed;
+- AdamW;
+- learning rate: 0.0002;
+- weight decay: 0.01;
+- gradient-norm cap: 1.0;
+- no early stopping;
+- no hyperparameter sweep after measurement.
+
+Checkpoint selection:
+
+1. maximize exact route-set accuracy;
+2. maximize macro F1;
+3. minimize required-tool omission;
+4. minimize unnecessary-tool addition;
+5. prefer earlier epoch.
+
+Seed selection used the same frozen metric hierarchy, then the earlier seed in
+the preregistered seed order.
+
+Selected model:
+
+- seed: 1729;
+- epoch: 19.
+
+Development performance:
+
+- exact route-set accuracy: 0.8214285714285714;
+- correct exact routes: 23 of 28;
+- macro precision: 0.9298245614035089;
+- macro recall: 0.9791666666666666;
+- macro F1: 0.9523809523809524;
+- Hamming loss: 0.05952380952380952;
+- required-tool omission rate: 0.020833333333333332;
+- unnecessary-tool addition rate: 0.1111111111111111;
+- under-routing case rate: 0.03571428571428571;
+- over-routing case rate: 0.14285714285714285.
+
+Development per-tool F1:
+
+- retrieval: 1.0;
+- SQL: 1.0;
+- graph: 0.8571428571428572.
+
+Development failure topology:
+
+- five non-exact cases;
+- four SQL-only cases over-routed to `sql+graph`;
+- one `retrieval+sql+graph` case omitted graph;
+- all remaining development errors were therefore concentrated at the graph
+  decision boundary.
+
+Canonical development artifact:
+
+`artifacts/models/phase8c/lora-router-development/training-report.json`
+
+SHA-256:
+
+`afd035414008baea25aad26ce1775dc6887e6d2c51b92b603bd5346408aa34ac`
+
+Selected adapter weights SHA-256:
+
+`9b9e95c2122e9d233e47b7432a0ec268fc69f6ece936b7cb7dda80728020b8f0`
+
+Selected adapter configuration SHA-256:
+
+`5bc3929e5bf9f8b39cb9bacf54aac0be91723d177f9774cf41b91f218ded7fd5`
+
+Reproducibility:
+
+- synthetic full-loop training preflight passed before any Northstar gradient;
+- independent post-freeze full three-seed rerun completed;
+- all three adapter configurations reproduced byte-identically;
+- all three adapter weight files reproduced byte-identically;
+- complete training report reproduced byte-identically;
+- selected seed and epoch reproduced exactly;
+- all development metrics reproduced exactly.
+
+Original locked-holdout confirmation:
+
+- cases: 28;
+- exact route-set accuracy: 0.7857142857142857;
+- correct exact routes: 22 of 28;
+- macro precision: 0.9629629629629629;
+- macro recall: 0.9166666666666666;
+- macro F1: 0.9327731092436974;
+- Hamming loss: 0.07142857142857142;
+- required-tool omission rate: 0.08333333333333333;
+- unnecessary-tool addition rate: 0.05555555555555555;
+- under-routing case rate: 0.14285714285714285;
+- over-routing case rate: 0.07142857142857142.
+
+Original holdout per-tool F1:
+
+- retrieval: 1.0;
+- SQL: 0.9411764705882353;
+- graph: 0.8571428571428571.
+
+Original holdout interpretation:
+
+The selected classifier retained most of its development performance across
+held-out template families within `northstar-routing-v1`.
+
+Routing-generalization challenge:
+
+- version: `northstar-routing-challenge-v1`;
+- cases: 84;
+- exact route-set accuracy: 0.32142857142857145;
+- correct exact routes: 27 of 84;
+- macro precision: 0.8132214594457157;
+- macro recall: 0.6666666666666666;
+- macro F1: 0.6981797082358107;
+- Hamming loss: 0.3055555555555556;
+- required-tool omission rate: 0.3333333333333333;
+- unnecessary-tool addition rate: 0.26851851851851855;
+- under-routing case rate: 0.5357142857142857;
+- over-routing case rate: 0.34523809523809523.
+
+Challenge per-tool F1:
+
+- retrieval: 0.5074626865671642;
+- SQL: 0.9574468085106383;
+- graph: 0.6296296296296297.
+
+Challenge interpretation:
+
+The robustness challenge exposed limited out-of-template compositional
+generalization, particularly for retrieval and graph intent. SQL intent remained
+comparatively robust.
+
+Frozen comparison results:
+
+Original 28-case holdout exact route-set accuracy:
+
+- heuristic: 1.0;
+- pretrained NLI: 0.14285714285714285;
+- LoRA: 0.7857142857142857.
+
+84-case challenge exact route-set accuracy:
+
+- heuristic: 0.2857142857142857;
+- pretrained NLI: 0.14285714285714285;
+- LoRA: 0.32142857142857145.
+
+The pretrained NLI router predicted `retrieval+sql+graph` for:
+
+- 28 of 28 original holdout cases;
+- 84 of 84 challenge cases.
+
+Its maximal-route collapse therefore reproduced on both confirmation sets.
+
+The heuristic comparison is descriptive because its rules were authored with
+knowledge of benchmark language. Its original-holdout 1.0 result must not be
+presented as unbiased generalization evidence.
+
+Canonical confirmation artifact:
+
+`artifacts/evaluation/phase8c/routing-confirmation.json`
+
+Confirmation artifact SHA-256:
+
+`95196035d5b47b1f8e741d3fdb0c8ba5997284049dc24964d76b8e499b550829`
+
+Confirmation result commit:
+
+`6ee3e03d8ac96c6f4e9f1a076547409b9686eeab`
+
+Confirmation result tag:
+
+`phase-8c-routing-confirmation-result`
+
+Interview evidence:
+
+- implemented PEFT/LoRA sequence-classification fine-tuning;
+- replaced a pretrained NLI head with a seven-class routing head;
+- targeted attention query/value projections with LoRA;
+- audited trainable parameter identity and count;
+- trained only approximately 0.21% of the wrapped model;
+- built deterministic multi-seed CPU training;
+- implemented frozen checkpoint and seed selection;
+- serialized and reloaded PEFT adapters;
+- reproduced the full three-seed experiment byte-for-byte;
+- separated model development from locked confirmation;
+- evaluated exact route sets and individual tool decisions;
+- measured omission and unnecessary invocation separately;
+- diagnosed graph-specific and retrieval-specific generalization failures;
+- retained a negative robustness result without post-hoc retuning.
+
+Supports:
+
+> Built and evaluated a PEFT/LoRA seven-class tool router across retrieval, SQL,
+> and graph execution paths; fine-tuned 150K parameters (~0.21% of the model)
+> in deterministic multi-seed CPU experiments, achieving 82.1% development and
+> 78.6% held-out exact routing accuracy while identifying out-of-template
+> robustness limitations on a separate 84-case challenge.
+
+Important causal limitation:
+
+The improvement over the frozen zero-shot NLI router cannot be attributed to
+LoRA adapters alone. Phase 8C combines supervised seven-class task adaptation,
+a newly initialized classifier head, and LoRA backbone adaptation. A
+frozen-backbone classifier-head-only control would be required to isolate the
+incremental contribution of LoRA.
+
+Do not claim:
+
+- production routing performance;
+- real-enterprise generalization;
+- statistical significance;
+- linguistically blind external validation;
+- strong challenge generalization;
+- causal LoRA superiority over a supervised frozen-backbone head-only model;
+- GPU/CUDA training;
+- production latency or throughput;
+- SQL execution correctness;
+- graph execution correctness;
+- end-to-end agent quality.
