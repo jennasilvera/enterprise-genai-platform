@@ -584,7 +584,7 @@ class ToolExecutionPlan(FrozenContractModel):
 
     retrieval: RetrievalQuery | None = None
     sql: StructuredQuery | None = None
-    graph: GraphQuery | None = None
+    graph: GraphQuery | PortfolioGraphQuery | None = None
 
     def required_tools(
         self,

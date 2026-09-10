@@ -4,6 +4,7 @@ from typing import Protocol
 
 from enterprise_genai.execution.contracts import (
     GraphQuery,
+    PortfolioGraphQuery,
     RetrievalQuery,
     StructuredQuery,
     ToolExecutionBatch,
@@ -30,7 +31,7 @@ class StructuredExecutorProtocol(Protocol):
 class GraphExecutorProtocol(Protocol):
     def execute(
         self,
-        query: GraphQuery,
+        query: GraphQuery | PortfolioGraphQuery,
     ) -> ToolExecutionResult: ...
 
 
@@ -133,7 +134,7 @@ class ToolExecutionCoordinator:
 
     def _execute_graph(
         self,
-        query: GraphQuery,
+        query: GraphQuery | PortfolioGraphQuery,
     ) -> ToolExecutionResult:
         executor = self._graph_executor
 

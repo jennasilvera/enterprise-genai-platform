@@ -2,6 +2,8 @@ from enterprise_genai.execution.contracts import (
     GraphPath,
     GraphPayload,
     GraphQuery,
+    PortfolioGraphPredicate,
+    PortfolioGraphQuery,
     RetrievalPayload,
     RetrievalQuery,
     StructuredPayload,
@@ -344,3 +346,82 @@ def test_existing_typed_tool_error_is_preserved() -> None:
     assert batch.results == (typed_error,)
 
     assert calls == ["sql"]
+
+
+def test_coordinator_forwards_portfolio_graph_query_unchanged() -> None:
+    captured: list[object] = []
+
+    class _CapturingGraphExecutor:
+        def execute(
+            self,
+            query: object,
+        ) -> ToolExecutionResult:
+            captured.append(query)
+
+            return ToolExecutionResult(
+                tool="graph",
+                status="empty",
+                payload=GraphPayload(
+                    nodes=(),
+                    edges=(),
+                    matched_company_ids=(),
+                    empty_reason="no_matches",
+                ),
+                duration_ms=0.0,
+            )
+
+    query = PortfolioGraphQuery(
+        predicates=(
+            PortfolioGraphPredicate(
+                relationship_type=("company_supplier"),
+                target_country="Germany",
+                criticality="critical",
+            ),
+        )
+    )
+
+    plan = ToolExecutionPlan(
+        route_label="graph",
+        graph=query,
+    )
+
+    assert isinstance(
+        plan.graph,
+        PortfolioGraphQuery,
+    )
+
+    assert plan.required_tools() == ("graph",)
+
+    #
+    # Prove the union also survives
+    # serialization/deserialization rather
+    # than only accepting a pre-built object.
+    #
+    restored = ToolExecutionPlan.model_validate(plan.model_dump(mode="json"))
+
+    assert isinstance(
+        restored.graph,
+        PortfolioGraphQuery,
+    )
+
+    assert restored.graph == query
+
+    coordinator = ToolExecutionCoordinator(graph_executor=(_CapturingGraphExecutor()))
+
+    batch = coordinator.execute(restored)
+
+    assert len(batch.results) == 1
+
+    assert batch.results[0].tool == "graph"
+
+    assert batch.results[0].status == "empty"
+
+    assert len(captured) == 1
+
+    #
+    # Coordinator must pass the exact object
+    # held by the validated execution plan.
+    #
+    assert captured[0] is restored.graph
+
+    assert batch.plan == restored

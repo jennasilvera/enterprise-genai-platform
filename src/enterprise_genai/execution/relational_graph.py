@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from time import perf_counter
 
-from sqlalchemy import Select, select
+from sqlalchemy import Select, and_, select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -23,6 +23,8 @@ from enterprise_genai.execution.contracts import (
     GraphQuery,
     GraphRelation,
     JsonScalar,
+    PortfolioGraphPredicate,
+    PortfolioGraphQuery,
     ToolExecutionResult,
 )
 
@@ -109,6 +111,94 @@ def build_relationship_statement(
             lookup_column,
             model.relationship_id,
         )
+    )
+
+
+def build_portfolio_company_statement(
+    query: PortfolioGraphQuery,
+) -> Select[tuple[CompanyRow]]:
+    """Resolve the bounded portfolio company scope."""
+
+    statement = select(CompanyRow).where(CompanyRow.dataset_version == query.dataset_version)
+
+    if query.candidate_company_ids:
+        statement = statement.where(CompanyRow.company_id.in_(query.candidate_company_ids))
+
+    return statement.order_by(CompanyRow.company_id)
+
+
+def build_portfolio_predicate_statement(
+    *,
+    dataset_version: str,
+    predicate: PortfolioGraphPredicate,
+    company_ids: tuple[str, ...],
+) -> Select[tuple[CompanyCustomerRow | CompanySupplierRow]]:
+    """Build one bounded existential predicate query."""
+
+    if not company_ids:
+        raise ValueError("Portfolio graph company scope must not be empty.")
+
+    if predicate.relationship_type == "company_customer":
+        statement = (
+            select(CompanyCustomerRow)
+            .join(
+                CustomerRow,
+                and_(
+                    CustomerRow.dataset_version == CompanyCustomerRow.dataset_version,
+                    CustomerRow.customer_id == CompanyCustomerRow.customer_id,
+                ),
+            )
+            .where(
+                CompanyCustomerRow.dataset_version == dataset_version,
+                CompanyCustomerRow.company_id.in_(company_ids),
+            )
+        )
+
+        if predicate.target_country is not None:
+            statement = statement.where(CustomerRow.country == predicate.target_country)
+
+        if predicate.relationship_status is not None:
+            statement = statement.where(
+                CompanyCustomerRow.relationship_status == predicate.relationship_status
+            )
+
+        return statement.order_by(
+            CompanyCustomerRow.company_id,
+            CompanyCustomerRow.relationship_id,
+        )
+
+    statement = (
+        select(CompanySupplierRow)
+        .join(
+            SupplierRow,
+            and_(
+                SupplierRow.dataset_version == CompanySupplierRow.dataset_version,
+                SupplierRow.supplier_id == CompanySupplierRow.supplier_id,
+            ),
+        )
+        .where(
+            CompanySupplierRow.dataset_version == dataset_version,
+            CompanySupplierRow.company_id.in_(company_ids),
+        )
+    )
+
+    if predicate.target_country is not None:
+        statement = statement.where(SupplierRow.country == predicate.target_country)
+
+    if predicate.criticality is not None:
+        statement = statement.where(CompanySupplierRow.criticality == predicate.criticality)
+
+    if predicate.single_source is not None:
+        statement = statement.where(CompanySupplierRow.single_source == predicate.single_source)
+
+    if predicate.relationship_status is not None:
+        statement = statement.where(
+            CompanySupplierRow.relationship_status == predicate.relationship_status
+        )
+
+    return statement.order_by(
+        CompanySupplierRow.company_id,
+        CompanySupplierRow.relationship_id,
     )
 
 
@@ -422,6 +512,269 @@ class RelationalGraphExecutor:
             next_ids,
         )
 
+    def _load_portfolio_companies(
+        self,
+        query: PortfolioGraphQuery,
+    ) -> tuple[
+        CompanyRow,
+        ...,
+    ]:
+        rows = tuple(self._session.scalars(build_portfolio_company_statement(query)))
+
+        observed_ids = [row.company_id for row in rows]
+
+        if len(set(observed_ids)) != len(observed_ids):
+            raise GraphDataIntegrityError(
+                "Portfolio graph company scope contains duplicate companies."
+            )
+
+        if query.candidate_company_ids:
+            expected = set(query.candidate_company_ids)
+
+            observed = set(observed_ids)
+
+            missing = sorted(expected - observed)
+
+            if missing:
+                raise GraphDataIntegrityError(
+                    f"Portfolio graph candidate scope contains unknown company IDs: {missing}."
+                )
+
+        return rows
+
+    def _portfolio_predicate_rows(
+        self,
+        *,
+        query: PortfolioGraphQuery,
+        predicate: PortfolioGraphPredicate,
+        company_ids: tuple[
+            str,
+            ...,
+        ],
+    ) -> tuple[
+        CompanyCustomerRow | CompanySupplierRow,
+        ...,
+    ]:
+        rows = tuple(
+            self._session.scalars(
+                build_portfolio_predicate_statement(
+                    dataset_version=(query.dataset_version),
+                    predicate=predicate,
+                    company_ids=company_ids,
+                )
+            )
+        )
+
+        expected_type = (
+            CompanyCustomerRow
+            if predicate.relationship_type == "company_customer"
+            else CompanySupplierRow
+        )
+
+        for row in rows:
+            if not isinstance(
+                row,
+                expected_type,
+            ):
+                raise GraphDataIntegrityError(
+                    "Portfolio graph predicate returned unexpected relationship row type."
+                )
+
+        return rows
+
+    @staticmethod
+    def _portfolio_target_identity(
+        row: (CompanyCustomerRow | CompanySupplierRow),
+    ) -> tuple[
+        GraphEntityType,
+        str,
+    ]:
+        if isinstance(
+            row,
+            CompanyCustomerRow,
+        ):
+            return (
+                "customer",
+                row.customer_id,
+            )
+
+        if isinstance(
+            row,
+            CompanySupplierRow,
+        ):
+            return (
+                "supplier",
+                row.supplier_id,
+            )
+
+        raise GraphDataIntegrityError("Unexpected portfolio graph relationship row type.")
+
+    def _execute_portfolio_payload(
+        self,
+        query: PortfolioGraphQuery,
+    ) -> tuple[
+        str,
+        GraphPayload,
+    ]:
+        companies = self._load_portfolio_companies(query)
+
+        if not companies:
+            return (
+                "empty",
+                GraphPayload(
+                    nodes=(),
+                    edges=(),
+                    matched_company_ids=(),
+                    empty_reason="no_matches",
+                ),
+            )
+
+        company_ids = tuple(company.company_id for company in companies)
+
+        predicate_rows: list[
+            tuple[
+                CompanyCustomerRow | CompanySupplierRow,
+                ...,
+            ]
+        ] = []
+
+        matched_company_ids = set(company_ids)
+
+        for predicate in query.predicates:
+            rows = self._portfolio_predicate_rows(
+                query=query,
+                predicate=predicate,
+                company_ids=company_ids,
+            )
+
+            predicate_rows.append(rows)
+
+            predicate_company_ids = {row.company_id for row in rows}
+
+            matched_company_ids.intersection_update(predicate_company_ids)
+
+        ordered_matched_ids = tuple(sorted(matched_company_ids))
+
+        if not ordered_matched_ids:
+            return (
+                "empty",
+                GraphPayload(
+                    nodes=(),
+                    edges=(),
+                    matched_company_ids=(),
+                    empty_reason="no_matches",
+                ),
+            )
+
+        nodes: dict[
+            tuple[
+                GraphEntityType,
+                str,
+            ],
+            GraphNode,
+        ] = {}
+
+        edges: dict[
+            tuple[
+                str,
+                str,
+            ],
+            GraphEdge,
+        ] = {}
+
+        for company_id in ordered_matched_ids:
+            company_node = self._load_node(
+                dataset_version=(query.dataset_version),
+                entity_type="company",
+                entity_id=company_id,
+            )
+
+            if company_node is None:
+                raise GraphDataIntegrityError(
+                    f"Portfolio graph scope references missing company: {company_id}."
+                )
+
+            nodes[
+                (
+                    company_node.entity_type,
+                    company_node.entity_id,
+                )
+            ] = company_node
+
+        matched_id_set = set(ordered_matched_ids)
+
+        for rows in predicate_rows:
+            for row in rows:
+                if row.company_id not in matched_id_set:
+                    continue
+
+                edge = self._edge(
+                    dataset_version=(query.dataset_version),
+                    row=row,
+                )
+
+                edges[
+                    (
+                        edge.relationship_type,
+                        edge.relationship_id,
+                    )
+                ] = edge
+
+                (
+                    target_type,
+                    target_id,
+                ) = self._portfolio_target_identity(row)
+
+                target_node = self._load_node(
+                    dataset_version=(query.dataset_version),
+                    entity_type=target_type,
+                    entity_id=target_id,
+                )
+
+                if target_node is None:
+                    raise GraphDataIntegrityError(
+                        "Portfolio graph "
+                        "relationship references "
+                        "missing endpoint: "
+                        f"{target_type}:"
+                        f"{target_id}."
+                    )
+
+                nodes[
+                    (
+                        target_node.entity_type,
+                        target_node.entity_id,
+                    )
+                ] = target_node
+
+        ordered_nodes = tuple(
+            sorted(
+                nodes.values(),
+                key=_node_sort_key,
+            )
+        )
+
+        ordered_edges = tuple(
+            sorted(
+                edges.values(),
+                key=_edge_sort_key,
+            )
+        )
+
+        if not ordered_edges:
+            raise GraphDataIntegrityError(
+                "Portfolio graph matched companies without supporting relationship evidence."
+            )
+
+        return (
+            "ok",
+            GraphPayload(
+                nodes=ordered_nodes,
+                edges=ordered_edges,
+                matched_company_ids=(ordered_matched_ids),
+            ),
+        )
+
     def _execute_payload(
         self,
         query: GraphQuery,
@@ -559,17 +912,26 @@ class RelationalGraphExecutor:
 
     def execute(
         self,
-        query: GraphQuery,
+        query: GraphQuery | PortfolioGraphQuery,
     ) -> ToolExecutionResult:
         """Execute one validated bounded graph request."""
 
         started_at = self._clock()
 
         try:
-            (
-                status,
-                payload,
-            ) = self._execute_payload(query)
+            if isinstance(
+                query,
+                PortfolioGraphQuery,
+            ):
+                (
+                    status,
+                    payload,
+                ) = self._execute_portfolio_payload(query)
+            else:
+                (
+                    status,
+                    payload,
+                ) = self._execute_payload(query)
 
         except GraphDataIntegrityError as exc:
             return ToolExecutionResult(
