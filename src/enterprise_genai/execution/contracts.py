@@ -51,7 +51,18 @@ StructuredOperation = Literal[
     "metric_difference",
     "metric_ratio",
     "metric_threshold",
+    "portfolio_metric_sum",
+    "portfolio_metric_filter",
+    "portfolio_metric_rank",
+    "portfolio_growth_rank",
+    "portfolio_ratio_rank",
 ]
+
+StructuredRankOrder = Literal[
+    "highest",
+    "lowest",
+]
+
 
 ThresholdComparator = Literal[
     "lt",
@@ -119,10 +130,15 @@ class StructuredQuery(FrozenContractModel):
     This is intentionally not arbitrary SQL.
     The SQL executor translates these operations
     into parameterized SQLAlchemy queries.
+
+    Empty candidate_company_ids means the full
+    persisted portfolio for dataset_version.
     """
 
     dataset_version: NonEmptyStr = "northstar-v1"
-    company_id: NonEmptyStr
+
+    company_id: NonEmptyStr | None = None
+
     period: Quarter
     operation: StructuredOperation
     metric: StructuredMetric
@@ -135,11 +151,155 @@ class StructuredQuery(FrozenContractModel):
 
     threshold: Decimal | None = None
 
+    candidate_company_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
+
+    rank_order: StructuredRankOrder | None = None
+
+    result_limit: int | None = Field(
+        default=None,
+        ge=1,
+        le=50,
+    )
+
     @model_validator(mode="after")
     def validate_operation_arguments(
         self,
     ) -> StructuredQuery:
-        if self.operation == "metric_value":
+        if len(set(self.candidate_company_ids)) != len(self.candidate_company_ids):
+            raise ValueError("candidate_company_ids must not contain duplicates.")
+
+        per_company_operations = {
+            "metric_value",
+            "metric_difference",
+            "metric_ratio",
+            "metric_threshold",
+        }
+
+        if self.operation in per_company_operations:
+            if self.company_id is None:
+                raise ValueError("Per-company structured operations require company_id.")
+
+            if self.candidate_company_ids:
+                raise ValueError(
+                    "Per-company structured operations do not accept candidate_company_ids."
+                )
+
+            if self.rank_order is not None or self.result_limit is not None:
+                raise ValueError(
+                    "Per-company structured operations do not accept ranking arguments."
+                )
+
+            if self.operation == "metric_value":
+                if any(
+                    value is not None
+                    for value in (
+                        self.comparison_period,
+                        self.denominator_metric,
+                        self.comparator,
+                        self.threshold,
+                    )
+                ):
+                    raise ValueError("metric_value does not accept comparison arguments.")
+
+            elif self.operation == "metric_difference":
+                if self.comparison_period is None:
+                    raise ValueError("metric_difference requires comparison_period.")
+
+                if self.comparison_period == self.period:
+                    raise ValueError("metric_difference requires distinct periods.")
+
+                if any(
+                    value is not None
+                    for value in (
+                        self.denominator_metric,
+                        self.comparator,
+                        self.threshold,
+                    )
+                ):
+                    raise ValueError("metric_difference accepts only comparison_period.")
+
+            elif self.operation == "metric_ratio":
+                if self.denominator_metric is None:
+                    raise ValueError("metric_ratio requires denominator_metric.")
+
+                if any(
+                    value is not None
+                    for value in (
+                        self.comparison_period,
+                        self.comparator,
+                        self.threshold,
+                    )
+                ):
+                    raise ValueError("metric_ratio accepts only denominator_metric.")
+
+                if self.denominator_metric == self.metric:
+                    raise ValueError("metric_ratio numerator and denominator must differ.")
+
+            elif self.operation == "metric_threshold":
+                if self.comparator is None or self.threshold is None:
+                    raise ValueError("metric_threshold requires comparator and threshold.")
+
+                if self.comparison_period is not None or self.denominator_metric is not None:
+                    raise ValueError(
+                        "metric_threshold does not accept comparison_period or denominator_metric."
+                    )
+
+            return self
+
+        if self.company_id is not None:
+            raise ValueError(
+                "Portfolio structured "
+                "operations do not accept "
+                "company_id; use "
+                "candidate_company_ids to "
+                "constrain the portfolio."
+            )
+
+        if self.operation == "portfolio_metric_sum":
+            if any(
+                value is not None
+                for value in (
+                    self.comparison_period,
+                    self.denominator_metric,
+                    self.comparator,
+                    self.threshold,
+                    self.rank_order,
+                    self.result_limit,
+                )
+            ):
+                raise ValueError(
+                    "portfolio_metric_sum "
+                    "accepts only period, "
+                    "metric, and optional "
+                    "candidate_company_ids."
+                )
+
+        elif self.operation == "portfolio_metric_filter":
+            if self.comparator is None or self.threshold is None:
+                raise ValueError("portfolio_metric_filter requires comparator and threshold.")
+
+            if any(
+                value is not None
+                for value in (
+                    self.comparison_period,
+                    self.denominator_metric,
+                    self.rank_order,
+                    self.result_limit,
+                )
+            ):
+                raise ValueError(
+                    "portfolio_metric_filter "
+                    "does not accept comparison, "
+                    "ratio, or ranking arguments."
+                )
+
+        elif self.operation == "portfolio_metric_rank":
+            if self.rank_order is None or self.result_limit is None:
+                raise ValueError("portfolio_metric_rank requires rank_order and result_limit.")
+
             if any(
                 value is not None
                 for value in (
@@ -149,11 +309,26 @@ class StructuredQuery(FrozenContractModel):
                     self.threshold,
                 )
             ):
-                raise ValueError("metric_value does not accept comparison arguments.")
+                raise ValueError(
+                    "portfolio_metric_rank "
+                    "does not accept comparison, "
+                    "ratio, or threshold arguments."
+                )
 
-        elif self.operation == "metric_difference":
-            if self.comparison_period is None:
-                raise ValueError("metric_difference requires comparison_period.")
+        elif self.operation == "portfolio_growth_rank":
+            if (
+                self.comparison_period is None
+                or self.rank_order is None
+                or self.result_limit is None
+            ):
+                raise ValueError(
+                    "portfolio_growth_rank "
+                    "requires comparison_period, "
+                    "rank_order, and result_limit."
+                )
+
+            if self.comparison_period == self.period:
+                raise ValueError("portfolio_growth_rank requires distinct periods.")
 
             if any(
                 value is not None
@@ -163,32 +338,35 @@ class StructuredQuery(FrozenContractModel):
                     self.threshold,
                 )
             ):
-                raise ValueError("metric_difference accepts only comparison_period.")
-
-        elif self.operation == "metric_ratio":
-            if self.denominator_metric is None:
-                raise ValueError("metric_ratio requires denominator_metric.")
-
-            if any(
-                value is not None
-                for value in (
-                    self.comparison_period,
-                    self.comparator,
-                    self.threshold,
+                raise ValueError(
+                    "portfolio_growth_rank does not accept ratio or threshold arguments."
                 )
+
+        elif self.operation == "portfolio_ratio_rank":
+            if (
+                self.denominator_metric is None
+                or self.rank_order is None
+                or self.result_limit is None
             ):
-                raise ValueError("metric_ratio accepts only denominator_metric.")
+                raise ValueError(
+                    "portfolio_ratio_rank "
+                    "requires denominator_metric, "
+                    "rank_order, and result_limit."
+                )
 
             if self.denominator_metric == self.metric:
-                raise ValueError("metric_ratio numerator and denominator must differ.")
+                raise ValueError("portfolio_ratio_rank numerator and denominator must differ.")
 
-        elif self.operation == "metric_threshold":
-            if self.comparator is None or self.threshold is None:
-                raise ValueError("metric_threshold requires comparator and threshold.")
-
-            if self.comparison_period is not None or self.denominator_metric is not None:
+            if any(
+                value is not None
+                for value in (
+                    self.comparison_period,
+                    self.comparator,
+                    self.threshold,
+                )
+            ):
                 raise ValueError(
-                    "metric_threshold does not accept comparison_period or denominator_metric."
+                    "portfolio_ratio_rank does not accept comparison period or threshold arguments."
                 )
 
         return self
@@ -399,12 +577,26 @@ class DatabaseRowReference(FrozenContractModel):
     ] = ()
 
 
+class StructuredEntity(FrozenContractModel):
+    """One company selected by a structured operation."""
+
+    company_id: NonEmptyStr
+    name: NonEmptyStr
+
+    score: JsonScalar = None
+
+
 class StructuredPayload(FrozenContractModel):
     """Structured result plus exact source rows."""
 
     operation: StructuredOperation
 
     value: JsonScalar
+
+    entities: tuple[
+        StructuredEntity,
+        ...,
+    ] = ()
 
     unit: NonEmptyStr | None = None
 
@@ -419,11 +611,25 @@ class StructuredPayload(FrozenContractModel):
     def validate_empty_semantics(
         self,
     ) -> StructuredPayload:
-        if self.value is None and self.empty_reason is None:
-            raise ValueError("Structured payload with no value requires empty_reason.")
+        if self.empty_reason is not None:
+            if self.value is not None or self.entities:
+                raise ValueError(
+                    "Empty structured payload must not contain a scalar value or entities."
+                )
 
-        if self.value is not None and self.empty_reason is not None:
-            raise ValueError("Structured payload with a value must not contain empty_reason.")
+            return self
+
+        if self.value is None and not self.entities:
+            raise ValueError(
+                "Non-empty structured payload "
+                "requires either a scalar value "
+                "or at least one entity."
+            )
+
+        if self.value is not None and self.entities:
+            raise ValueError(
+                "Structured payload cannot contain both a scalar value and entity results."
+            )
 
         return self
 
