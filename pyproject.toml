@@ -8,9 +8,11 @@ version = "0.1.0"
 description = "Enterprise GenAI retrieval, agent, and evaluation platform."
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "accelerate==1.15.0",
     "alembic>=1.14,<2.0",
     "fastapi>=0.115,<1.0",
     "numpy==2.5.2",
+    "peft==0.20.0",
     "pgvector>=0.3,<1.0",
     "psycopg[binary]>=3.2,<4.0",
     "pydantic-settings>=2.6,<3.0",
