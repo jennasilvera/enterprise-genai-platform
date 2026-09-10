@@ -85,6 +85,25 @@ GraphRelation = Literal[
     "supplier_company",
 ]
 
+GraphPredicateRelationship = Literal[
+    "company_customer",
+    "company_supplier",
+]
+
+GraphSupplierCriticality = Literal[
+    "low",
+    "medium",
+    "high",
+    "critical",
+]
+
+GraphRelationshipStatus = Literal[
+    "active",
+    "at_risk",
+    "ended",
+]
+
+
 ExecutionStatus = Literal[
     "ok",
     "empty",
@@ -101,6 +120,7 @@ StructuredEmptyReason = Literal[
 GraphEmptyReason = Literal[
     "start_entity_not_found",
     "no_relationships",
+    "no_matches",
 ]
 
 
@@ -417,6 +437,93 @@ class GraphPath(FrozenContractModel):
     )
 
 
+class PortfolioGraphPredicate(FrozenContractModel):
+    """One existential relationship predicate.
+
+    All populated fields within one predicate must
+    hold on the same relationship and target entity.
+    """
+
+    relationship_type: GraphPredicateRelationship
+
+    target_country: NonEmptyStr | None = None
+
+    criticality: GraphSupplierCriticality | None = None
+
+    single_source: bool | None = None
+
+    relationship_status: GraphRelationshipStatus | None = None
+
+    @model_validator(mode="after")
+    def validate_predicate(
+        self,
+    ) -> PortfolioGraphPredicate:
+        if all(
+            value is None
+            for value in (
+                self.target_country,
+                self.criticality,
+                self.single_source,
+                self.relationship_status,
+            )
+        ):
+            raise ValueError("Portfolio graph predicate requires at least one filter.")
+
+        if self.relationship_type == "company_customer" and (
+            self.criticality is not None or self.single_source is not None
+        ):
+            raise ValueError("Customer predicates do not accept supplier-only fields.")
+
+        return self
+
+
+class PortfolioGraphQuery(FrozenContractModel):
+    """Bounded portfolio-wide relationship discovery.
+
+    A company must satisfy every predicate.
+    Different predicates may be satisfied by
+    different relationships.
+    """
+
+    dataset_version: NonEmptyStr = "northstar-v1"
+
+    predicates: tuple[
+        PortfolioGraphPredicate,
+        ...,
+    ] = Field(
+        min_length=1,
+        max_length=4,
+    )
+
+    candidate_company_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
+
+    @model_validator(mode="after")
+    def validate_portfolio_query(
+        self,
+    ) -> PortfolioGraphQuery:
+        if len(set(self.candidate_company_ids)) != len(self.candidate_company_ids):
+            raise ValueError("candidate_company_ids must not contain duplicates.")
+
+        signatures = [
+            (
+                predicate.relationship_type,
+                predicate.target_country,
+                predicate.criticality,
+                predicate.single_source,
+                predicate.relationship_status,
+            )
+            for predicate in self.predicates
+        ]
+
+        if len(set(signatures)) != len(signatures):
+            raise ValueError("Portfolio graph query contains duplicate predicates.")
+
+        return self
+
+
 class GraphQuery(FrozenContractModel):
     """One or more bounded relationship paths.
 
@@ -704,12 +811,33 @@ class GraphPayload(FrozenContractModel):
         ...,
     ]
 
+    matched_company_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
+
     empty_reason: GraphEmptyReason | None = None
 
     @model_validator(mode="after")
     def validate_empty_semantics(
         self,
     ) -> GraphPayload:
+        if len(set(self.matched_company_ids)) != len(self.matched_company_ids):
+            raise ValueError("matched_company_ids must not contain duplicates.")
+
+        if tuple(sorted(self.matched_company_ids)) != self.matched_company_ids:
+            raise ValueError("matched_company_ids must use deterministic company-ID ordering.")
+
+        if self.matched_company_ids:
+            company_node_ids = {
+                node.entity_id for node in self.nodes if node.entity_type == "company"
+            }
+
+            missing = set(self.matched_company_ids) - company_node_ids
+
+            if missing:
+                raise ValueError("Every matched company must have a company node.")
+
         if self.empty_reason is None:
             if not self.edges:
                 raise ValueError("Non-empty graph payload requires at least one edge.")
@@ -721,6 +849,12 @@ class GraphPayload(FrozenContractModel):
 
         if self.edges:
             raise ValueError("Empty graph payload must not contain edges.")
+
+        if self.matched_company_ids:
+            raise ValueError("Empty graph payload must not contain matched companies.")
+
+        if self.empty_reason == "no_matches" and self.nodes:
+            raise ValueError("no_matches must produce no graph nodes.")
 
         if self.empty_reason == "start_entity_not_found" and self.nodes:
             raise ValueError("Missing start entity must produce no graph nodes.")
