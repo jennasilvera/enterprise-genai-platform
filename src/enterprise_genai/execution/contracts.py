@@ -86,6 +86,11 @@ StructuredEmptyReason = Literal[
     "zero_denominator",
 ]
 
+GraphEmptyReason = Literal[
+    "start_entity_not_found",
+    "no_relationships",
+]
+
 
 class FrozenContractModel(BaseModel):
     """Strict immutable base for execution contracts."""
@@ -421,8 +426,22 @@ class GraphNode(FrozenContractModel):
     entity_id: NonEmptyStr
     name: NonEmptyStr
 
+    attributes: dict[
+        str,
+        JsonScalar,
+    ] = Field(
+        default_factory=dict,
+    )
+
+    canonical_fact_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
+
 
 class GraphEdge(FrozenContractModel):
+    """Canonical persisted relationship orientation."""
+
     relationship_type: Literal[
         "company_customer",
         "company_supplier",
@@ -443,6 +462,11 @@ class GraphEdge(FrozenContractModel):
         default_factory=dict,
     )
 
+    canonical_fact_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
+
 
 class GraphPayload(FrozenContractModel):
     nodes: tuple[
@@ -454,6 +478,32 @@ class GraphPayload(FrozenContractModel):
         GraphEdge,
         ...,
     ]
+
+    empty_reason: GraphEmptyReason | None = None
+
+    @model_validator(mode="after")
+    def validate_empty_semantics(
+        self,
+    ) -> GraphPayload:
+        if self.empty_reason is None:
+            if not self.edges:
+                raise ValueError("Non-empty graph payload requires at least one edge.")
+
+            if not self.nodes:
+                raise ValueError("Non-empty graph payload requires graph nodes.")
+
+            return self
+
+        if self.edges:
+            raise ValueError("Empty graph payload must not contain edges.")
+
+        if self.empty_reason == "start_entity_not_found" and self.nodes:
+            raise ValueError("Missing start entity must produce no graph nodes.")
+
+        if self.empty_reason == "no_relationships" and not self.nodes:
+            raise ValueError("no_relationships requires the existing start node.")
+
+        return self
 
 
 type ToolPayload = RetrievalPayload | StructuredPayload | GraphPayload
