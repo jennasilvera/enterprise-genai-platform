@@ -95,6 +95,7 @@ StructuredEmptyReason = Literal[
     "row_not_found",
     "metric_is_null",
     "zero_denominator",
+    "no_matches",
 ]
 
 GraphEmptyReason = Literal[
@@ -259,6 +260,12 @@ class StructuredQuery(FrozenContractModel):
             )
 
         if self.operation == "portfolio_metric_sum":
+            if self.metric in {
+                "gross_margin_pct",
+                "net_retention_pct",
+            }:
+                raise ValueError("portfolio_metric_sum requires an additive metric.")
+
             if any(
                 value is not None
                 for value in (
@@ -584,6 +591,11 @@ class StructuredEntity(FrozenContractModel):
     name: NonEmptyStr
 
     score: JsonScalar = None
+
+    canonical_fact_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ] = ()
 
 
 class StructuredPayload(FrozenContractModel):

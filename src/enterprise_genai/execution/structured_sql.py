@@ -10,10 +10,12 @@ from sqlalchemy.orm import Session
 
 from enterprise_genai.db.models import (
     CanonicalFactRow,
+    CompanyRow,
     FinancialMetricRow,
 )
 from enterprise_genai.execution.contracts import (
     DatabaseRowReference,
+    StructuredEntity,
     StructuredMetric,
     StructuredPayload,
     StructuredQuery,
@@ -49,6 +51,81 @@ def build_financial_metric_statement(
         FinancialMetricRow.company_id == query.company_id,
         FinancialMetricRow.period == period,
     )
+
+
+def build_portfolio_company_statement(
+    query: StructuredQuery,
+) -> Select[tuple[CompanyRow]]:
+    """Build deterministic bounded company-scope SQL."""
+
+    statement = select(CompanyRow).where(CompanyRow.dataset_version == query.dataset_version)
+
+    if query.candidate_company_ids:
+        statement = statement.where(CompanyRow.company_id.in_(query.candidate_company_ids))
+
+    return statement.order_by(CompanyRow.company_id)
+
+
+def build_portfolio_financial_statement(
+    query: StructuredQuery,
+    *,
+    period: str,
+    company_ids: tuple[str, ...],
+) -> Select[tuple[FinancialMetricRow]]:
+    """Build deterministic financial SQL for a resolved scope."""
+
+    if not company_ids:
+        raise ValueError("Portfolio financial scope must not be empty.")
+
+    return (
+        select(FinancialMetricRow)
+        .where(
+            FinancialMetricRow.dataset_version == query.dataset_version,
+            FinancialMetricRow.period == period,
+            FinancialMetricRow.company_id.in_(company_ids),
+        )
+        .order_by(FinancialMetricRow.company_id)
+    )
+
+
+def _ordered_scored_companies(
+    scored: list[
+        tuple[
+            CompanyRow,
+            int | Decimal,
+            tuple[str, ...],
+        ]
+    ],
+    *,
+    rank_order: str,
+) -> list[
+    tuple[
+        CompanyRow,
+        int | Decimal,
+        tuple[str, ...],
+    ]
+]:
+    """Sort by score, then company ID for deterministic ties."""
+
+    if rank_order == "highest":
+        return sorted(
+            scored,
+            key=lambda item: (
+                -_decimal(item[1]),
+                item[0].company_id,
+            ),
+        )
+
+    if rank_order == "lowest":
+        return sorted(
+            scored,
+            key=lambda item: (
+                _decimal(item[1]),
+                item[0].company_id,
+            ),
+        )
+
+    raise StructuredDataIntegrityError("Unexpected structured rank order.")
 
 
 def financial_fact_id(
@@ -523,6 +600,680 @@ class StructuredSqlExecutor:
             ),
         )
 
+    def _load_portfolio_companies(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        CompanyRow,
+        ...,
+    ]:
+        rows = tuple(self._session.scalars(build_portfolio_company_statement(query)))
+
+        if query.candidate_company_ids:
+            expected = set(query.candidate_company_ids)
+
+            observed = {row.company_id for row in rows}
+
+            missing = sorted(expected - observed)
+
+            if missing:
+                raise StructuredDataIntegrityError(
+                    f"Portfolio candidate scope contains unknown company IDs: {missing}."
+                )
+
+        return rows
+
+    def _load_portfolio_financial_rows(
+        self,
+        query: StructuredQuery,
+        *,
+        period: str,
+        companies: tuple[
+            CompanyRow,
+            ...,
+        ],
+    ) -> tuple[
+        FinancialMetricRow,
+        ...,
+    ]:
+        company_ids = tuple(company.company_id for company in companies)
+
+        if not company_ids:
+            return ()
+
+        rows = tuple(
+            self._session.scalars(
+                build_portfolio_financial_statement(
+                    query,
+                    period=period,
+                    company_ids=company_ids,
+                )
+            )
+        )
+
+        observed_ids = [row.company_id for row in rows]
+
+        if len(set(observed_ids)) != len(observed_ids):
+            raise StructuredDataIntegrityError(
+                "Portfolio financial scope contains duplicate company rows."
+            )
+
+        expected = set(company_ids)
+
+        observed = set(observed_ids)
+
+        missing = sorted(expected - observed)
+
+        if missing:
+            raise StructuredDataIntegrityError(
+                f"Portfolio financial coverage is incomplete for {period}: {missing}."
+            )
+
+        return rows
+
+    def _portfolio_sources(
+        self,
+        *row_groups: tuple[
+            FinancialMetricRow,
+            ...,
+        ],
+    ) -> tuple[
+        DatabaseRowReference,
+        ...,
+    ]:
+        return tuple(self._source_reference(row) for rows in row_groups for row in rows)
+
+    @staticmethod
+    def _structured_entity(
+        *,
+        company: CompanyRow,
+        score: int | Decimal,
+        fact_ids: tuple[str, ...],
+    ) -> StructuredEntity:
+        return StructuredEntity(
+            company_id=(company.company_id),
+            name=company.name,
+            score=score,
+            canonical_fact_ids=(fact_ids),
+        )
+
+    def _portfolio_metric_sum_payload(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        str,
+        StructuredPayload,
+    ]:
+        companies = self._load_portfolio_companies(query)
+
+        unit = _METRIC_UNITS[query.metric]
+
+        if not companies:
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=("row_not_found"),
+                    source_rows=(),
+                ),
+            )
+
+        rows = self._load_portfolio_financial_rows(
+            query,
+            period=query.period,
+            companies=companies,
+        )
+
+        sources = self._portfolio_sources(rows)
+
+        values = [
+            _metric_value(
+                row,
+                query.metric,
+            )
+            for row in rows
+        ]
+
+        if any(value is None for value in values):
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=("metric_is_null"),
+                    source_rows=sources,
+                ),
+            )
+
+        non_null = [value for value in values if value is not None]
+
+        if all(
+            isinstance(
+                value,
+                int,
+            )
+            for value in non_null
+        ):
+            total: int | Decimal = sum(non_null)
+        else:
+            total = sum(
+                (_decimal(value) for value in non_null),
+                Decimal(0),
+            )
+
+        return (
+            "ok",
+            StructuredPayload(
+                operation=query.operation,
+                value=total,
+                unit=unit,
+                source_rows=sources,
+            ),
+        )
+
+    def _portfolio_metric_filter_payload(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        str,
+        StructuredPayload,
+    ]:
+        comparator = query.comparator
+        threshold = query.threshold
+
+        if comparator is None or threshold is None:
+            raise StructuredDataIntegrityError(
+                "Validated portfolio filter lost comparator or threshold."
+            )
+
+        companies = self._load_portfolio_companies(query)
+
+        unit = _METRIC_UNITS[query.metric]
+
+        if not companies:
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=("row_not_found"),
+                    source_rows=(),
+                ),
+            )
+
+        rows = self._load_portfolio_financial_rows(
+            query,
+            period=query.period,
+            companies=companies,
+        )
+
+        sources = self._portfolio_sources(rows)
+
+        companies_by_id = {company.company_id: company for company in companies}
+
+        entities: list[StructuredEntity] = []
+
+        comparable = 0
+
+        for row in rows:
+            value = _metric_value(
+                row,
+                query.metric,
+            )
+
+            if value is None:
+                continue
+
+            comparable += 1
+
+            if not _compare(
+                comparator,
+                _decimal(value),
+                threshold,
+            ):
+                continue
+
+            fact_id = financial_fact_id(
+                company_id=(row.company_id),
+                period=row.period,
+            )
+
+            entities.append(
+                self._structured_entity(
+                    company=(companies_by_id[row.company_id]),
+                    score=value,
+                    fact_ids=(fact_id,),
+                )
+            )
+
+        entities.sort(key=lambda entity: entity.company_id)
+
+        if not entities:
+            empty_reason = "metric_is_null" if comparable == 0 else "no_matches"
+
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=(empty_reason),
+                    source_rows=sources,
+                ),
+            )
+
+        return (
+            "ok",
+            StructuredPayload(
+                operation=query.operation,
+                value=None,
+                entities=tuple(entities),
+                unit=unit,
+                source_rows=sources,
+            ),
+        )
+
+    def _portfolio_metric_rank_payload(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        str,
+        StructuredPayload,
+    ]:
+        rank_order = query.rank_order
+        result_limit = query.result_limit
+
+        if rank_order is None or result_limit is None:
+            raise StructuredDataIntegrityError(
+                "Validated portfolio metric rank lost ranking arguments."
+            )
+
+        companies = self._load_portfolio_companies(query)
+
+        unit = _METRIC_UNITS[query.metric]
+
+        if not companies:
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=("row_not_found"),
+                    source_rows=(),
+                ),
+            )
+
+        rows = self._load_portfolio_financial_rows(
+            query,
+            period=query.period,
+            companies=companies,
+        )
+
+        sources = self._portfolio_sources(rows)
+
+        companies_by_id = {company.company_id: company for company in companies}
+
+        scored: list[
+            tuple[
+                CompanyRow,
+                int | Decimal,
+                tuple[str, ...],
+            ]
+        ] = []
+
+        for row in rows:
+            value = _metric_value(
+                row,
+                query.metric,
+            )
+
+            if value is None:
+                return (
+                    "empty",
+                    StructuredPayload(
+                        operation=query.operation,
+                        value=None,
+                        unit=unit,
+                        empty_reason=("metric_is_null"),
+                        source_rows=sources,
+                    ),
+                )
+
+            scored.append(
+                (
+                    companies_by_id[row.company_id],
+                    value,
+                    (
+                        financial_fact_id(
+                            company_id=(row.company_id),
+                            period=row.period,
+                        ),
+                    ),
+                )
+            )
+
+        ordered = _ordered_scored_companies(
+            scored,
+            rank_order=rank_order,
+        )
+
+        entities = tuple(
+            self._structured_entity(
+                company=company,
+                score=score,
+                fact_ids=fact_ids,
+            )
+            for (
+                company,
+                score,
+                fact_ids,
+            ) in ordered[:result_limit]
+        )
+
+        return (
+            "ok",
+            StructuredPayload(
+                operation=query.operation,
+                value=None,
+                entities=entities,
+                unit=unit,
+                source_rows=sources,
+            ),
+        )
+
+    def _portfolio_growth_rank_payload(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        str,
+        StructuredPayload,
+    ]:
+        comparison_period = query.comparison_period
+
+        rank_order = query.rank_order
+
+        result_limit = query.result_limit
+
+        if comparison_period is None or rank_order is None or result_limit is None:
+            raise StructuredDataIntegrityError(
+                "Validated portfolio growth rank lost required arguments."
+            )
+
+        companies = self._load_portfolio_companies(query)
+
+        if not companies:
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit="ratio",
+                    empty_reason=("row_not_found"),
+                    source_rows=(),
+                ),
+            )
+
+        current_rows = self._load_portfolio_financial_rows(
+            query,
+            period=query.period,
+            companies=companies,
+        )
+
+        previous_rows = self._load_portfolio_financial_rows(
+            query,
+            period=comparison_period,
+            companies=companies,
+        )
+
+        sources = self._portfolio_sources(
+            current_rows,
+            previous_rows,
+        )
+
+        current_by_id = {row.company_id: row for row in current_rows}
+
+        previous_by_id = {row.company_id: row for row in previous_rows}
+
+        scored: list[
+            tuple[
+                CompanyRow,
+                int | Decimal,
+                tuple[str, ...],
+            ]
+        ] = []
+
+        for company in companies:
+            current = current_by_id[company.company_id]
+
+            previous = previous_by_id[company.company_id]
+
+            current_value = _metric_value(
+                current,
+                query.metric,
+            )
+
+            previous_value = _metric_value(
+                previous,
+                query.metric,
+            )
+
+            if current_value is None or previous_value is None:
+                return (
+                    "empty",
+                    StructuredPayload(
+                        operation=query.operation,
+                        value=None,
+                        unit="ratio",
+                        empty_reason=("metric_is_null"),
+                        source_rows=sources,
+                    ),
+                )
+
+            previous_decimal = _decimal(previous_value)
+
+            if previous_decimal == 0:
+                return (
+                    "empty",
+                    StructuredPayload(
+                        operation=query.operation,
+                        value=None,
+                        unit="ratio",
+                        empty_reason=("zero_denominator"),
+                        source_rows=sources,
+                    ),
+                )
+
+            growth = (_decimal(current_value) - previous_decimal) / previous_decimal
+
+            scored.append(
+                (
+                    company,
+                    growth,
+                    (
+                        financial_fact_id(
+                            company_id=(company.company_id),
+                            period=query.period,
+                        ),
+                        financial_fact_id(
+                            company_id=(company.company_id),
+                            period=(comparison_period),
+                        ),
+                    ),
+                )
+            )
+
+        ordered = _ordered_scored_companies(
+            scored,
+            rank_order=rank_order,
+        )
+
+        entities = tuple(
+            self._structured_entity(
+                company=company,
+                score=score,
+                fact_ids=fact_ids,
+            )
+            for (
+                company,
+                score,
+                fact_ids,
+            ) in ordered[:result_limit]
+        )
+
+        return (
+            "ok",
+            StructuredPayload(
+                operation=query.operation,
+                value=None,
+                entities=entities,
+                unit="ratio",
+                source_rows=sources,
+            ),
+        )
+
+    def _portfolio_ratio_rank_payload(
+        self,
+        query: StructuredQuery,
+    ) -> tuple[
+        str,
+        StructuredPayload,
+    ]:
+        denominator_metric = query.denominator_metric
+
+        rank_order = query.rank_order
+
+        result_limit = query.result_limit
+
+        if denominator_metric is None or rank_order is None or result_limit is None:
+            raise StructuredDataIntegrityError(
+                "Validated portfolio ratio rank lost required arguments."
+            )
+
+        companies = self._load_portfolio_companies(query)
+
+        unit = _ratio_unit(
+            query.metric,
+            denominator_metric,
+        )
+
+        if not companies:
+            return (
+                "empty",
+                StructuredPayload(
+                    operation=query.operation,
+                    value=None,
+                    unit=unit,
+                    empty_reason=("row_not_found"),
+                    source_rows=(),
+                ),
+            )
+
+        rows = self._load_portfolio_financial_rows(
+            query,
+            period=query.period,
+            companies=companies,
+        )
+
+        sources = self._portfolio_sources(rows)
+
+        rows_by_id = {row.company_id: row for row in rows}
+
+        scored: list[
+            tuple[
+                CompanyRow,
+                int | Decimal,
+                tuple[str, ...],
+            ]
+        ] = []
+
+        for company in companies:
+            row = rows_by_id[company.company_id]
+
+            numerator = _metric_value(
+                row,
+                query.metric,
+            )
+
+            denominator = _metric_value(
+                row,
+                denominator_metric,
+            )
+
+            if numerator is None or denominator is None:
+                return (
+                    "empty",
+                    StructuredPayload(
+                        operation=query.operation,
+                        value=None,
+                        unit=unit,
+                        empty_reason=("metric_is_null"),
+                        source_rows=sources,
+                    ),
+                )
+
+            denominator_decimal = _decimal(denominator)
+
+            if denominator_decimal == 0:
+                return (
+                    "empty",
+                    StructuredPayload(
+                        operation=query.operation,
+                        value=None,
+                        unit=unit,
+                        empty_reason=("zero_denominator"),
+                        source_rows=sources,
+                    ),
+                )
+
+            ratio = _decimal(numerator) / denominator_decimal
+
+            scored.append(
+                (
+                    company,
+                    ratio,
+                    (
+                        financial_fact_id(
+                            company_id=(company.company_id),
+                            period=query.period,
+                        ),
+                    ),
+                )
+            )
+
+        ordered = _ordered_scored_companies(
+            scored,
+            rank_order=rank_order,
+        )
+
+        entities = tuple(
+            self._structured_entity(
+                company=company,
+                score=score,
+                fact_ids=fact_ids,
+            )
+            for (
+                company,
+                score,
+                fact_ids,
+            ) in ordered[:result_limit]
+        )
+
+        return (
+            "ok",
+            StructuredPayload(
+                operation=query.operation,
+                value=None,
+                entities=entities,
+                unit=unit,
+                source_rows=sources,
+            ),
+        )
+
     def _execute_payload(
         self,
         query: StructuredQuery,
@@ -541,6 +1292,21 @@ class StructuredSqlExecutor:
 
         if query.operation == "metric_threshold":
             return self._metric_threshold_payload(query)
+
+        if query.operation == "portfolio_metric_sum":
+            return self._portfolio_metric_sum_payload(query)
+
+        if query.operation == "portfolio_metric_filter":
+            return self._portfolio_metric_filter_payload(query)
+
+        if query.operation == "portfolio_metric_rank":
+            return self._portfolio_metric_rank_payload(query)
+
+        if query.operation == "portfolio_growth_rank":
+            return self._portfolio_growth_rank_payload(query)
+
+        if query.operation == "portfolio_ratio_rank":
+            return self._portfolio_ratio_rank_payload(query)
 
         raise StructuredDataIntegrityError("Unexpected structured operation.")
 

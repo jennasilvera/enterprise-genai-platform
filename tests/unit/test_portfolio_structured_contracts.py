@@ -192,3 +192,15 @@ def test_structured_payload_supports_entity_results_exclusively() -> None:
             unit="ratio",
             source_rows=(),
         )
+
+
+def test_portfolio_sum_rejects_non_additive_percentage_metrics() -> None:
+    with pytest.raises(
+        ValueError,
+        match="additive metric",
+    ):
+        StructuredQuery(
+            period="2026Q2",
+            operation=("portfolio_metric_sum"),
+            metric=("gross_margin_pct"),
+        )
