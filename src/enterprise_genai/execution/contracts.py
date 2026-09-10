@@ -354,6 +354,13 @@ class RetrievalHit(FrozenContractModel):
     evidence_id: NonEmptyStr
     document_id: NonEmptyStr
 
+    text: NonEmptyStr
+
+    source_fact_ids: tuple[
+        NonEmptyStr,
+        ...,
+    ]
+
     rrf_score: float = Field(
         ge=0.0,
     )
