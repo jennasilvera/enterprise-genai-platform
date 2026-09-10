@@ -1,0 +1,1750 @@
+{
+  "benchmark": {
+    "cases": 28,
+    "dataset_version": "northstar-v1",
+    "routing_sha256": "995f707a4cc6393f0e916f903cc57f9aec6fbabb3c43a00a78e318ca505b6912",
+    "routing_version": "northstar-routing-v1",
+    "split": "development"
+  },
+  "cases": [
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "What is management's explanation for why St. Anne revenue concentration matters at Meridian Health Systems?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0021790172904729843,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0020922452677041292,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0009778632083907723,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0019064765656366944,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.00152355688624084,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0010955118341371417,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.01344412099570036,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-B0E21CECB344191B",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": [
+        "sql",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "What is management's explanation for why TitaniumWorks single-source dependency matters at Alder Manufacturing?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0015976366121321917,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0017461680108681321,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0010347823845222592,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0017028168076649308,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0013067834079265594,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0009950970998033881,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.005656427703797817,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-BB9E09EE90799681",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": [
+        "sql",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "What is management's explanation for why Weak early-cohort retention matters at Vantage Retail Analytics?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0018584823701530695,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0015163974603638053,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.001063628471456468,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.002290094271302223,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0013979865470901132,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0009508900111541152,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.006348633207380772,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-F156FA8D04D01E87",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": [
+        "sql",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "retrieval",
+      "gold_tools": [
+        "retrieval"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "What is management's explanation for why Helix Motion single-source dependency matters at NovaBio Instruments?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0019372542155906558,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.001846267725341022,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0010770191438496113,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0021087387576699257,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.001425612485036254,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0011362411314621568,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.01032513938844204,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-F9D70B8BCF68C677",
+      "template_family": "retrieval-development-01",
+      "unnecessary_tools": [
+        "sql",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "By what percentage did Meridian Health Systems's revenue change from 2025Q2 to 2026Q2?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0014661595923826098,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0015635888557881117,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0009478910360485315,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0031911174301058054,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0013421372277662158,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0010664312867447734,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.0045043290592730045,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-784675D01B7D83E2",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "By what percentage did Alder Manufacturing's revenue change from 2025Q2 to 2026Q2?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0015621460042893887,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0017193134408444166,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.001011239131912589,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0028756672982126474,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0012907610507681966,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.001019568764604628,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.004382946994155645,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-A9058CEB397DAB32",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "By what percentage did Vantage Retail Analytics's revenue change from 2025Q2 to 2026Q2?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0013108581770211458,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0011475146748125553,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0008946612942963839,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.002998656826093793,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0011841707164421678,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0009066667407751083,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.0030772662721574306,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-1F5DF3DE145E282F",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "easy",
+      "exact_match": false,
+      "gold_route_label": "sql",
+      "gold_tools": [
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "By what percentage did NovaBio Instruments's revenue change from 2025Q2 to 2026Q2?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0015168501995503902,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0015513881808146834,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0009266440756618977,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.003376259235665202,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0013617832446470857,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0010864516953006387,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.00470274593681097,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-553BC548245DBD77",
+      "template_family": "sql-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves St. Anne Health Network?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.006376701407134533,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.005263293161988258,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0011617663549259305,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0005222131148912013,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0024974809493869543,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0016791909001767635,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.08592315763235092,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-845A1A14498C92E2",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Skyward Aerospace?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.005630549043416977,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004536720458418131,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0010089109418913722,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0005254996358416975,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.002476255875080824,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0016066367970779538,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.07347502559423447,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-5830C0169C3AA776",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Crown Street Retail?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.005989494733512402,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004479911644011736,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0011679657036438584,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0005151170189492404,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.002307974034920335,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0015552061377093196,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.07683882862329483,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-5D5CA675EECA837A",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "graph",
+      "gold_tools": [
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies the portfolio company that serves Alpine Diagnostics?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.007006964646279812,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0050225527957081795,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0012774610659107566,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0010252256179228425,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.002857517683878541,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.001982713583856821,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.10022328048944473,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-81AAB27F64843692",
+      "template_family": "graph-development-01",
+      "unnecessary_tools": [
+        "retrieval",
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "How many customers did Meridian Health Systems have in 2026Q2, and what explanation did management give for St. Anne revenue concentration?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0033183975610882044,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0032085685525089502,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0019292295910418034,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.002034219680353999,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0019498132169246674,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0018461283762007952,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.046245504170656204,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-9FBA1AB6A24335CB",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": [
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "How many customers did Alder Manufacturing have in 2026Q2, and what explanation did management give for TitaniumWorks single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0022870430257171392,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.002793502062559128,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0026088489685207605,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0022249973844736814,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0015645787352696061,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0014838922070339322,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.01177550945430994,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-382179B3E410A637",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": [
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "How many customers did Vantage Retail Analytics have in 2026Q2, and what explanation did management give for Weak early-cohort retention?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0026197447441518307,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.002002706052735448,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0015902563463896513,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0035703363828361034,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.001833045040257275,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0015173566062003374,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.01882247067987919,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-9958875885D1DB20",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": [
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "medium",
+      "exact_match": false,
+      "gold_route_label": "retrieval+sql",
+      "gold_tools": [
+        "retrieval",
+        "sql"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "How many customers did NovaBio Instruments have in 2026Q2, and what explanation did management give for Helix Motion single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.002536851679906249,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.002518409863114357,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0020385547541081905,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.003396776504814625,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.001692753518000245,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0016020373441278934,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.018169844523072243,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-2FDC9D1B30181E51",
+      "template_family": "retrieval-sql-development-01",
+      "unnecessary_tools": [
+        "graph"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies Meridian Health Systems, and what explanation has management given for St. Anne revenue concentration?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.004348390735685825,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0044587706215679646,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0028093396686017513,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0013216889929026365,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.00233926298096776,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0021350723691284657,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.04403531923890114,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-6E6F5F221E8B841D",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": [
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies Alder Manufacturing, and what explanation has management given for TitaniumWorks single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.001911959145218134,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0037665246054530144,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0022160920780152082,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0006835525273345411,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0014653766993433237,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0012812308268621564,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.005576344672590494,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-FC35C0AB54C45542",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": [
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies Vantage Retail Analytics, and what explanation has management given for Weak early-cohort retention?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0037751547060906887,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0026970249600708485,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0023932179901748896,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0020005085971206427,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0019529360579326749,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0015692474553361535,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.022657031193375587,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-B8EFE79762E2EE59",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": [
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "retrieval+graph",
+      "gold_tools": [
+        "retrieval",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who supplies NovaBio Instruments, and what explanation has management given for Helix Motion single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0032532918266952038,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004206720739603043,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0020522845443338156,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0014305798104032874,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0020370257552713156,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0019257081439718604,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.025612253695726395,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-A116819E8B1CB68B",
+      "template_family": "retrieval-graph-development-01",
+      "unnecessary_tools": [
+        "sql"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves St. Anne Health Network, what was its EBITDA in 2026Q2, and who supplies it?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.024592725560069084,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.0067864879965782166,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.004132761619985104,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.00031458999728783965,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0037634701002389193,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0032638246193528175,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.4818246364593506,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-F4C3CCEC43BA5E8C",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": [
+        "retrieval"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Skyward Aerospace, what was its EBITDA in 2026Q2, and who supplies it?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.010848413221538067,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004364834167063236,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0026294589042663574,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0002520135312806815,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0026378314942121506,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0021274536848068237,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.10960178077220917,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-D851416128810F0E",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": [
+        "retrieval"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Crown Street Retail, what was its EBITDA in 2026Q2, and who supplies it?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.011838416568934917,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004424205515533686,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.00284304260276258,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.00025629406445659697,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0027781540993601084,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.002190121216699481,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.13411420583724976,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-A8C2C0DDC07B5C0B",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": [
+        "retrieval"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": false,
+      "gold_route_label": "sql+graph",
+      "gold_tools": [
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Which portfolio company serves Alpine Diagnostics, what was its EBITDA in 2026Q2, and who supplies it?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.011720657348632812,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004578877706080675,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.003083016024902463,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0003225714317522943,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0031212633475661278,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0022628845181316137,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.1463092416524887,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-7280BA5C28E7333A",
+      "template_family": "sql-graph-development-01",
+      "unnecessary_tools": [
+        "retrieval"
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Meridian Health Systems's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for St. Anne revenue concentration?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.003637544810771942,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004354136995971203,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0034424634650349617,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0004179351089987904,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0020320310723036528,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0014563127188012004,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.03292670473456383,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-4F89E80D37C53733",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Alder Manufacturing's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for TitaniumWorks single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.003845370840281248,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004839423578232527,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.004617113620042801,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0003609247214626521,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0019511677091941237,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0015816973755136132,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.02208799310028553,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-3B9433660253BCB4",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are Vantage Retail Analytics's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for Weak early-cohort retention?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0030326812993735075,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.003497229889035225,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.0030797079671174288,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.0004752494569402188,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.001937188906595111,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.0015077765565365553,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.020065458491444588,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-78A74D18AEE94A00",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    },
+    {
+      "difficulty": "hard",
+      "exact_match": true,
+      "gold_route_label": "retrieval+sql+graph",
+      "gold_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "missing_required_tools": [],
+      "predicted_route_label": "retrieval+sql+graph",
+      "predicted_tools": [
+        "retrieval",
+        "sql",
+        "graph"
+      ],
+      "question": "Who are NovaBio Instruments's customers and suppliers, how did its revenue change from 2025Q2 to 2026Q2, and what explanation did management give for Helix Motion single-source dependency?",
+      "route_scores": [
+        {
+          "entailment_probability": 0.0029081241227686405,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+          "route_label": "retrieval"
+        },
+        {
+          "entailment_probability": 0.004188148304820061,
+          "hypothesis": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+          "route_label": "sql"
+        },
+        {
+          "entailment_probability": 0.004104937892407179,
+          "hypothesis": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+          "route_label": "graph"
+        },
+        {
+          "entailment_probability": 0.00047194730723276734,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+          "route_label": "retrieval+sql"
+        },
+        {
+          "entailment_probability": 0.0019325029570609331,
+          "hypothesis": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+          "route_label": "retrieval+graph"
+        },
+        {
+          "entailment_probability": 0.001501361490227282,
+          "hypothesis": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents.",
+          "route_label": "sql+graph"
+        },
+        {
+          "entailment_probability": 0.018225792795419693,
+          "hypothesis": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+          "route_label": "retrieval+sql+graph"
+        }
+      ],
+      "routing_id": "RTE-A8051C4621567790",
+      "template_family": "retrieval-sql-graph-development-01",
+      "unnecessary_tools": []
+    }
+  ],
+  "challenge_guard": {
+    "challenge_commit": "bea37c093783bcbfb9f66e934f449e56fafa2e06",
+    "challenge_evaluated": false,
+    "challenge_sha256": "e1fc84e80e5cd27cc311da4392e3c9d46375777a27c81bdc5e35e37b5b131867"
+  },
+  "experiment_version": "pretrained-nli-router-development-v1",
+  "ground_truth_source": {
+    "commit": "e0755e81d3d1fa24577dbe4e0dd7a92c00247863",
+    "development_cases": 28,
+    "original_locked_holdout_used": false,
+    "sha256": "995f707a4cc6393f0e916f903cc57f9aec6fbabb3c43a00a78e318ca505b6912",
+    "tag": "phase-8a1-routing-ground-truth"
+  },
+  "metrics": {
+    "cases": 28,
+    "exact_route_set_accuracy": 0.14285714285714285,
+    "hamming_loss": 0.42857142857142855,
+    "macro_f1": 0.7272727272727272,
+    "macro_precision": 0.5714285714285714,
+    "macro_recall": 1.0,
+    "over_routing_case_rate": 0.8571428571428571,
+    "per_tool": {
+      "graph": {
+        "f1": 0.7272727272727273,
+        "false_negative": 0,
+        "false_positive": 12,
+        "precision": 0.5714285714285714,
+        "recall": 1.0,
+        "true_positive": 16
+      },
+      "retrieval": {
+        "f1": 0.7272727272727273,
+        "false_negative": 0,
+        "false_positive": 12,
+        "precision": 0.5714285714285714,
+        "recall": 1.0,
+        "true_positive": 16
+      },
+      "sql": {
+        "f1": 0.7272727272727273,
+        "false_negative": 0,
+        "false_positive": 12,
+        "precision": 0.5714285714285714,
+        "recall": 1.0,
+        "true_positive": 16
+      }
+    },
+    "required_tool_omission_rate": 0.0,
+    "under_routing_case_rate": 0.0,
+    "unnecessary_tool_addition_rate": 1.0
+  },
+  "router": {
+    "decoding_version": "seven-route-entailment-argmax-v1",
+    "device": "cpu",
+    "label2id": {
+      "contradiction": 0,
+      "entailment": 1,
+      "neutral": 2
+    },
+    "max_length": 512,
+    "model_class": "DebertaV2ForSequenceClassification",
+    "model_id": "cross-encoder/nli-deberta-v3-xsmall",
+    "model_revision": "a150876415327c80daeff35ca6f68f5ed8cf5c24",
+    "parameters": 70831107,
+    "question_representation_version": "question-text-v1",
+    "route_hypotheses": {
+      "graph": "Answering the user request requires following relationships between entities such as companies, customers, or suppliers, but does not require qualitative document evidence or structured numerical computation.",
+      "retrieval": "Answering the user request requires qualitative evidence from unstructured documents, but does not require structured numerical computation or traversal of relationships between entities.",
+      "retrieval+graph": "Answering the user request requires both qualitative evidence from unstructured documents and traversal of relationships between entities, but does not require structured numerical computation.",
+      "retrieval+sql": "Answering the user request requires both qualitative evidence from unstructured documents and structured numerical computation, but does not require traversal of relationships between entities.",
+      "retrieval+sql+graph": "Answering the user request requires qualitative evidence from unstructured documents, structured numerical computation, and traversal of relationships between entities.",
+      "sql": "Answering the user request requires structured numerical data, filtering, comparison, aggregation, or arithmetic, but does not require qualitative document evidence or traversal of relationships between entities.",
+      "sql+graph": "Answering the user request requires both structured numerical computation and traversal of relationships between entities, but does not require qualitative evidence from unstructured documents."
+    },
+    "route_order": [
+      "retrieval",
+      "sql",
+      "graph",
+      "retrieval+sql",
+      "retrieval+graph",
+      "sql+graph",
+      "retrieval+sql+graph"
+    ],
+    "router_config_sha256": "72d8ce61cdce386bb189cb70698d0f899bf94fa63b8f42796f1a19eaaca3e924",
+    "router_version": "pretrained-nli-router-v1",
+    "scoring_version": "nli-entailment-probability-v1",
+    "tie_break_version": "route-order-first-v1",
+    "tokenizer_class": "DebertaV2Tokenizer",
+    "training_performed": false
+  },
+  "scope": "development-routing-baseline"
+}
