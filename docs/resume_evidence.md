@@ -3817,3 +3817,181 @@ Do not claim yet:
 - generation fidelity has been formally measured
 - bad generations are automatically rejected
 - deterministic fallback after generation is implemented
+
+## Phase 10C — Grounded Generation Fidelity & Deterministic Fallback
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Scope
+
+Implemented a guarded local-LLM presentation layer on top of the existing
+deterministic execution, evidence, sufficiency, synthesis, provenance, and
+abstention pipeline.
+
+The probabilistic model does not control retrieval, SQL/graph execution,
+sufficiency, deterministic authority, provenance, or abstention. It receives
+only the frozen `GroundedGenerationRequest` authority and its
+sufficiency-selected evidence.
+
+### Local generation provider
+
+- Model: `Qwen/Qwen2.5-0.5B-Instruct`
+- Immutable revision:
+  `7ae557604adf67be50417f59c2c2f167def9a775`
+- Provider:
+  `northstar-hf-causal-generation-provider-v1`
+- Runtime: CPU
+- dtype: float32
+- CUDA observed: false
+- Decoding: deterministic greedy generation
+
+### Fidelity validation
+
+Policy:
+
+`northstar-generation-fidelity-v1`
+
+Raw model text is treated as untrusted.
+
+The deterministic validator mechanically checks properties including:
+
+- deterministic abstention authority,
+- strict authoritative text preservation for text answers,
+- exact authoritative entity preservation,
+- exact numeric-literal preservation,
+- unit preservation,
+- boolean preservation,
+- unauthorized numeric literals,
+- citation IDs outside the frozen allowlist.
+
+Rejected model output has `safe_text=None`.
+
+The validator intentionally does **not** claim general semantic equivalence,
+semantic hallucination detection, or factual verification of arbitrary
+free-form prose.
+
+### Guarded presentation boundary
+
+Policy:
+
+`northstar-safe-generation-presentation-v1`
+
+`resolve_safe_generation(...)` enforces:
+
+- accepted fidelity assessment -> exact approved model text may cross the
+  presentation boundary;
+- rejected fidelity assessment -> raw model text is not presentation-eligible
+  and exact deterministic authority is rendered instead.
+
+`SafeGenerationResult` validates that rejected text cannot be mislabeled as
+approved model output and that fallback text cannot be replaced with arbitrary
+content.
+
+### Real persisted five-case confirmation
+
+Formal confirmation version:
+
+`northstar-guarded-generation-confirmation-v1`
+
+Cases:
+
+- `Q-0001` — retrieval-backed Orbis risk answer
+- `Q-0010` — PostgreSQL-backed highest-growth entity answer
+- `Q-0011` — PostgreSQL-backed portfolio revenue numeric answer
+- `Q-0023` — missing-required-information abstention
+- `Q-0024` — unsupported-request abstention
+
+Observed results:
+
+- cases: 5
+- fidelity accepted: 1
+- fidelity rejected: 4
+- model generation presented: 1
+- deterministic fallback presented: 4
+- rejected raw generations exposed: 0
+
+Case behavior:
+
+- `Q-0001`
+  - Qwen paraphrased the authoritative retrieval text.
+  - Rejected under strict text-preservation policy.
+  - Presentation used the exact deterministic authority text.
+
+- `Q-0010`
+  - Qwen preserved `HelioGrid Energy` and stayed within the mechanical
+    fidelity constraints.
+  - Accepted and presented as model generation.
+
+- `Q-0011`
+  - Deterministic authority: `735000000 USD`.
+  - Qwen produced `$735 million USD`.
+  - Rejected for exact numeric-literal preservation and unauthorized numeric
+    literal introduction.
+  - Presentation fell back to `735000000 USD`.
+
+- `Q-0023`
+  - Deterministic authority required abstention for missing evidence.
+  - Qwen hallucinated a `$15 billion` 2030 exit valuation.
+  - Rejected for abstention-semantics violation and unauthorized numeric claim.
+  - Presentation used deterministic missing-information abstention and did not
+    expose `$15 billion`.
+
+- `Q-0024`
+  - Deterministic authority marked the requested churn metric unsupported.
+  - Qwen converted this into a substantive "no known customer churn rate"
+    statement.
+  - Rejected for abstention-semantics violation.
+  - Presentation used deterministic unsupported-request fallback and did not
+    expose the substantive model claim.
+
+### Reproducibility artifact
+
+Artifact:
+
+`artifacts/generation/phase10c_guarded_generation_confirmation.json`
+
+Exact file SHA-256:
+
+`471f99f0f9df37363dcdff5c51e5ee6d0a4454215a115870239b3f330db751bf`
+
+The report was independently regenerated through the persisted PostgreSQL /
+frozen retrieval / deterministic answering / pinned Qwen / fidelity /
+presentation pipeline and was byte-identical to the persisted artifact.
+
+### Verification
+
+At the Phase 10C freeze candidate:
+
+- Phase 10C fidelity/guarded tests: 27 passing
+- Formal confirmation tests: 6 passing
+- Full repository: 507 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 10B1 frozen ancestor remained unchanged before the Phase 10C commit
+
+### Claim boundary
+
+Supported claim:
+
+> Implemented a pinned local Hugging Face causal-LM generation layer with
+> deterministic fidelity checks and fail-closed presentation fallback. On a
+> five-case persisted integration control set spanning retrieval, structured
+> numeric/entity answers, missing-evidence abstention, and unsupported-request
+> abstention, four noncompliant model generations were rejected and replaced by
+> deterministic authority, with zero rejected raw generations crossing the
+> presentation boundary.
+
+Do **not** claim:
+
+- general hallucination prevention,
+- semantic correctness of arbitrary free-form generations,
+- 100% generation accuracy,
+- evaluation on the complete 24-case benchmark,
+- learned factuality or confidence scoring,
+- autonomous LLM planning or tool selection,
+- autonomous sufficiency decisions,
+- autonomous provenance generation,
+- that deterministic lexical guardrails prove semantic faithfulness.
+
+This phase establishes a conservative mechanical safety boundary and verified
+fallback behavior, not a general-purpose semantic factuality guarantee.
