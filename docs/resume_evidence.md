@@ -5082,7 +5082,7 @@ This milestone does not establish:
 
 ## Phase 11C1 — Privacy-Safe HTTP Request Observability
 
-**Status:** VERIFIED / FROZEN pending commit/tag
+**Status:** VERIFIED / FROZEN
 
 ### Purpose
 
