@@ -2331,3 +2331,125 @@ Do not claim yet:
 - confidence calibration
 - autonomous planning
 - autonomous tool selection
+
+## Phase 9C2A — Execution Evidence Normalization
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+### Scope
+
+Implemented the deterministic adapter from terminal orchestration
+snapshots into typed `EvidenceBundle` objects.
+
+This milestone normalizes executor output only. It does not decide
+whether the resulting evidence is sufficient to answer the question.
+
+### Normalization behavior
+
+Retrieval:
+
+- Converts canonically grounded retrieval hits into
+  `EvidenceRecord(kind="retrieval_hit")`.
+- Preserves document identity, retrieval rank, source fact IDs, and
+  evidence text.
+- Sorts and deduplicates canonical fact provenance deterministically.
+- Retrieved text without canonical provenance is not promoted into
+  answering evidence.
+
+SQL:
+
+- Converts scalar structured results into `structured_value` records.
+- Converts selected structured entities into `structured_entity`
+  records.
+- Preserves exact relational source-row provenance and entity-level
+  canonical fact IDs.
+- Empty structured payloads do not fabricate evidence.
+
+Relational graph:
+
+- Converts graph nodes into `graph_entity` records.
+- Converts graph relationships into `graph_relationship` records.
+- Preserves canonical graph-node and relationship provenance.
+- Empty graph payloads do not fabricate evidence.
+
+Terminal orchestration state:
+
+- `completed` -> completed evidence bundle
+- `blocked` -> blocked evidence bundle with typed detail
+- `failed` -> failed evidence bundle with executor error detail
+- non-terminal snapshots are rejected by the adapter
+
+Unsupported bounded requests:
+
+- Requests rejected before valid executor construction are represented
+  separately through `unsupported_request_bundle`.
+- Unsupported requests contain no execution evidence.
+
+### Real-data verification
+
+**Q-0023**
+
+Question:
+
+`What is Northstar's expected 2030 exit valuation for Meridian Health Systems?`
+
+Observed behavior:
+
+- Frozen LangGraph retrieval execution completed successfully.
+- Frozen hybrid retrieval returned 10 grounded Meridian records.
+- Evidence normalization produced:
+  `EvidenceBundle(status="completed")`
+- Normalized record count:
+  `10`
+- The records contain real Meridian operating, financial, risk,
+  customer, and investment-thesis facts.
+- No sufficiency decision was made in this milestone.
+
+This case demonstrates that successful retrieval and non-empty,
+entity-relevant evidence are not equivalent to answerability.
+
+**Q-0024**
+
+Question:
+
+`What was Alder Manufacturing's exact customer churn rate in 2026 Q2?`
+
+Observed behavior:
+
+- `customer_churn_rate` remains outside the bounded
+  `StructuredQuery` metric contract.
+- The request was represented as:
+  `EvidenceBundle(status="unsupported_request")`
+- Record count:
+  `0`
+- The bundle carries an explicit unsupported-metric detail.
+
+### Validation
+
+- Phase 9C2A evidence normalization tests: `8 passed`
+- Phase 9C1 contract regression tests: `10 passed`
+- Phase 9B orchestration regression tests: `21 passed`
+- Combined regression gate: `31 passed`
+- Full repository: `400 passed`
+- Ruff: clean
+- `git diff --check`: clean
+
+### Claim boundary
+
+Safe claim:
+
+> Implemented and tested a deterministic evidence-normalization layer
+> that converts typed retrieval, SQL, and relational-graph execution
+> results into immutable provenance-bearing evidence bundles, including
+> explicit blocked, failed, and unsupported-request states.
+
+Do not claim yet:
+
+- an implemented sufficiency evaluator
+- an implemented abstention policy
+- Q-0023 abstention
+- answer synthesis
+- LLM-grounded generation
+- confidence calibration
+- autonomous planning
+- autonomous tool selection
