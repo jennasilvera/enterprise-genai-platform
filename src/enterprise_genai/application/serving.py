@@ -32,6 +32,9 @@ from enterprise_genai.generation.contracts import (
 from enterprise_genai.generation.hf_provider import (
     HuggingFaceCausalGenerationProvider,
 )
+from enterprise_genai.observability.metrics import (
+    OperationalMetricsRegistry,
+)
 
 SERVING_ASSEMBLY_VERSION = "northstar-serving-assembly-v1"
 
@@ -117,6 +120,8 @@ class ServingAssembly:
 
     generation_provider: LockedGenerationProvider
 
+    metrics_registry: OperationalMetricsRegistry
+
 
 def build_serving_assembly(
     *,
@@ -124,8 +129,11 @@ def build_serving_assembly(
     dataset_version: str = "northstar-v1",
     retrieval_builder: RetrievalBuilder = (_build_persisted_retrieval),
     generation_builder: GenerationBuilder = (_build_generation_provider),
+    metrics_registry: (OperationalMetricsRegistry | None) = None,
 ) -> ServingAssembly:
     """Build expensive serving resources exactly once."""
+
+    metrics = metrics_registry if metrics_registry is not None else OperationalMetricsRegistry()
 
     with Session(engine) as session:
         persisted_retrieval = retrieval_builder(
@@ -148,6 +156,7 @@ def build_serving_assembly(
         specification_provider=(specification_provider),
         runtime=runtime,
         generation_provider=generation,
+        metrics_registry=metrics,
     )
 
     return ServingAssembly(
@@ -156,4 +165,5 @@ def build_serving_assembly(
         runtime=runtime,
         retrieval_executor=retrieval,
         generation_provider=generation,
+        metrics_registry=metrics,
     )

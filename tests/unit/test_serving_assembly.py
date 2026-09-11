@@ -216,3 +216,24 @@ def test_shared_generation_execution_is_serialized() -> None:
     )
 
     assert max_active == 1
+
+
+def test_serving_assembly_reuses_supplied_metrics_registry() -> None:
+    from enterprise_genai.observability.metrics import (
+        OperationalMetricsRegistry,
+    )
+
+    engine = create_engine("sqlite://")
+
+    metrics = OperationalMetricsRegistry()
+
+    assembly = build_serving_assembly(
+        engine=engine,
+        retrieval_builder=(lambda session, dataset_version: EmptyRetrieval()),
+        generation_builder=(lambda: UnusedGenerationProvider()),
+        metrics_registry=metrics,
+    )
+
+    assert assembly.metrics_registry is metrics
+
+    assert assembly.service._metrics_registry is metrics

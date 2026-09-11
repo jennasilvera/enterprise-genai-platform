@@ -195,3 +195,32 @@ def test_unhandled_failure_logs_only_exception_type(
     assert fields["duration_ms"] >= 0.0
 
     assert sensitive_message not in repr(fake.events)
+
+
+def test_http_middleware_records_process_local_metrics() -> None:
+    with TestClient(app) as client:
+        metrics = app.state.operational_metrics
+
+        before = metrics.snapshot()
+
+        response = client.get("/health/live")
+
+        after = metrics.snapshot()
+
+    assert response.status_code == 200
+
+    assert after.http_requests_total == before.http_requests_total + 1
+
+    assert after.http_latency_ms.count == before.http_latency_ms.count + 1
+
+    before_2xx = dict(before.http_status_classes).get(
+        "2xx",
+        0,
+    )
+
+    after_2xx = dict(after.http_status_classes).get(
+        "2xx",
+        0,
+    )
+
+    assert after_2xx == before_2xx + 1

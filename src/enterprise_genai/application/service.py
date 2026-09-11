@@ -55,6 +55,9 @@ from enterprise_genai.observability.answering import (
     duration_ms,
     request_trace_fields,
 )
+from enterprise_genai.observability.metrics import (
+    OperationalMetricsRegistry,
+)
 from enterprise_genai.orchestration.contracts import (
     BoundedOrchestrationPlan,
     OrchestrationStateSnapshot,
@@ -203,6 +206,7 @@ class GroundedAnsweringService:
         specification_provider: (AnswerSpecificationProviderProtocol),
         runtime: AnswerExecutionRuntimeProtocol,
         generation_provider: GenerationProvider,
+        metrics_registry: (OperationalMetricsRegistry | None) = None,
         clock: Callable[
             [],
             float,
@@ -213,6 +217,8 @@ class GroundedAnsweringService:
         self._runtime = runtime
 
         self._generation_provider = generation_provider
+
+        self._metrics_registry = metrics_registry
 
         self._clock = clock
 
@@ -474,6 +480,23 @@ class GroundedAnsweringService:
                     ),
                 )
 
+                if self._metrics_registry is not None:
+                    self._metrics_registry.record_answer_completed(
+                        status=result.status,
+                        presentation_source=(result.presentation_source),
+                        generation_fidelity=(result.generation_fidelity),
+                        abstention_reason=(result.reason),
+                        generation_invoked=False,
+                        stage_durations_ms=(stage_durations_ms),
+                        tool_durations_ms=(tool_durations_ms),
+                        total_duration_ms=(
+                            duration_ms(
+                                clock=self._clock,
+                                started_at=(service_started_at),
+                            )
+                        ),
+                    )
+
                 return result
 
             # -------------------------------------
@@ -548,6 +571,23 @@ class GroundedAnsweringService:
                 ),
             )
 
+            if self._metrics_registry is not None:
+                self._metrics_registry.record_answer_completed(
+                    status=result.status,
+                    presentation_source=(result.presentation_source),
+                    generation_fidelity=(result.generation_fidelity),
+                    abstention_reason=None,
+                    generation_invoked=(generation_invoked),
+                    stage_durations_ms=(stage_durations_ms),
+                    tool_durations_ms=(tool_durations_ms),
+                    total_duration_ms=(
+                        duration_ms(
+                            clock=self._clock,
+                            started_at=(service_started_at),
+                        )
+                    ),
+                )
+
             return result
 
         except Exception as exc:
@@ -569,5 +609,17 @@ class GroundedAnsweringService:
                     )
                 ),
             )
+
+            if self._metrics_registry is not None:
+                self._metrics_registry.record_answer_failed(
+                    stage=current_stage,
+                    generation_invoked=(generation_invoked),
+                    total_duration_ms=(
+                        duration_ms(
+                            clock=self._clock,
+                            started_at=(service_started_at),
+                        )
+                    ),
+                )
 
             raise

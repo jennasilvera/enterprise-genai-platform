@@ -1,0 +1,106 @@
+{
+  "control_case_ids": [
+    "Q-0001",
+    "Q-0010",
+    "Q-0011",
+    "Q-0023",
+    "Q-0024"
+  ],
+  "counters": {
+    "abstention_reasons": {
+      "missing_required_information": 1,
+      "unsupported_request": 1
+    },
+    "abstentions_total": 2,
+    "answer_failure_stages": {},
+    "answer_failures_total": 0,
+    "answer_requests_total": 5,
+    "answers_total": 3,
+    "deterministic_fallback_total": 2,
+    "generation_accepted_total": 1,
+    "generation_invocations_total": 3,
+    "generation_rejected_total": 2,
+    "http_failures_total": 0,
+    "http_requests_total": 5,
+    "http_status_classes": {
+      "2xx": 5
+    },
+    "tool_invocations": {
+      "retrieval": 2,
+      "sql": 2
+    }
+  },
+  "dataset_version": "northstar-v1",
+  "generation_runtime": {
+    "device": "cpu",
+    "dtype": "float32",
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+  },
+  "histogram_observation_counts": {
+    "answer_service": 5,
+    "generation": 3,
+    "http": 5,
+    "tool": {
+      "graph": 0,
+      "retrieval": 2,
+      "sql": 2
+    }
+  },
+  "latency_buckets_ms": [
+    1.0,
+    5.0,
+    10.0,
+    25.0,
+    50.0,
+    100.0,
+    250.0,
+    500.0,
+    1000.0,
+    2500.0,
+    5000.0,
+    10000.0,
+    30000.0
+  ],
+  "metrics_version": "northstar-operational-metrics-v1",
+  "observations": {
+    "Q-0001": {
+      "generation_fidelity": "rejected",
+      "presentation_source": "deterministic_fallback",
+      "status": "answered"
+    },
+    "Q-0010": {
+      "generation_fidelity": "accepted",
+      "presentation_source": "model_generation",
+      "status": "answered"
+    },
+    "Q-0011": {
+      "generation_fidelity": "rejected",
+      "presentation_source": "deterministic_fallback",
+      "status": "answered"
+    },
+    "Q-0023": {
+      "generation_fidelity": "not_applicable",
+      "presentation_source": "deterministic",
+      "status": "abstained"
+    },
+    "Q-0024": {
+      "generation_fidelity": "not_applicable",
+      "presentation_source": "deterministic",
+      "status": "abstained"
+    }
+  },
+  "privacy": {
+    "stores_answer_text": false,
+    "stores_evidence_text": false,
+    "stores_individual_latency_samples": false,
+    "stores_model_output": false,
+    "stores_prompt_text": false,
+    "stores_question_text": false
+  },
+  "shared_registry": {
+    "app_state_is_assembly": true,
+    "assembly_is_service": true
+  },
+  "version": "northstar-operational-metrics-confirmation-v1"
+}

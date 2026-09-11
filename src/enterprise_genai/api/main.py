@@ -28,6 +28,7 @@ from enterprise_genai.db.session import (
     engine,
 )
 from enterprise_genai.observability import (
+    OperationalMetricsRegistry,
     RequestObservabilityMiddleware,
 )
 
@@ -76,13 +77,20 @@ async def lifespan(
 
     installed_answering_service = False
 
+    metrics_registry = OperationalMetricsRegistry()
+
+    _app.state.operational_metrics = metrics_registry
+
     _app.state.answering_status = "disabled"
 
     if settings.answering_enabled:
         logger.info("answering_service_initializing")
 
         try:
-            assembly = build_serving_assembly(engine=engine)
+            assembly = build_serving_assembly(
+                engine=engine,
+                metrics_registry=(metrics_registry),
+            )
         except Exception:
             _app.state.answering_status = "unavailable"
 
@@ -127,6 +135,15 @@ async def lifespan(
             delattr(
                 _app.state,
                 "answering_status",
+            )
+
+        if hasattr(
+            _app.state,
+            "operational_metrics",
+        ):
+            delattr(
+                _app.state,
+                "operational_metrics",
             )
 
         logger.info(

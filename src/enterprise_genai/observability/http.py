@@ -18,6 +18,10 @@ from structlog.contextvars import (
     clear_contextvars,
 )
 
+from enterprise_genai.observability.metrics import (
+    OperationalMetricsRegistry,
+)
+
 HTTP_REQUEST_TRACE_VERSION = "northstar-http-request-trace-v1"
 
 REQUEST_ID_HEADER = "X-Request-ID"
@@ -85,6 +89,18 @@ class RequestObservabilityMiddleware(BaseHTTPMiddleware):
 
         started_at = self._clock()
 
+        metrics = getattr(
+            request.app.state,
+            "operational_metrics",
+            None,
+        )
+
+        if not isinstance(
+            metrics,
+            OperationalMetricsRegistry,
+        ):
+            metrics = None
+
         bind_contextvars(
             request_id=request_id,
             trace_version=(HTTP_REQUEST_TRACE_VERSION),
@@ -106,29 +122,42 @@ class RequestObservabilityMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
 
         except Exception as exc:
+            elapsed_ms = _duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            if metrics is not None:
+                metrics.record_http_failed(duration_ms=elapsed_ms)
+
             logger.error(
                 "http_request_failed",
                 **safe_fields,
                 error_type=(type(exc).__name__),
-                duration_ms=_duration_ms(
-                    clock=self._clock,
-                    started_at=started_at,
-                ),
+                duration_ms=elapsed_ms,
             )
 
             raise
 
         else:
+            elapsed_ms = _duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            if metrics is not None:
+                metrics.record_http_completed(
+                    status_code=(response.status_code),
+                    duration_ms=elapsed_ms,
+                )
+
             response.headers[REQUEST_ID_HEADER] = request_id
 
             logger.info(
                 "http_request_completed",
                 **safe_fields,
                 status_code=(response.status_code),
-                duration_ms=_duration_ms(
-                    clock=self._clock,
-                    started_at=started_at,
-                ),
+                duration_ms=elapsed_ms,
             )
 
             return response

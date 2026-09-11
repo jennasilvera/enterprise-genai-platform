@@ -654,3 +654,82 @@ def test_answer_service_failure_observability_redacts_exception_message(
     assert sensitive_error not in repr(fake.events)
 
     assert QUESTION not in repr(fake.events)
+
+
+def test_answer_service_records_operational_metrics() -> None:
+    from enterprise_genai.observability.metrics import (
+        OperationalMetricsRegistry,
+    )
+
+    metrics = OperationalMetricsRegistry()
+
+    service = GroundedAnsweringService(
+        specification_provider=(StaticSpecificationProvider(_spec())),
+        runtime=(FixedRuntime(_snapshot())),
+        generation_provider=(FakeGenerationProvider(AUTHORITY_TEXT)),
+        metrics_registry=metrics,
+        clock=(_IncrementingClock()),
+    )
+
+    result = service.answer(AnswerRequest(question=QUESTION))
+
+    assert result.status == "answered"
+
+    snapshot = metrics.snapshot()
+
+    assert snapshot.answer_requests_total == 1
+
+    assert snapshot.answers_total == 1
+
+    assert snapshot.generation_invocations_total == 1
+
+    assert snapshot.generation_accepted_total == 1
+
+    assert dict(snapshot.tool_invocations) == {
+        "retrieval": 1,
+    }
+
+    assert snapshot.answer_service_latency_ms.count == 1
+
+    assert snapshot.generation_latency_ms.count == 1
+
+
+def test_answer_service_records_abstention_metrics() -> None:
+    from enterprise_genai.observability.metrics import (
+        OperationalMetricsRegistry,
+    )
+
+    question = "What was Alder Manufacturing's exact customer churn rate?"
+
+    metrics = OperationalMetricsRegistry()
+
+    service = GroundedAnsweringService(
+        specification_provider=(
+            StaticSpecificationProvider(
+                UnsupportedAnswerSpecification(
+                    question=question,
+                    detail=("outside bounded capability"),
+                )
+            )
+        ),
+        runtime=NoCallRuntime(),
+        generation_provider=(NoCallGenerationProvider()),
+        metrics_registry=metrics,
+        clock=(_IncrementingClock()),
+    )
+
+    result = service.answer(AnswerRequest(question=question))
+
+    assert result.status == "abstained"
+
+    snapshot = metrics.snapshot()
+
+    assert snapshot.answer_requests_total == 1
+
+    assert snapshot.abstentions_total == 1
+
+    assert snapshot.generation_invocations_total == 0
+
+    assert dict(snapshot.abstention_reasons) == {
+        "unsupported_request": 1,
+    }

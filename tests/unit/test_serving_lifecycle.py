@@ -48,6 +48,7 @@ def clean_serving_state():
         "answering_service",
         "answering_assembly",
         "answering_status",
+        "operational_metrics",
     )
 
     for attribute in attributes:
@@ -132,8 +133,14 @@ def test_enabled_lifecycle_installs_service(
     def fake_build(
         *,
         engine,
+        metrics_registry,
     ):
-        calls.append(engine)
+        calls.append(
+            (
+                engine,
+                metrics_registry,
+            )
+        )
 
         return assembly
 
@@ -256,3 +263,33 @@ def test_failed_enabled_initialization_is_not_ready(
     assert answer.status_code == 503
 
     assert answer.json() == {"detail": ("answering service unavailable")}
+
+
+def test_lifespan_owns_process_local_metrics_registry(
+    monkeypatch,
+) -> None:
+    monkeypatch.setattr(
+        main,
+        "settings",
+        Settings(
+            _env_file=None,
+            answering_enabled=False,
+        ),
+    )
+
+    with TestClient(app):
+        assert hasattr(
+            app.state,
+            "operational_metrics",
+        )
+
+        metrics = app.state.operational_metrics
+
+        snapshot = metrics.snapshot()
+
+        assert snapshot.version == "northstar-operational-metrics-v1"
+
+    assert not hasattr(
+        app.state,
+        "operational_metrics",
+    )

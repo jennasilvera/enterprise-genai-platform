@@ -5399,3 +5399,252 @@ This milestone does not establish:
 - concurrency scalability;
 - multi-process trace propagation;
 - external log aggregation.
+
+## Phase 11C3 — Bounded Process-Local Operational Metrics
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Added bounded, thread-safe, process-local operational metrics over the already
+verified HTTP and grounded-answering observability boundaries.
+
+The metrics layer intentionally avoids retaining request content or arbitrary
+individual latency samples.
+
+### Metrics contract
+
+Implemented:
+
+`northstar-operational-metrics-v1`
+
+The registry records bounded operational aggregates including:
+
+- HTTP request count;
+- unhandled HTTP middleware failure count;
+- HTTP status-class counts;
+- answering request count;
+- answered and abstained outcome counts;
+- answering-service failure count;
+- generation invocation count;
+- accepted and rejected generation counts;
+- deterministic fallback count;
+- typed abstention-reason counts;
+- typed answer-failure-stage counts;
+- retrieval, SQL, and graph tool invocation counts;
+- fixed-bucket HTTP latency histograms;
+- fixed-bucket answering-service latency histograms;
+- fixed-bucket generation latency histograms;
+- fixed-bucket per-tool latency histograms.
+
+`http_failures_total` represents unhandled middleware request failures.
+Ordinary returned HTTP error responses are represented independently through
+HTTP status-class accounting.
+
+### Bounded storage
+
+Latency aggregation uses fixed histogram buckets:
+
+- 1 ms
+- 5 ms
+- 10 ms
+- 25 ms
+- 50 ms
+- 100 ms
+- 250 ms
+- 500 ms
+- 1,000 ms
+- 2,500 ms
+- 5,000 ms
+- 10,000 ms
+- 30,000 ms
+- overflow
+
+The registry stores:
+
+- cumulative counters;
+- count and sum aggregates;
+- fixed-bucket histogram counts.
+
+It does not retain an unbounded list of individual latency samples.
+
+### Concurrency
+
+Registry mutation and snapshots are protected by a process-local lock.
+
+A concurrent unit test executed 200 updates through an eight-worker thread
+pool and verified exact counter and histogram totals.
+
+This establishes thread-safe behavior for the tested in-process registry.
+
+It is not a distributed, multi-process, or external metrics backend.
+
+### Serving integration
+
+FastAPI lifespan now creates one process-local operational metrics registry.
+
+That same registry is passed to the serving assembly and grounded-answering
+service.
+
+HTTP middleware obtains the registry from FastAPI application state.
+
+The enabled integration confirmation verified object identity across:
+
+- `app.state.operational_metrics`;
+- `ServingAssembly.metrics_registry`;
+- the metrics registry used by `GroundedAnsweringService`.
+
+The registry is removed from app state at lifespan shutdown.
+
+### Five-case enabled FastAPI/ASGI confirmation
+
+The existing five-case answering control set was executed through `POST
+/answer` using an enabled FastAPI TestClient lifecycle with the persisted
+Northstar data and pinned local generation layer.
+
+This was an in-process ASGI integration confirmation, not a Uvicorn/TCP network
+benchmark.
+
+Exact operational counts after the five requests were:
+
+- HTTP requests: 5
+- unhandled HTTP middleware failures: 0
+- HTTP 2xx responses: 5
+- answering requests: 5
+- answered outcomes: 3
+- abstentions: 2
+- answering-service failures: 0
+- generation invocations: 3
+- generation accepted: 1
+- generation rejected: 2
+- deterministic fallbacks: 2
+- retrieval invocations: 2
+- SQL invocations: 2
+- graph invocations: 0
+
+Abstention reasons were:
+
+- `missing_required_information`: 1
+- `unsupported_request`: 1
+
+Histogram observation counts were:
+
+- HTTP: 5
+- answering service: 5
+- generation: 3
+- retrieval: 2
+- SQL: 2
+- graph: 0
+
+### Control behavior
+
+The five cases preserved the previously verified answering behavior:
+
+- Q-0001:
+  answered / deterministic fallback / generation rejected
+- Q-0010:
+  answered / model generation / generation accepted
+- Q-0011:
+  answered / deterministic fallback / generation rejected
+- Q-0023:
+  abstained / deterministic / generation not applicable
+- Q-0024:
+  abstained / deterministic / generation not applicable
+
+### Privacy boundary
+
+The metrics snapshot schema contains no fields for:
+
+- question text;
+- evidence text;
+- prompts;
+- request or response bodies;
+- raw model generations;
+- generated answer text.
+
+The confirmation artifact additionally asserts that it does not store:
+
+- question text;
+- evidence text;
+- prompt text;
+- model output;
+- answer text;
+- individual latency samples.
+
+A runtime artifact self-check also verified that the five control questions and
+selected canonical evidence/answer strings were absent from the persisted
+artifact.
+
+### Confirmation artifact
+
+Artifact:
+
+`artifacts/evaluation/phase11c3/operational-metrics-confirmation.json`
+
+Confirmation version:
+
+`northstar-operational-metrics-confirmation-v1`
+
+SHA-256:
+
+`bc0c82a84c7f83579318a83ca8a1ed040a455c66dd0f73da8df544afc1896357`
+
+The artifact intentionally excludes raw observed timing values and histogram
+bucket occupancy from the five-case run.
+
+It records only deterministic configuration, exact aggregate counts, bounded
+outcome taxonomy, runtime metadata, and histogram observation counts.
+
+### Runtime note
+
+The enabled confirmation loaded the pinned E5 retrieval model and pinned Qwen
+generation model on CPU.
+
+Model initialization contacted Hugging Face Hub endpoints during the run.
+
+Therefore this milestone does not establish offline packaging or offline model
+startup.
+
+### Verification
+
+At the Phase 11C3 freeze candidate:
+
+- operational-registry tests: 5 passing
+- application-service tests: 15 passing
+- HTTP observability tests: 5 passing
+- serving/lifecycle tests: 10 passing
+- health/transport tests: 10 passing
+- full repository: 604 passing
+- Ruff: clean
+- `git diff --check`: clean
+- fixed-bucket bounded storage: verified
+- metrics snapshot privacy shape: verified
+- shared registry identity: verified
+- five-case enabled ASGI operational accounting: verified
+- confirmation artifact privacy check: verified
+- Phase 11C2 remained a frozen ancestor
+
+### Safe claim
+
+> Implemented a thread-safe, process-local operational metrics layer for a
+> grounded GenAI serving stack, with bounded counters and fixed-bucket latency
+> histograms spanning HTTP, answering, generation, and retrieval/SQL/graph
+> execution. Verified shared registry wiring and exact operational accounting
+> across a five-case enabled FastAPI/ASGI integration control set.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- Prometheus integration;
+- OpenTelemetry metrics;
+- distributed aggregation;
+- multi-process aggregation;
+- persistent metrics storage;
+- production monitoring;
+- service-level objectives;
+- production latency or throughput;
+- statistical latency benchmarking;
+- Uvicorn/TCP network performance;
+- concurrency scalability of model inference;
+- offline model packaging.
