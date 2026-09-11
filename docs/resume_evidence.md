@@ -4537,3 +4537,163 @@ At the Phase 11B0 freeze candidate:
 - production `/answer` execution,
 - live PostgreSQL/Qwen serving through the application service,
 - gRPC or distributed service deployment.
+
+## Phase 11B1 — Grounded Answering Application Service
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Implemented the application-level `GroundedAnsweringService` that composes the
+previously frozen bounded execution, evidence, sufficiency, synthesis, and
+guarded-generation layers behind the Phase 11A service contract.
+
+The service is a composition boundary. It does not infer tool selection,
+execution plans, evidence requirements, or synthesis instructions from arbitrary
+natural-language questions.
+
+### Service dependencies
+
+The service consumes:
+
+- `AnswerSpecificationProviderProtocol`
+- `AnswerExecutionRuntimeProtocol`
+- `GenerationProvider`
+
+The specification provider supplies the already-bounded execution intent.
+
+### Execution flow
+
+For executable requests:
+
+`AnswerRequest`
+→ bounded answer specification
+→ `BoundedLangGraphRuntime`
+→ terminal orchestration snapshot
+→ evidence normalization
+→ deterministic sufficiency assessment
+→ deterministic grounded synthesis
+→ grounded generation request
+→ generation provider
+→ deterministic fidelity assessment
+→ guarded model text or deterministic fallback
+→ `AnswerServiceResult`
+
+For explicitly unsupported requests:
+
+`AnswerRequest`
+→ unsupported answer specification
+→ typed unsupported evidence bundle
+→ deterministic insufficiency/abstention
+→ deterministic presentation
+
+No orchestration or probabilistic generation is invoked for that path.
+
+### Boundary invariants
+
+The service verifies:
+
+- returned specification question exactly equals the incoming request question;
+- runtime snapshot plan exactly equals the requested orchestration plan;
+- sufficient evidence cannot be synthesized without explicit synthesis metadata;
+- accepted model output may cross the presentation boundary only after the
+  frozen fidelity assessment accepts it;
+- rejected model output is replaced with deterministic authority;
+- deterministic abstentions bypass the generation provider entirely.
+
+Generation-provider exceptions currently propagate rather than being
+misclassified as fidelity failures. Failure/degradation policy is deferred to a
+later serving-resilience phase.
+
+### Unit verification
+
+Phase 11B1 added 9 application-service tests covering:
+
+- frozen service version;
+- protocol compatibility;
+- request/specification question consistency;
+- runtime-plan consistency;
+- explicit synthesis requirement;
+- accepted model presentation;
+- rejected-generation deterministic fallback;
+- deterministic unsupported-request abstention with no runtime/model call;
+- generation-provider failure propagation.
+
+### Real persisted integration confirmation
+
+The service was exercised against the persisted Northstar dataset using:
+
+- frozen Phase 9C4 bounded control specifications;
+- persisted hybrid retrieval;
+- persisted structured SQL;
+- `BoundedLangGraphRuntime`;
+- pinned `Qwen/Qwen2.5-0.5B-Instruct`;
+- immutable model revision
+  `7ae557604adf67be50417f59c2c2f167def9a775`;
+- CPU;
+- float32;
+- CUDA unavailable.
+
+Observed five-case control behavior:
+
+- Q-0001: answered / deterministic fallback / generation rejected
+- Q-0010: answered / model generation / generation accepted
+- Q-0011: answered / deterministic fallback / generation rejected
+- Q-0023: abstained / deterministic / generation not applicable
+- Q-0024: abstained / deterministic / generation not applicable
+
+Additional confirmed authority values:
+
+- Q-0001 provenance included `RISK-006`;
+- Q-0010 authoritative entity was `HelioGrid Energy`;
+- Q-0011 authoritative value was `735000000 USD`;
+- Q-0023 abstained with `missing_required_information`;
+- Q-0024 abstained with `unsupported_request`.
+
+The generation provider was invoked exactly 3 times for Q-0001, Q-0010, and
+Q-0011.
+
+Q-0023 and Q-0024 were deterministic abstentions and did not invoke the
+generation provider.
+
+Rejected raw model text for Q-0001 and Q-0011 did not cross the public
+presentation boundary. The accepted Q-0010 model generation was retained.
+
+### Verification
+
+At the Phase 11B1 freeze candidate:
+
+- Phase 11B1 service tests: 9 passing
+- Phase 11B0 regression tests: 6 passing
+- Phase 11A regression tests: 16 passing
+- Phase 10 comparison regression tests: 23 passing
+- full repository: 561 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 11B0 remained a frozen ancestor
+
+### Safe claim
+
+> Implemented and verified a composition-only grounded answering service over
+> bounded execution, deterministic evidence/sufficiency/synthesis, and guarded
+> local LLM presentation. On a frozen five-case persisted integration control
+> set, three answer cases traversed the model path while two deterministic
+> abstentions skipped generation; rejected model output was replaced by
+> deterministic authority and accepted model output was retained.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- arbitrary natural-language planning;
+- general question-to-tool compilation;
+- general semantic accuracy;
+- hallucination-free generation;
+- full 24-case benchmark accuracy;
+- provider outage recovery;
+- retry or timeout policy;
+- HTTP request serving;
+- authentication or authorization;
+- gRPC or distributed deployment;
+- production latency or throughput.
+

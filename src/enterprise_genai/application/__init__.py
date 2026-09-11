@@ -15,6 +15,11 @@ from enterprise_genai.application.answering import (
     PresentationSource,
     TextAnswerPayload,
 )
+from enterprise_genai.application.service import (
+    GROUNDED_ANSWERING_SERVICE_VERSION,
+    AnswerExecutionRuntimeProtocol,
+    GroundedAnsweringService,
+)
 
 __all__ = [
     "AbstainedServiceResult",
@@ -46,4 +51,10 @@ __all__ += [
     "AnswerSynthesisSpecification",
     "ExecutableAnswerSpecification",
     "UnsupportedAnswerSpecification",
+]
+
+__all__ += [
+    "GROUNDED_ANSWERING_SERVICE_VERSION",
+    "AnswerExecutionRuntimeProtocol",
+    "GroundedAnsweringService",
 ]
