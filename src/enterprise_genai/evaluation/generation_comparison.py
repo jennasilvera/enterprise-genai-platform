@@ -189,3 +189,217 @@ def build_generation_comparison_protocol() -> GenerationComparisonProtocol:
             ),
         )
     )
+
+
+class MechanicalMetricResult(FrozenAnsweringModel):
+    metric: MechanicalMetric
+    passed: bool
+    detail: NonEmptyStr
+
+
+class GenerationSystemScore(FrozenAnsweringModel):
+    system: GenerationSystem
+    query_id: NonEmptyStr
+    text: NonEmptyStr
+    metric_results: tuple[
+        MechanicalMetricResult,
+        ...,
+    ]
+
+    @property
+    def passed(
+        self,
+    ) -> int:
+        return sum(item.passed for item in self.metric_results)
+
+    @property
+    def total(
+        self,
+    ) -> int:
+        return len(self.metric_results)
+
+
+def _normalized(
+    value: str,
+) -> str:
+    return " ".join(value.casefold().split())
+
+
+def _contains_exact_normalized(
+    *,
+    text: str,
+    expected: str,
+) -> bool:
+    return _normalized(expected) in _normalized(text)
+
+
+def score_comparison_text(
+    *,
+    case: GenerationComparisonCase,
+    system: GenerationSystem,
+    text: str,
+    authority_outcome: str,
+    authority_answer_type: str | None,
+    authority_value: object,
+    authority_unit: str | None,
+    authority_reason: str | None,
+    presented_outcome: str | None,
+    presented_reason: str | None,
+    unauthorized_numeric_present: bool,
+    unauthorized_citation_present: bool,
+    rejected_raw_exposed: bool,
+) -> GenerationSystemScore:
+    results: list[MechanicalMetricResult] = []
+
+    for metric in case.metrics:
+        if metric == "authority_preserved":
+            if authority_outcome == "abstain":
+                passed = presented_outcome == "abstain" and presented_reason == authority_reason
+
+                detail = (
+                    "Typed abstention authority preserved exactly."
+                    if passed
+                    else ("Presented output did not preserve the typed abstention authority.")
+                )
+
+            elif authority_answer_type == "text":
+                passed = isinstance(
+                    authority_value,
+                    str,
+                ) and _contains_exact_normalized(
+                    text=text,
+                    expected=authority_value,
+                )
+
+                detail = (
+                    "Strict normalized authority text preserved."
+                    if passed
+                    else ("Strict normalized authority text not preserved.")
+                )
+
+            elif authority_answer_type == "entity":
+                passed = isinstance(
+                    authority_value,
+                    str,
+                ) and _contains_exact_normalized(
+                    text=text,
+                    expected=authority_value,
+                )
+
+                detail = (
+                    "Authoritative entity preserved."
+                    if passed
+                    else ("Authoritative entity not preserved.")
+                )
+
+            elif authority_answer_type == "number":
+                passed = (
+                    not isinstance(
+                        authority_value,
+                        bool,
+                    )
+                    and authority_value is not None
+                    and str(authority_value) in text
+                )
+
+                detail = (
+                    "Authoritative numeric literal preserved."
+                    if passed
+                    else ("Authoritative numeric literal not preserved.")
+                )
+
+            else:
+                passed = True
+                detail = "No additional authority preservation rule applies."
+
+        elif metric == "abstention_preserved":
+            passed = (
+                authority_outcome == "abstain"
+                and presented_outcome == "abstain"
+                and presented_reason == authority_reason
+            )
+
+            detail = (
+                "Deterministic abstention preserved."
+                if passed
+                else ("Deterministic abstention was not preserved.")
+            )
+
+        elif metric == "numeric_literal_preserved":
+            passed = (
+                authority_answer_type == "number"
+                and authority_value is not None
+                and str(authority_value) in text
+            )
+
+            detail = (
+                "Exact numeric literal preserved."
+                if passed
+                else ("Exact numeric literal not preserved.")
+            )
+
+        elif metric == "unit_preserved":
+            passed = authority_unit is not None and _contains_exact_normalized(
+                text=text,
+                expected=authority_unit,
+            )
+
+            detail = "Authority unit preserved." if passed else "Authority unit not preserved."
+
+        elif metric == "entity_preserved":
+            passed = (
+                authority_answer_type == "entity"
+                and isinstance(
+                    authority_value,
+                    str,
+                )
+                and _contains_exact_normalized(
+                    text=text,
+                    expected=authority_value,
+                )
+            )
+
+            detail = "Authority entity preserved." if passed else "Authority entity not preserved."
+
+        elif metric == "unauthorized_numeric_absent":
+            passed = not unauthorized_numeric_present
+
+            detail = (
+                "No unauthorized numeric literal."
+                if passed
+                else ("Unauthorized numeric literal present.")
+            )
+
+        elif metric == "unauthorized_citation_absent":
+            passed = not unauthorized_citation_present
+
+            detail = (
+                "No unauthorized citation ID." if passed else ("Unauthorized citation ID present.")
+            )
+
+        elif metric == "rejected_raw_not_exposed":
+            passed = not rejected_raw_exposed
+
+            detail = (
+                "Rejected raw generation was not exposed."
+                if passed
+                else ("Rejected raw generation crossed the presentation boundary.")
+            )
+
+        else:
+            raise AssertionError(f"Unhandled metric: {metric}")
+
+        results.append(
+            MechanicalMetricResult(
+                metric=metric,
+                passed=passed,
+                detail=detail,
+            )
+        )
+
+    return GenerationSystemScore(
+        system=system,
+        query_id=case.query_id,
+        text=text,
+        metric_results=tuple(results),
+    )

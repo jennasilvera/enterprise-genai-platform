@@ -8,6 +8,7 @@ from enterprise_genai.evaluation.generation_comparison import (
     GenerationComparisonCase,
     GenerationComparisonProtocol,
     build_generation_comparison_protocol,
+    score_comparison_text,
 )
 
 
@@ -105,3 +106,221 @@ def test_claim_boundary_discloses_posthoc_protocol() -> None:
     assert "after phase 10c model behavior" in joined
 
     assert "not blind or preregistered" in joined
+
+
+def test_deterministic_numeric_scores_all_numeric_metrics() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0011")
+
+    score = score_comparison_text(
+        case=case,
+        system="deterministic",
+        text="735000000 USD",
+        authority_outcome="answer",
+        authority_answer_type="number",
+        authority_value=735000000,
+        authority_unit="USD",
+        authority_reason=None,
+        presented_outcome="answer",
+        presented_reason=None,
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    assert score.passed == score.total
+
+
+def test_raw_rescaled_numeric_fails_authority_and_literal() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0011")
+
+    score = score_comparison_text(
+        case=case,
+        system="raw_llm",
+        text=("Total portfolio revenue for 2026 Q2 was $735 million USD."),
+        authority_outcome="answer",
+        authority_answer_type="number",
+        authority_value=735000000,
+        authority_unit="USD",
+        authority_reason=None,
+        presented_outcome="answer",
+        presented_reason=None,
+        unauthorized_numeric_present=True,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["authority_preserved"] is False
+
+    assert results["numeric_literal_preserved"] is False
+
+    assert results["unit_preserved"] is True
+
+    assert results["unauthorized_numeric_absent"] is False
+
+
+def test_guarded_numeric_fallback_scores_cleanly() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0011")
+
+    score = score_comparison_text(
+        case=case,
+        system="guarded_llm",
+        text="735000000 USD",
+        authority_outcome="answer",
+        authority_answer_type="number",
+        authority_value=735000000,
+        authority_unit="USD",
+        authority_reason=None,
+        presented_outcome="answer",
+        presented_reason=None,
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    assert score.passed == score.total
+
+
+def test_raw_abstention_violation_fails_abstention_metric() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0023")
+
+    score = score_comparison_text(
+        case=case,
+        system="raw_llm",
+        text=("Northstar expects Meridian Health Systems' 2030 exit valuation to be $15 billion."),
+        authority_outcome="abstain",
+        authority_answer_type=None,
+        authority_value=None,
+        authority_unit=None,
+        authority_reason=("missing_required_information"),
+        presented_outcome=None,
+        presented_reason=None,
+        unauthorized_numeric_present=True,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["abstention_preserved"] is False
+
+    assert results["authority_preserved"] is False
+
+    assert results["unauthorized_numeric_absent"] is False
+
+
+def test_deterministic_abstention_requires_typed_reason() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0023")
+
+    score = score_comparison_text(
+        case=case,
+        system="deterministic",
+        text=("The available evidence is insufficient to answer this question."),
+        authority_outcome="abstain",
+        authority_answer_type=None,
+        authority_value=None,
+        authority_unit=None,
+        authority_reason="missing_required_information",
+        presented_outcome="abstain",
+        presented_reason="missing_required_information",
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["authority_preserved"] is True
+    assert results["abstention_preserved"] is True
+
+
+def test_guarded_abstention_requires_typed_reason() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0024")
+
+    score = score_comparison_text(
+        case=case,
+        system="guarded_llm",
+        text=("This request is outside the supported query capabilities."),
+        authority_outcome="abstain",
+        authority_answer_type=None,
+        authority_value=None,
+        authority_unit=None,
+        authority_reason="unsupported_request",
+        presented_outcome="abstain",
+        presented_reason="unsupported_request",
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["authority_preserved"] is True
+    assert results["abstention_preserved"] is True
+
+
+def test_raw_text_cannot_spoof_typed_abstention() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0023")
+
+    score = score_comparison_text(
+        case=case,
+        system="raw_llm",
+        text=("missing_required_information: I cannot answer."),
+        authority_outcome="abstain",
+        authority_answer_type=None,
+        authority_value=None,
+        authority_unit=None,
+        authority_reason="missing_required_information",
+        presented_outcome=None,
+        presented_reason=None,
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["authority_preserved"] is False
+    assert results["abstention_preserved"] is False
+
+
+def test_wrong_typed_abstention_reason_fails() -> None:
+    protocol = build_generation_comparison_protocol()
+
+    case = next(item for item in protocol.cases if item.query_id == "Q-0023")
+
+    score = score_comparison_text(
+        case=case,
+        system="guarded_llm",
+        text=("The available evidence is insufficient to answer this question."),
+        authority_outcome="abstain",
+        authority_answer_type=None,
+        authority_value=None,
+        authority_unit=None,
+        authority_reason="missing_required_information",
+        presented_outcome="abstain",
+        presented_reason="unsupported_request",
+        unauthorized_numeric_present=False,
+        unauthorized_citation_present=False,
+        rejected_raw_exposed=False,
+    )
+
+    results = {item.metric: item.passed for item in score.metric_results}
+
+    assert results["authority_preserved"] is False
+    assert results["abstention_preserved"] is False

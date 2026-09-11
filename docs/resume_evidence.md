@@ -4063,3 +4063,86 @@ At the Phase 10D1 freeze candidate:
 - Phase 10C frozen boundary remained unchanged
 
 No comparative score has been computed as part of Phase 10D1.
+
+## Phase 10D2 — Mechanical Generation Comparison Scorer
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Implemented the scorer for the frozen Phase 10D1 comparison protocol before
+running the real three-system comparison.
+
+The scorer compares:
+
+1. `deterministic`
+2. `raw_llm`
+3. `guarded_llm`
+
+against the mechanical case/metric matrix frozen in Phase 10D1.
+
+### Scoring model
+
+The scorer produces typed:
+
+- `MechanicalMetricResult`
+- `GenerationSystemScore`
+
+and evaluates only the metrics declared by each frozen comparison case.
+
+Metrics include:
+
+- authority preservation,
+- abstention preservation,
+- exact numeric-literal preservation,
+- unit preservation,
+- entity preservation,
+- absence of unauthorized numeric literals,
+- absence of unauthorized citation IDs,
+- rejected raw-generation non-exposure.
+
+### Abstention hardening
+
+Abstention scoring does not grant credit based on the system name.
+
+Instead, the scorer requires explicit typed presentation metadata:
+
+- `presented_outcome`
+- `presented_reason`
+
+For deterministic and guarded deterministic-fallback outputs, these values are
+derived from the typed deterministic authority.
+
+For raw LLM prose, no typed abstention outcome or reason is inferred from text;
+the values remain `None`.
+
+This prevents raw prose from receiving abstention credit merely by emitting a
+machine-looking reason string, and prevents deterministic or guarded systems
+from receiving credit merely because of their system labels.
+
+### Methodological boundary
+
+The Phase 10D1 protocol was frozen before this scorer was used to compute any
+comparative result.
+
+The scorer itself is frozen before the real Qwen comparison is executed.
+
+The scoring rules remain deterministic mechanical checks. They do not establish
+general semantic equivalence, arbitrary free-form factuality, or semantic answer
+accuracy.
+
+No real three-system comparative score has been computed as part of Phase 10D2.
+
+### Verification
+
+At the Phase 10D2 freeze candidate:
+
+- generation comparison tests: 17 passing
+- Phase 10C regression tests: 33 passing
+- full repository: 524 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 10D1 protocol tag remained unchanged
+
+The next phase executes the frozen scorer against the real deterministic,
+raw-Qwen, and guarded-Qwen presentation paths.
