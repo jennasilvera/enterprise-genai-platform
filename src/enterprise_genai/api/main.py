@@ -27,6 +27,9 @@ from enterprise_genai.db.session import (
     check_database,
     engine,
 )
+from enterprise_genai.observability import (
+    RequestObservabilityMiddleware,
+)
 
 settings = get_settings()
 configure_logging(settings.log_level)
@@ -137,6 +140,8 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+app.add_middleware(RequestObservabilityMiddleware)
 
 app.include_router(answer_router)
 

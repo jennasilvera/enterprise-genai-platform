@@ -5079,3 +5079,121 @@ This milestone does not establish:
 - authentication or authorization;
 - retry or timeout policy;
 - gRPC or distributed deployment.
+
+## Phase 11C1 — Privacy-Safe HTTP Request Observability
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Added a privacy-safe HTTP observability boundary to the live FastAPI
+application without changing the answering API contract.
+
+### Trace contract
+
+Implemented:
+
+`northstar-http-request-trace-v1`
+
+Every HTTP request receives a server-generated UUID request identifier.
+
+The identifier is:
+
+- bound into structured logging context;
+- shared across request start/completion or failure events;
+- returned to the caller in `X-Request-ID`.
+
+Caller-supplied request identifiers are not trusted as the canonical server
+request ID.
+
+### Structured HTTP events
+
+Successful requests emit:
+
+- `http_request_started`
+- `http_request_completed`
+
+Unhandled failures emit:
+
+- `http_request_started`
+- `http_request_failed`
+
+Operational fields include:
+
+- request ID;
+- trace version;
+- HTTP method;
+- URL path without query string;
+- HTTP status code for completed requests;
+- elapsed duration in milliseconds;
+- exception class name for failed requests.
+
+### Privacy boundary
+
+The HTTP observability layer intentionally does not log:
+
+- request bodies;
+- natural-language questions;
+- query strings;
+- request headers;
+- authorization material;
+- retrieved evidence;
+- model prompts;
+- model output;
+- response bodies.
+
+Failure events record only the exception type rather than the exception message,
+because exception messages can contain user-controlled or sensitive content.
+
+### Timing
+
+HTTP request duration uses `perf_counter` and is reported as non-negative
+milliseconds.
+
+This is operational timing instrumentation only.
+
+No latency or throughput performance claim is made by this milestone.
+
+### Verification
+
+At the Phase 11C1 freeze candidate:
+
+- Phase 11C1 tests: 4 passing
+- Phase 11B3 serving regression: 8 passing
+- HTTP/health regression: 10 passing
+- full repository: 590 passing
+- Ruff: clean
+- `git diff --check`: clean
+- OpenAPI answering and health surfaces unchanged
+- Phase 11B3 remained a frozen ancestor
+
+Tests verified:
+
+- unique server-generated UUID request IDs;
+- `X-Request-ID` response propagation;
+- request-start and request-completion correlation;
+- question text excluded from logs;
+- query-string content excluded from logs;
+- sensitive exception messages excluded from logs;
+- exception class retained for operational diagnosis.
+
+### Safe claim
+
+> Added structured, privacy-safe HTTP request observability to the FastAPI
+> serving layer with server-generated correlation IDs, request lifecycle
+> events, response correlation headers, and monotonic request-duration
+> measurement.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- distributed tracing;
+- OpenTelemetry integration;
+- Prometheus metrics;
+- service-level objectives;
+- production latency or throughput;
+- application-stage tracing;
+- per-generation latency;
+- persistent log aggregation;
+- cross-process correlation.
