@@ -3256,3 +3256,223 @@ Do not claim yet:
 - autonomous planning or tool selection
 - learned sufficiency classification
 - probabilistic confidence calibration
+
+## Phase 9C4B — End-to-End Answering Confirmation
+
+**Status:** IMPLEMENTED / TESTED / MEASURED / VERIFIED / REPRODUCIBLE
+
+### Scope
+
+Executed the frozen Phase 9C4A five-case answering protocol against the
+real persisted Northstar dataset and the frozen production execution
+components.
+
+The confirmation exercised:
+
+- frozen BM25 + E5 + reciprocal-rank-fusion retrieval
+- persisted PostgreSQL structured execution
+- bounded LangGraph orchestration
+- typed evidence normalization
+- deterministic evidence sufficiency
+- deterministic grounded synthesis
+- typed abstention
+- post-hoc benchmark comparison
+- canonical provenance validation
+
+Confirmation version:
+
+`northstar-answering-confirmation-v1`
+
+Frozen protocol version:
+
+`northstar-answering-evaluation-v1`
+
+Frozen protocol canonical SHA-256:
+
+`31a2c3e2294e1b6954cf5955e8467fa012869e10d789055bdbc6b75ca6232ad6`
+
+### Result
+
+Formal selected-case result:
+
+- cases: `5`
+- passed: `5`
+- failed: `0`
+- selected-case pass rate: `5/5`
+
+This is a five-case integration confirmation, not a claim of full
+24-case benchmark answering accuracy.
+
+### Q-0001 — grounded retrieval answer
+
+Real frozen retrieval returned the canonical Orbis risk evidence as the
+first hit.
+
+The answering pipeline produced:
+
+- execution: `completed`
+- tool: `retrieval`
+- evidence: `completed`
+- sufficiency: `sufficient`
+- outcome: `answer`
+- answer type: `text`
+- selected support:
+  `RET:001:EVID-CORE-PC006-RISK-PRIMARY`
+- canonical source fact: `RISK-006`
+
+Post-hoc evaluation verified:
+
+- answer type correctness
+- canonical grade-3 retrieval evidence correctness
+- support validity
+- exact internal source-fact provenance
+- benchmark answer-source provenance inclusion
+
+### Q-0010 — structured entity answer
+
+Real PostgreSQL execution produced:
+
+`HelioGrid Energy`
+
+The path was:
+
+SQL
+→ LangGraph terminal snapshot
+→ typed structured entity evidence
+→ deterministic sufficiency
+→ deterministic entity synthesis
+→ exact normalized entity comparison.
+
+The selected answer passed value, support, and provenance checks.
+
+### Q-0011 — structured numeric answer
+
+Real PostgreSQL execution produced:
+
+`735000000 USD`
+
+The final evidence preserved all eight canonical Q2 2026 portfolio
+revenue fact IDs.
+
+The answer passed:
+
+- numeric value comparison
+- exact unit comparison
+- support validation
+- internal provenance validation
+- benchmark answer-source provenance validation
+
+### Q-0023 — retrieval insufficiency
+
+Real frozen retrieval completed successfully and returned ten grounded
+Meridian evidence records.
+
+None satisfied the explicit requirement for Northstar's expected 2030
+exit valuation.
+
+The deterministic answering layer therefore produced:
+
+- sufficiency: `insufficient`
+- reason: `missing_required_information`
+- outcome: `abstain`
+
+This verifies a real retrieval-to-abstention path rather than a
+hand-constructed insufficiency bundle.
+
+### Q-0024 — unsupported bounded request
+
+The requested `customer_churn_rate` metric was independently verified to
+be rejected by the bounded `StructuredQuery` contract.
+
+The answering layer produced:
+
+- evidence status: `unsupported_request`
+- sufficiency: `insufficient`
+- reason: `unsupported_request`
+- outcome: `abstain`
+
+No SQL was executed and no unsupported value was fabricated.
+
+### Frozen retrieval configuration observed during confirmation
+
+- retriever: `hybrid:rrf-k60-v1`
+- BM25 representation: `document-title-text-v1`
+- dense representation: `e5-document-title-text-v1`
+- dense model: `intfloat/e5-small-v2`
+- model revision:
+  `ffb93f3bd4047442299a41ebb6fa998a38507c52`
+- embedding dimension: `384`
+- RRF k: `60`
+- device: `cpu`
+- batch size: `16`
+- persisted evidence chunks: `80`
+
+### Reproducibility
+
+Formal artifact:
+
+`artifacts/answering/phase9c4b_answering_confirmation.json`
+
+Exact artifact-file SHA-256:
+
+`dabd7446984fd5d405c90a0c3d29b26df1b7578a9c30f1983476c88f8bb63668`
+
+The persisted report was regenerated in a separate real execution and
+verified byte-identical.
+
+Execution-duration fields are intentionally excluded from the artifact
+because wall-clock timing is nondeterministic and is not part of answer
+correctness.
+
+Markers:
+
+`phase9c4b2_real_persisted_confirmation: VERIFIED`
+
+`phase9c4b_reproducibility: VERIFIED`
+
+### Validation
+
+- Phase 9C4B1 confirmation-runner tests: `6 passed`
+- Phase 9C4A protocol/comparator tests: `13 passed`
+- Phase 9C3B1 synthesis tests: `11 passed`
+- Phase 9C2 regression tests: `18 passed`
+- Phase 9B regression tests: `21 passed`
+- Full repository: `456 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- real persisted selected-case confirmation: `5/5`
+- formal artifact regeneration: byte-identical
+
+### Claim boundary
+
+Safe claim:
+
+> Built and verified a reproducible end-to-end grounded-answering
+> pipeline spanning frozen hybrid retrieval, PostgreSQL structured
+> execution, LangGraph orchestration, deterministic evidence
+> sufficiency, grounded synthesis, exact provenance validation, and
+> typed abstention.
+
+Also safe:
+
+> Achieved 5/5 on a frozen, non-oracular integration control set covering
+> retrieval grounding, structured entity and numeric answers, missing
+> evidence abstention, and unsupported-request abstention.
+
+Also safe:
+
+> Verified the selected integration controls against persisted data and a
+> frozen CPU E5/BM25/RRF retrieval stack, with byte-reproducible
+> stage-resolved evaluation artifacts.
+
+Do not claim:
+
+- 100% accuracy on the complete 24-case benchmark
+- full benchmark answer-generation accuracy
+- free-form natural-language generation
+- LLM answer generation
+- autonomous planning
+- autonomous tool selection
+- autonomous evidence-requirement generation
+- autonomous synthesis-instruction generation
+- learned sufficiency or confidence calibration
