@@ -1,0 +1,158 @@
+{
+  "claim_boundary": [
+    "localhost only",
+    "single Uvicorn worker",
+    "sequential requests",
+    "CPU-only target environment",
+    "descriptive latency rather than throughput",
+    "not a concurrency scalability test",
+    "not a production SLO",
+    "not internet or WAN latency",
+    "not multi-worker performance"
+  ],
+  "client": {
+    "client_clock": "time.perf_counter_ns",
+    "concurrency": 1,
+    "connection_policy": "one persistent connection for readiness, warm-up, and measurement",
+    "process_boundary": "separate client process from Uvicorn",
+    "request_timeout_s": 120.0,
+    "transport": "HTTP/1.1 over localhost TCP"
+  },
+  "control_cases": [
+    {
+      "expected_generation_fidelity": "rejected",
+      "expected_presentation_source": "deterministic_fallback",
+      "expected_status": "answered",
+      "query_id": "Q-0001"
+    },
+    {
+      "expected_generation_fidelity": "accepted",
+      "expected_presentation_source": "model_generation",
+      "expected_status": "answered",
+      "query_id": "Q-0010"
+    },
+    {
+      "expected_generation_fidelity": "rejected",
+      "expected_presentation_source": "deterministic_fallback",
+      "expected_status": "answered",
+      "query_id": "Q-0011"
+    },
+    {
+      "expected_generation_fidelity": "not_applicable",
+      "expected_presentation_source": "deterministic",
+      "expected_status": "abstained",
+      "query_id": "Q-0023"
+    },
+    {
+      "expected_generation_fidelity": "not_applicable",
+      "expected_presentation_source": "deterministic",
+      "expected_status": "abstained",
+      "query_id": "Q-0024"
+    }
+  ],
+  "environment_capture": [
+    "uname",
+    "WSL/kernel identity",
+    "CPU model",
+    "physical/logical CPU counts",
+    "PyTorch version",
+    "CUDA availability",
+    "PyTorch intra-op thread count",
+    "PyTorch inter-op thread count",
+    "Uvicorn version",
+    "FastAPI version",
+    "Python version"
+  ],
+  "latency_channels": {
+    "answer_service_ms": "answer_service_completed.total_duration_ms correlated through X-Request-ID",
+    "client_observed_ms": "client-side POST /answer elapsed time",
+    "generation_ms": "answer_generation_completed.generation_duration_ms when generation was invoked",
+    "server_http_ms": "http_request_completed.duration_ms correlated through X-Request-ID",
+    "tool_duration_ms": "per-tool duration values from answer_service_completed"
+  },
+  "measurement": {
+    "case_order_per_round": [
+      "Q-0001",
+      "Q-0010",
+      "Q-0011",
+      "Q-0023",
+      "Q-0024"
+    ],
+    "expected_http_status": 200,
+    "rounds": 5,
+    "sequential": true,
+    "total_requests": 25,
+    "validate_answer_outcomes": true
+  },
+  "methodology_note": "Incidental latency observations existed before this protocol. The exact Phase 11C4 benchmark methodology is frozen before Phase 11C4 benchmark execution and summary computation.",
+  "purpose": "Measure descriptive warm localhost serving latency through a real single-worker Uvicorn TCP boundary.",
+  "result_artifact_policy": {
+    "store_answer_text": false,
+    "store_evidence_text": false,
+    "store_per_sample_latency": true,
+    "store_prompt_text": false,
+    "store_query_id": true,
+    "store_question_text": false,
+    "store_raw_model_output": false,
+    "store_round_number": true,
+    "store_validated_outcome_taxonomy": true
+  },
+  "server": {
+    "access_log": false,
+    "answering_enabled": true,
+    "app": "enterprise_genai.api.main:app",
+    "date_header": false,
+    "host": "127.0.0.1",
+    "http": "h11",
+    "lifespan": "on",
+    "loop": "asyncio",
+    "port": 8011,
+    "proxy_headers": false,
+    "server_header": false,
+    "workers": 1
+  },
+  "server_log_correlation": {
+    "optional_generation_event": "answer_generation_completed",
+    "required_events": [
+      "http_request_completed",
+      "answer_service_completed"
+    ],
+    "response_header": "X-Request-ID"
+  },
+  "startup": {
+    "included_in_warm_latency_summary": false,
+    "measurement": "elapsed monotonic time from immediately before server-process launch until the first HTTP 200 response from /health/ready",
+    "observations": 1,
+    "poll_interval_s": 0.1,
+    "timeout_s": 120.0
+  },
+  "statistics": {
+    "fields": [
+      "n",
+      "min_ms",
+      "median_ms",
+      "p95_ms",
+      "max_ms"
+    ],
+    "median_method": "statistics.median",
+    "nearest_rank_definition": "sorted_values[ceil(p*n)-1]",
+    "p95_method": "nearest-rank",
+    "p95_quantile": 0.95,
+    "scopes": [
+      "overall",
+      "per_case"
+    ]
+  },
+  "version": "northstar-localhost-serving-latency-protocol-v1",
+  "warmup": {
+    "case_order": [
+      "Q-0001",
+      "Q-0010",
+      "Q-0011",
+      "Q-0023",
+      "Q-0024"
+    ],
+    "included_in_summary": false,
+    "rounds": 1
+  }
+}

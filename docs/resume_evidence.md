@@ -5648,3 +5648,193 @@ This milestone does not establish:
 - Uvicorn/TCP network performance;
 - concurrency scalability of model inference;
 - offline model packaging.
+
+## Phase 11C4A — Localhost Serving Latency Protocol
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Frozen the exact Phase 11C4 localhost latency methodology before executing or
+summarizing the Phase 11C4 benchmark.
+
+Incidental single-run latency observations existed in earlier observability
+work. Therefore this is not claimed as a blind latency experiment.
+
+The stronger methodology claim is that the exact Phase 11C4 sample plan,
+warm-up policy, request ordering, process boundary, timing channels, percentile
+definition, and result-artifact policy were frozen before the Phase 11C4
+benchmark was run.
+
+### Serving boundary
+
+The frozen benchmark requires:
+
+- a real Uvicorn server process;
+- `127.0.0.1`;
+- TCP HTTP rather than TestClient/in-process ASGI;
+- one Uvicorn worker;
+- `asyncio` event loop;
+- `h11` HTTP implementation;
+- lifespan enabled;
+- access logging disabled;
+- proxy headers disabled;
+- server/date headers disabled;
+- `ANSWERING_ENABLED=true`;
+- a separate client process.
+
+### Startup observation
+
+One startup-readiness observation is recorded from immediately before server
+process launch until the first HTTP 200 from `/health/ready`.
+
+Startup readiness is reported separately and is not included in warm request
+latency summaries.
+
+### Warm-up
+
+Exactly one full five-case cycle is executed after readiness.
+
+Warm-up uses the frozen case order:
+
+1. Q-0001
+2. Q-0010
+3. Q-0011
+4. Q-0023
+5. Q-0024
+
+Warm-up requests are validated but excluded from latency summaries.
+
+### Measurement
+
+Exactly five measurement rounds follow warm-up.
+
+Each round uses the same fixed five-case order.
+
+Total measured requests:
+
+`5 rounds × 5 cases = 25 requests`
+
+Requests are sequential with concurrency equal to one.
+
+The client uses one persistent HTTP/1.1 localhost connection.
+
+### Frozen answering outcomes
+
+The benchmark fails if the five cases do not retain the previously verified
+answering behavior:
+
+- Q-0001: answered / deterministic fallback / rejected
+- Q-0010: answered / model generation / accepted
+- Q-0011: answered / deterministic fallback / rejected
+- Q-0023: abstained / deterministic / not applicable
+- Q-0024: abstained / deterministic / not applicable
+
+### Timing channels
+
+The benchmark protocol records:
+
+- client-observed POST `/answer` elapsed time;
+- server HTTP middleware duration;
+- grounded-answering service total duration;
+- generation-provider duration when applicable;
+- tool-native duration values.
+
+Server timing events are correlated to measured client requests using the
+server-generated `X-Request-ID`.
+
+Generation-provider duration includes provider/lock overhead and is not claimed
+as pure neural-network inference time.
+
+### Statistics
+
+Latency summaries are computed:
+
+- overall;
+- per control case.
+
+Reported descriptive statistics are:
+
+- sample count;
+- minimum;
+- median;
+- p95;
+- maximum.
+
+Median uses Python `statistics.median`.
+
+p95 uses the frozen nearest-rank definition:
+
+`sorted_values[ceil(0.95 * n) - 1]`
+
+For a five-sample per-case summary, p95 therefore equals that case's maximum.
+This small-n limitation must remain explicit.
+
+### Environment capture
+
+The result artifact must record:
+
+- OS/kernel/WSL identity;
+- CPU model;
+- physical/logical CPU counts;
+- Python version;
+- Uvicorn version;
+- FastAPI version;
+- PyTorch version;
+- CUDA availability;
+- PyTorch intra-op thread count;
+- PyTorch inter-op thread count.
+
+The target inspection before protocol freeze observed CPU-only PyTorch with
+CUDA unavailable.
+
+### Result artifact privacy
+
+The benchmark result artifact may store per-sample numerical timings, case IDs,
+round numbers, and validated bounded outcome taxonomy.
+
+It must not store:
+
+- natural-language question text;
+- answer text;
+- evidence text;
+- prompt text;
+- raw model output.
+
+### Frozen protocol artifact
+
+Artifact:
+
+`artifacts/evaluation/phase11c4a/latency-protocol.json`
+
+Version:
+
+`northstar-localhost-serving-latency-protocol-v1`
+
+SHA-256:
+
+`c39f2c19135efd8959bd0490a6666acb3e7eda45ba016d76f4267634c8a2e432`
+
+The protocol artifact was generated twice before freeze and required a
+byte-identical SHA-256 result.
+
+### Claim boundary
+
+This protocol does not establish:
+
+- benchmark results;
+- production latency;
+- production throughput;
+- concurrency scalability;
+- multi-worker performance;
+- WAN or internet latency;
+- service-level objectives;
+- GPU performance;
+- production capacity.
+
+### Safe methodology claim
+
+> Froze a reproducible localhost serving-latency protocol before benchmark
+> execution, using a real single-worker Uvicorn TCP boundary, fixed warm-up and
+> five-round request ordering, server/client timing correlation, and an explicit
+> nearest-rank p95 definition.
