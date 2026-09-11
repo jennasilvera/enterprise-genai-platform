@@ -26,6 +26,7 @@ def test_ready_health_when_database_is_available(monkeypatch) -> None:
     assert response.json() == {
         "status": "ready",
         "database": "ok",
+        "answering": "disabled",
     }
 
 
@@ -42,4 +43,5 @@ def test_ready_health_when_database_is_unavailable(monkeypatch) -> None:
     assert response.json() == {
         "status": "not_ready",
         "database": "unavailable",
+        "answering": "disabled",
     }

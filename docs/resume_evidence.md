@@ -4837,3 +4837,245 @@ This milestone does not establish:
 - authentication or authorization;
 - HTTP latency or throughput measurements;
 - gRPC or distributed deployment.
+
+## Phase 11B3 — Bounded FastAPI Serving Assembly and Lifecycle
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Completed the live serving assembly behind the Phase 11B2 `POST /answer`
+transport.
+
+This phase added:
+
+- a deterministic bounded Northstar specification provider;
+- request-scoped SQLAlchemy execution state;
+- process-lifetime persisted retrieval resources;
+- process-lifetime pinned local generation resources;
+- serialized access to shared CPU inference resources;
+- opt-in serving lifecycle configuration;
+- answering-aware readiness;
+- real persisted HTTP confirmation.
+
+### Deterministic serving specification
+
+Implemented:
+
+`NorthstarBoundedSpecificationProvider`
+
+Version:
+
+`northstar-bounded-serving-specification-v1`
+
+The provider is deliberately not described as an autonomous planner.
+
+It compiles only explicit supported natural-language query families into
+`AnswerExecutionSpecification` objects and returns
+`UnsupportedAnswerSpecification` for requests outside that grammar.
+
+Verified supported families include:
+
+- qualitative defect lookup by explicit identifier;
+- highest/lowest year-over-year portfolio revenue growth;
+- total portfolio revenue for a quarter;
+- expected exit-valuation retrieval with explicit evidence requirements.
+
+Unsupported questions are not guessed into tool calls.
+
+### Request-scoped execution
+
+Implemented:
+
+`RequestScopedExecutionRuntime`
+
+Version:
+
+`northstar-request-scoped-execution-runtime-v1`
+
+Database-backed SQL and graph execution use a fresh SQLAlchemy `Session` for
+each bounded execution requiring relational state.
+
+Retrieval-only plans do not open a database session.
+
+This avoids sharing one mutable ORM session across concurrent HTTP requests.
+
+### Process-lifetime serving assembly
+
+Implemented:
+
+`ServingAssembly`
+
+Version:
+
+`northstar-serving-assembly-v1`
+
+At enabled application startup:
+
+- the persisted hybrid retrieval corpus/index is constructed once;
+- the pinned Qwen generation provider is loaded once;
+- the bounded specification provider is constructed once;
+- the request-scoped runtime is constructed once;
+- the composed `GroundedAnsweringService` is installed in FastAPI application
+  state.
+
+The SQL and graph executors themselves remain request scoped.
+
+### Shared inference locking
+
+Added explicit locking wrappers for:
+
+- the shared retrieval executor;
+- the shared generation provider.
+
+Unit concurrency tests verified that two concurrent calls do not enter the
+wrapped shared inference delegate simultaneously.
+
+This is an explicit CPU-serving policy for the current implementation, not a
+throughput optimization claim.
+
+### Configuration
+
+Added:
+
+`answering_enabled: bool = False`
+
+Default behavior keeps heavyweight answering resources disabled.
+
+When answering is disabled:
+
+- the service remains lightweight;
+- the answering stack is not initialized;
+- readiness may still report ready if the database is available;
+- `POST /answer` remains unavailable because no answering service is installed.
+
+When explicitly enabled:
+
+- serving resources initialize during FastAPI lifespan startup;
+- successful initialization installs the answering service;
+- failed initialization keeps the process alive but marks answering
+  `unavailable`.
+
+### Readiness
+
+`GET /health/ready` now reports:
+
+- database readiness;
+- answering state: `disabled`, `ready`, or `unavailable`.
+
+Enabled initialization failure produces HTTP 503 readiness without pretending
+the answering service is operational.
+
+### Real enabled HTTP confirmation
+
+A fresh process was run with:
+
+`ANSWERING_ENABLED=true`
+
+The application successfully initialized the persisted serving stack and
+reported:
+
+- HTTP readiness: `ready`;
+- database: `ok`;
+- answering: `ready`.
+
+Generation model:
+
+- model: `Qwen/Qwen2.5-0.5B-Instruct`;
+- revision:
+  `7ae557604adf67be50417f59c2c2f167def9a775`;
+- device: CPU;
+- dtype: float32;
+- CUDA available: false.
+
+Five real requests were sent through `POST /answer`.
+
+Observed:
+
+- Q-0001:
+  answered / deterministic fallback / generation rejected
+- Q-0010:
+  answered / model generation / generation accepted
+- Q-0011:
+  answered / deterministic fallback / generation rejected
+- Q-0023:
+  abstained / deterministic / generation not applicable
+- Q-0024:
+  abstained / deterministic / generation not applicable
+
+Authority confirmation:
+
+- Q-0001 preserved `ORBIS-IDX-7` and provenance `RISK-006`;
+- Q-0010 returned `HelioGrid Energy`;
+- Q-0011 returned `735000000 USD`;
+- Q-0023 returned `missing_required_information`;
+- Q-0024 returned `unsupported_request`.
+
+Q-0023 is a supported retrieval-family request that executed retrieval before
+abstaining because its required evidence was absent.
+
+Q-0024 is a distinct pre-execution unsupported-capability path.
+
+### Resource-count confirmation
+
+During the five-case enabled HTTP run:
+
+- persisted retrieval builds: 1
+- generation-model loads: 1
+- retrieval executions: 2
+- SQL executions: 2
+- graph executions: 0
+- generation calls: 3
+
+Q-0023 and Q-0024 did not invoke probabilistic generation.
+
+### Startup network caveat
+
+The enabled startup contacted Hugging Face Hub while resolving/loading pinned
+model resources.
+
+Therefore this milestone establishes serving under the observed
+environment/cache/network configuration.
+
+It does not establish offline or fully self-contained model packaging.
+
+### Verification
+
+At the Phase 11B3 freeze candidate:
+
+- serving assembly tests: 4 passing
+- serving lifecycle tests: 4 passing
+- health tests: 3 passing
+- Phase 11B3A tests: 10 passing
+- Phase 11B2 transport tests: 7 passing
+- Phase 11B1 service tests: 9 passing
+- full repository: 586 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 11B2 remained a frozen ancestor
+- live enabled HTTP serving confirmation: verified
+
+### Safe claim
+
+> Implemented and verified bounded live FastAPI serving over persisted
+> retrieval, request-scoped PostgreSQL execution, deterministic
+> evidence/sufficiency/synthesis, and guarded local Qwen presentation.
+> Heavyweight retrieval and generation resources are initialized once at
+> enabled startup, while database execution uses request-scoped sessions. A
+> five-case persisted HTTP control run reproduced the expected answer,
+> fallback, and abstention behavior.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- arbitrary natural-language planning;
+- unrestricted question-to-tool compilation;
+- general semantic correctness;
+- hallucination-free generation;
+- offline model packaging;
+- production latency or throughput;
+- multi-process model sharing;
+- authentication or authorization;
+- retry or timeout policy;
+- gRPC or distributed deployment.

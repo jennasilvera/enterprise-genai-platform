@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     app_name: str = "enterprise-genai-platform"
     environment: str = "dev"
     log_level: str = "INFO"
+    answering_enabled: bool = False
     database_url: str = (
         "postgresql+psycopg://enterprise_genai:enterprise_genai_dev@localhost:5432/enterprise_genai"
     )
