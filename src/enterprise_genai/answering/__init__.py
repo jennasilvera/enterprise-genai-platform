@@ -9,6 +9,14 @@ from enterprise_genai.answering.contracts import (
     StructuredValueEvidenceData,
     SufficiencyAssessment,
 )
+from enterprise_genai.answering.evaluation import (
+    ANSWERING_EVALUATION_PROTOCOL_VERSION,
+    PHASE9C4_QUERY_IDS,
+    AnswerComparison,
+    AnsweringCaseProtocol,
+    build_phase9c4_protocol,
+    compare_answer_outcome,
+)
 from enterprise_genai.answering.evidence import (
     evidence_bundle_from_snapshot,
     unsupported_request_bundle,
@@ -31,9 +39,13 @@ from enterprise_genai.answering.synthesis import (
 )
 
 __all__ = [
+    "ANSWERING_EVALUATION_PROTOCOL_VERSION",
+    "PHASE9C4_QUERY_IDS",
     "SUFFICIENCY_POLICY_VERSION",
     "SYNTHESIS_VERSION",
     "AbstentionOutcome",
+    "AnswerComparison",
+    "AnsweringCaseProtocol",
     "AnswerOutcome",
     "EvidenceBundle",
     "EvidenceRecord",
@@ -46,6 +58,8 @@ __all__ = [
     "StructuredValueEvidenceData",
     "SufficiencyAssessment",
     "SynthesisInstruction",
+    "build_phase9c4_protocol",
+    "compare_answer_outcome",
     "evaluate_sufficiency",
     "evidence_bundle_from_snapshot",
     "synthesize_answer",

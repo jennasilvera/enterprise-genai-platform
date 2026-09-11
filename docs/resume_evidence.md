@@ -3088,3 +3088,171 @@ Do not claim yet:
 - probabilistic confidence calibration
 - Q0023 end-to-end retrieval verification in this milestone
 - full benchmark answer-generation accuracy
+
+## Phase 9C4A — End-to-End Answering Evaluation Protocol
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / REPRODUCIBLE / FROZEN
+
+### Scope
+
+Frozen a five-case stage-resolved evaluation protocol for the answering
+pipeline introduced in Phase 9C.
+
+Protocol version:
+
+`northstar-answering-evaluation-v1`
+
+Dataset version:
+
+`northstar-v1`
+
+Evaluation seed:
+
+`northstar-eval-v1-seed`
+
+Selected cases:
+
+- `Q-0001` — lexical retrieval / grounded text
+- `Q-0010` — SQL / entity
+- `Q-0011` — SQL / numeric value with unit
+- `Q-0023` — real retrieval / insufficient evidence
+- `Q-0024` — bounded unsupported structured request
+
+The protocol freezes execution plans, deterministic evidence
+requirements, synthesis modes, comparison modes, and expected typed
+abstention reasons.
+
+It does not contain benchmark expected-answer values, benchmark
+answer-source fact IDs, or benchmark relevance judgments.
+
+### Non-oracular construction boundary
+
+Execution and answering specifications are built independently of the
+benchmark answer oracle.
+
+The frozen protocol serialization excludes:
+
+- `expected_answer`
+- `answer_source_fact_ids`
+- `relevance_judgments`
+- `answerable`
+
+An independent audit also verified that the serialized protocol contains
+none of the selected benchmark expected-answer literals or canonical
+answer-source fact IDs.
+
+Marker:
+
+`phase9c4a_oracle_leak_audit: VERIFIED`
+
+### Text-answer comparison rule
+
+`Q-0001` intentionally does not use exact string equality against the
+benchmark's concise canonical text answer.
+
+The deterministic synthesizer's `retrieval_text` mode returns the exact
+selected grounded retrieval evidence rather than generating or rewriting
+a concise natural-language answer.
+
+A retrieval-text answer therefore passes only when:
+
+- the observed answer type is `text`
+- the selected evidence record is a benchmark grade-3 canonical
+  retrieval judgment
+- final provenance contains the benchmark canonical answer-source fact
+  IDs
+- supporting record IDs are valid
+- final source-fact provenance exactly matches the selected evidence
+
+This scores retrieval grounding rather than unimplemented free-form
+natural-language rewriting.
+
+Benchmark relevance judgments and answer-source facts are used only
+during post-hoc scoring; they do not influence retrieval, sufficiency,
+or synthesis.
+
+### Structured-answer comparison
+
+`Q-0010` uses normalized exact entity comparison.
+
+`Q-0011` uses numeric comparison with the benchmark tolerance plus exact
+unit comparison.
+
+Both additionally require:
+
+- valid sufficiency-selected support
+- exact internal source-fact provenance
+- inclusion of the benchmark canonical answer-source facts
+
+### Abstention comparison
+
+`Q-0023` expects typed:
+
+`missing_required_information`
+
+after successful frozen retrieval fails the explicit evidence
+requirement for an expected 2030 exit valuation.
+
+`Q-0024` expects typed:
+
+`unsupported_request`
+
+for a metric outside the bounded `StructuredQuery` contract.
+
+### Frozen artifact
+
+Artifact:
+
+`artifacts/answering/phase9c4a_answering_evaluation_protocol.json`
+
+Canonical SHA-256:
+
+`31a2c3e2294e1b6954cf5955e8467fa012869e10d789055bdbc6b75ca6232ad6`
+
+The artifact was regenerated independently and verified byte-identical.
+
+Marker:
+
+`phase9c4a_reproducibility: VERIFIED`
+
+### Validation
+
+- Phase 9C4A protocol/comparator tests: `13 passed`
+- Phase 9C3B1 regression tests: `11 passed`
+- Phase 9C3B0 regression tests: `6 passed`
+- Phase 9C3A regression tests: `10 passed`
+- Phase 9C2 regression tests: `18 passed`
+- Phase 9B regression tests: `21 passed`
+- Full repository: `450 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- oracle-leak audit: `VERIFIED`
+- canonical protocol regeneration: byte-identical
+
+### Claim boundary
+
+Safe claim:
+
+> Designed and froze a reproducible, non-oracular end-to-end answering
+> evaluation protocol spanning retrieval grounding, structured numeric
+> and entity answers, provenance validation, and typed abstention.
+
+Also safe:
+
+> Implemented stage-resolved answer evaluation that separates answer
+> type, value or canonical evidence correctness, unit correctness,
+> support validity, provenance validity, and abstention-reason
+> correctness.
+
+Do not claim yet:
+
+- the five-case end-to-end protocol has been executed as one formal
+  confirmation artifact
+- full benchmark answering accuracy
+- free-form natural-language answer generation
+- LLM answer generation
+- autonomous synthesis-instruction generation
+- autonomous requirement generation
+- autonomous planning or tool selection
+- learned sufficiency classification
+- probabilistic confidence calibration
