@@ -1,0 +1,238 @@
+{
+  "cases": [
+    {
+      "composition_mode": "independent_sequential_evidence_join",
+      "execution_order": [
+        "retrieval",
+        "sql"
+      ],
+      "handoff_count": 0,
+      "mode": "independent",
+      "query_id": "Q-0020",
+      "question": "Which company had net retention below 100 percent in 2026 Q2 and also has document evidence that newer customer cohorts are failing to normalize?",
+      "retrieval": {
+        "canonical_hit": {
+          "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+          "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+          "rank": 1,
+          "source_fact_ids": [
+            "RISK-005",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2"
+          ]
+        },
+        "top_10_evidence_ids": [
+          "EVID-CORE-PC005-QMR-SIGNAL",
+          "EVID-CORE-PC005-RISK-PRIMARY",
+          "EVID-CORE-PC005-BOARD-PRIORITY",
+          "EVID-CORE-PC007-QMR-FINANCIAL",
+          "EVID-CORE-PC006-QMR-FINANCIAL",
+          "EVID-CORE-PC003-QMR-FINANCIAL",
+          "EVID-CORE-PC005-QMR-FINANCIAL",
+          "EVID-CORE-PC001-QMR-FINANCIAL",
+          "EVID-CORE-PC006-BOARD-PRIORITY",
+          "EVID-CORE-PC006-RISK-INDICATOR"
+        ]
+      },
+      "sql": {
+        "entities": [
+          {
+            "canonical_fact_ids": [
+              "FIN-PC-005-2026Q2"
+            ],
+            "company_id": "PC-005",
+            "name": "Vantage Retail Analytics",
+            "score": "97.000"
+          }
+        ],
+        "source_fact_ids": [
+          "FIN-PC-001-2026Q2",
+          "FIN-PC-002-2026Q2",
+          "FIN-PC-003-2026Q2",
+          "FIN-PC-004-2026Q2",
+          "FIN-PC-005-2026Q2",
+          "FIN-PC-006-2026Q2",
+          "FIN-PC-007-2026Q2",
+          "FIN-PC-008-2026Q2"
+        ],
+        "unit": "percent",
+        "value": null
+      },
+      "terminal_status": "completed"
+    },
+    {
+      "composition_mode": "independent_sequential_evidence_join",
+      "execution_order": [
+        "retrieval",
+        "sql"
+      ],
+      "handoff_count": 0,
+      "mode": "independent",
+      "query_id": "Q-0021",
+      "question": "Which company had the highest year-over-year revenue growth in 2026 Q2 and also has a documented permitting problem?",
+      "retrieval": {
+        "canonical_hit": {
+          "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+          "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+          "rank": 1,
+          "source_fact_ids": [
+            "RISK-004"
+          ]
+        },
+        "top_10_evidence_ids": [
+          "EVID-CORE-PC004-RISK-PRIMARY",
+          "EVID-CORE-PC004-BOARD-PRIORITY",
+          "EVID-CORE-PC005-RISK-PRIMARY",
+          "EVID-CORE-PC003-QMR-FINANCIAL",
+          "EVID-CORE-PC004-QMR-FINANCIAL",
+          "EVID-CORE-PC004-QMR-SIGNAL",
+          "EVID-CORE-PC005-QMR-FINANCIAL",
+          "EVID-CORE-PC007-QMR-FINANCIAL",
+          "EVID-CORE-PC002-QMR-SIGNAL",
+          "EVID-CORE-PC002-QMR-FINANCIAL"
+        ]
+      },
+      "sql": {
+        "entities": [
+          {
+            "canonical_fact_ids": [
+              "FIN-PC-004-2026Q2",
+              "FIN-PC-004-2025Q2"
+            ],
+            "company_id": "PC-004",
+            "name": "HelioGrid Energy",
+            "score": "0.3529411764705882352941176471"
+          }
+        ],
+        "source_fact_ids": [
+          "FIN-PC-001-2025Q2",
+          "FIN-PC-001-2026Q2",
+          "FIN-PC-002-2025Q2",
+          "FIN-PC-002-2026Q2",
+          "FIN-PC-003-2025Q2",
+          "FIN-PC-003-2026Q2",
+          "FIN-PC-004-2025Q2",
+          "FIN-PC-004-2026Q2",
+          "FIN-PC-005-2025Q2",
+          "FIN-PC-005-2026Q2",
+          "FIN-PC-006-2025Q2",
+          "FIN-PC-006-2026Q2",
+          "FIN-PC-007-2025Q2",
+          "FIN-PC-007-2026Q2",
+          "FIN-PC-008-2025Q2",
+          "FIN-PC-008-2026Q2"
+        ],
+        "unit": "ratio",
+        "value": null
+      },
+      "terminal_status": "completed"
+    },
+    {
+      "composition_mode": "graph_candidates_to_sql",
+      "dependency_kind": "graph_company_ids_to_sql_candidates",
+      "execution_order": [
+        "graph",
+        "sql"
+      ],
+      "graph": {
+        "company_node_ids": [
+          "PC-002",
+          "PC-008"
+        ],
+        "customer_node_ids": [],
+        "matched_company_ids": [
+          "PC-002",
+          "PC-008"
+        ],
+        "relationship_ids": [
+          "CS-003",
+          "CS-011"
+        ],
+        "source_fact_ids": [
+          "CS-003",
+          "CS-011",
+          "PC-002",
+          "PC-008",
+          "SUP-005",
+          "SUP-011"
+        ],
+        "supplier_node_ids": [
+          "SUP-005",
+          "SUP-011"
+        ]
+      },
+      "handoff": {
+        "company_ids": [
+          "PC-002",
+          "PC-008"
+        ],
+        "downstream_candidate_company_ids": [
+          "PC-002",
+          "PC-008"
+        ]
+      },
+      "mode": "dependent",
+      "original_sql_candidate_company_ids": [],
+      "query_id": "Q-0022",
+      "question": "Among companies with critical suppliers in Germany, which had lower revenue in 2026 Q2?",
+      "sql": {
+        "entities": [
+          {
+            "canonical_fact_ids": [
+              "FIN-PC-008-2026Q2"
+            ],
+            "company_id": "PC-008",
+            "name": "NovaBio Instruments",
+            "score": 83000000
+          }
+        ],
+        "source_fact_ids": [
+          "FIN-PC-002-2026Q2",
+          "FIN-PC-008-2026Q2"
+        ],
+        "unit": "USD",
+        "value": null
+      },
+      "terminal_status": "completed"
+    }
+  ],
+  "confirmation_version": "northstar-langgraph-mixed-tool-confirmation-v1",
+  "dataset_version": "northstar-v1",
+  "evaluation_version": "northstar-eval-v1-seed",
+  "retrieval": {
+    "batch_size": 16,
+    "bm25_b": 0.75,
+    "bm25_k1": 1.5,
+    "chunks": 80,
+    "dense_representation": "e5-document-title-text-v1",
+    "dense_version": "dense-e5-small-v2-v1",
+    "device": "cpu",
+    "embedding_dimension": 384,
+    "lexical_representation": "document-title-text-v1",
+    "model_id": "intfloat/e5-small-v2",
+    "model_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+    "retriever_version": "hybrid:rrf-k60-v1",
+    "rrf_k": 60
+  },
+  "runtime": {
+    "class": "BoundedLangGraphRuntime",
+    "commit": "476ff6ceeb37c5174183f353e8a08bfadbe0dc56",
+    "independent_execution": "sequential",
+    "langgraph_version": "1.2.11",
+    "tag": "phase-9b1-bounded-langgraph-runtime"
+  },
+  "source_protocol": {
+    "execution_confirmation_sha256": "0089e0a0dabd5a4a24cb9fd9b7c39aa9c3be555add4a14377a2ac61710d3056e",
+    "report_sha256": "5970e7dbff67bc4fb2e1db5d86ee1116604fd1111b682b0eb31573b73ccc103f"
+  },
+  "summary": {
+    "abstention_implemented": false,
+    "answer_synthesis_implemented": false,
+    "completed_cases": 3,
+    "dependent_cases_verified": 1,
+    "independent_cases_verified": 2,
+    "parallel_execution_claimed": false,
+    "planner_implemented": false,
+    "target_cases": 3
+  }
+}

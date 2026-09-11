@@ -2098,3 +2098,147 @@ Do not claim:
 - general enterprise benchmark coverage;
 - production latency or throughput;
 - GPU/CUDA execution.
+
+## Phase 9B2 — Mixed-Tool LangGraph Orchestration Confirmation
+
+**Status:** IMPLEMENTED / TESTED / MEASURED / REPRODUCIBLE / VERIFIED / FROZEN
+
+### Scope
+
+Confirmed the frozen Phase 9B1 `BoundedLangGraphRuntime`
+against the existing Northstar mixed-tool benchmark cases using
+persisted PostgreSQL data and the frozen hybrid retrieval stack.
+
+Runtime boundary:
+
+- Phase 9B1 commit:
+  `476ff6ceeb37c5174183f353e8a08bfadbe0dc56`
+- Phase 9B1 tag:
+  `phase-9b1-bounded-langgraph-runtime`
+- LangGraph:
+  `1.2.11`
+- Independent execution is intentionally sequential.
+- No parallel-execution claim is made.
+
+### Verified mixed-tool cases
+
+**Q-0020 — independent retrieval + SQL**
+
+- Execution order:
+  `retrieval -> sql`
+- Terminal status:
+  `completed`
+- SQL result:
+  `PC-005` — Vantage Retail Analytics
+- SQL provenance includes:
+  `FIN-PC-005-2026Q2`
+- Canonical retrieval evidence:
+  `EVID-CORE-PC005-QMR-SIGNAL`
+- Canonical retrieval rank:
+  `1`
+- Retrieval provenance includes:
+  `RISK-005`
+- No dependency handoff is produced.
+
+**Q-0021 — independent retrieval + SQL**
+
+- Execution order:
+  `retrieval -> sql`
+- Terminal status:
+  `completed`
+- SQL result:
+  `PC-004` — HelioGrid Energy
+- SQL provenance includes:
+  `FIN-PC-004-2025Q2`,
+  `FIN-PC-004-2026Q2`
+- Canonical retrieval evidence:
+  `EVID-CORE-PC004-RISK-PRIMARY`
+- Canonical retrieval rank:
+  `1`
+- Retrieval provenance includes:
+  `RISK-004`
+- No dependency handoff is produced.
+
+**Q-0022 — dependent graph -> SQL**
+
+- Execution order:
+  `graph -> sql`
+- Terminal status:
+  `completed`
+- Graph candidates:
+  `PC-002`, `PC-008`
+- Materialized dependency handoff:
+  `PC-002`, `PC-008`
+- Downstream SQL candidate scope exactly equals the handoff.
+- Original frozen SQL request remains unmodified with an empty
+  candidate scope before dependency materialization.
+- SQL result:
+  `PC-008` — NovaBio Instruments
+- SQL score:
+  `83000000`
+- Relationship evidence includes:
+  `CS-003`, `CS-011`
+- Candidate-scoped SQL provenance:
+  `FIN-PC-002-2026Q2`,
+  `FIN-PC-008-2026Q2`
+
+### Reproducibility
+
+Canonical artifact:
+
+`artifacts/evaluation/phase9b2/orchestration-confirmation.json`
+
+SHA-256:
+
+`35c47a4f635cb7ac0dddff4adab42625e64fa365fe7b3a1b4fe86b0f361033d8`
+
+Three independently executed confirmation runs produced
+byte-identical JSON artifacts with the same SHA-256.
+
+Source Phase 8E3B execution-confirmation artifact SHA-256:
+
+`0089e0a0dabd5a4a24cb9fd9b7c39aa9c3be555add4a14377a2ac61710d3056e`
+
+Frozen execution-coverage protocol report SHA-256:
+
+`5970e7dbff67bc4fb2e1db5d86ee1116604fd1111b682b0eb31573b73ccc103f`
+
+### Validation
+
+- Phase 9B2 confirmation tests: `2 passed`
+- Phase 9A + Phase 9B1 orchestration regression tests:
+  `19 passed`
+- Combined focused orchestration/evaluation tests:
+  `21 passed`
+- Full repository:
+  `382 passed`
+- Ruff:
+  clean
+- `git diff --check`:
+  clean
+
+### Claim boundary
+
+Safe claim:
+
+> Implemented and verified deterministic LangGraph orchestration
+> across independent retrieval+SQL evidence workflows and a
+> data-dependent graph-to-SQL candidate handoff, preserving typed
+> execution contracts and provenance against persisted PostgreSQL
+> data and the frozen hybrid retrieval stack; repeated evaluation
+> produced byte-identical artifacts.
+
+Do not claim:
+
+- autonomous planning
+- autonomous tool selection
+- LLM-generated execution plans
+- parallel execution
+- arbitrary DAG execution
+- arbitrary agent loops
+- retries
+- answer synthesis
+- downstream sufficiency assessment
+- abstention policy
+- production latency or throughput
+- GPU/CUDA execution
