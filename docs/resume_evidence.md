@@ -4315,3 +4315,122 @@ At the Phase 10E freeze candidate:
 - blind or preregistered comparison,
 - learned factuality/confidence scoring,
 - that 25/25 mechanical fidelity implies perfect generation quality.
+
+## Phase 11A — Typed Application Answering Boundary
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Introduced a typed application-service boundary between the existing FastAPI
+application and the grounded answering/generation stack.
+
+No HTTP answering route, database wiring, model initialization, or gRPC service
+was added in this phase.
+
+### Public application contract
+
+Request:
+
+- `AnswerRequest`
+- normalized nonblank `question`
+- closed Pydantic schema (`additionalProperties: false`)
+
+Result union:
+
+- `AnsweredServiceResult`
+- `AbstainedServiceResult`
+
+Top-level discriminator:
+
+`status`
+
+with:
+
+- `answered`
+- `abstained`
+
+Answered payload discriminator:
+
+`answer_type`
+
+with:
+
+- `text`
+- `entity`
+- `entities`
+- `number`
+- `boolean`
+
+### Presentation safety boundary
+
+The public result exposes:
+
+- presentation text,
+- typed answer or abstention state,
+- presentation source,
+- generation-fidelity disposition,
+- citation IDs,
+- provenance fact IDs.
+
+It deliberately exposes no raw model generation, provider prompt, generation
+prompt, or other untrusted internal generation object.
+
+Presentation-source / fidelity consistency is enforced at runtime:
+
+- deterministic -> `not_applicable`
+- model generation -> `accepted`
+- deterministic fallback -> `rejected`
+
+The OpenAPI schema exposes the enum values but does not itself encode this
+cross-field conditional invariant; Pydantic validation enforces it.
+
+### Service abstraction
+
+`AnsweringServiceProtocol` defines the application boundary consumed by the
+future HTTP route:
+
+`answer(AnswerRequest) -> AnswerServiceResult`
+
+This keeps orchestration, evidence sufficiency, deterministic synthesis, and
+guarded generation out of FastAPI route handlers.
+
+### OpenAPI verification
+
+Verified that:
+
+- `AnswerServiceResult` emits a discriminated `oneOf` on `status`;
+- `AnsweredServiceResult.payload` emits a discriminated `oneOf` on
+  `answer_type`;
+- FastAPI preserves the top-level discriminator in the `/answer` response
+  schema;
+- no raw-generation or prompt fields appear in the public schema.
+
+### Verification
+
+At the Phase 11A freeze candidate:
+
+- application contract/schema tests: 16 passing
+- health regression tests: 3 passing
+- Phase 10 comparison regression tests: 23 passing
+- full repository: 546 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 10E remained a frozen ancestor
+
+### Safe claim
+
+> Designed and verified a typed application-service boundary for grounded
+> answering, including discriminated answer/abstention schemas, typed
+> provenance/citations, presentation-fidelity metadata, and an OpenAPI surface
+> that excludes raw model generation.
+
+### Do not claim
+
+- a production `/answer` endpoint yet,
+- live request handling through PostgreSQL or Qwen,
+- API latency or throughput measurements,
+- authentication or authorization,
+- gRPC or microservice deployment,
+- distributed tracing,
+- production serving readiness.
