@@ -5200,7 +5200,7 @@ This milestone does not establish:
 
 ## Phase 11C2 — Application-Stage Answering Observability
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
