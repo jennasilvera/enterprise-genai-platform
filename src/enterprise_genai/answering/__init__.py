@@ -3,6 +3,10 @@
 from enterprise_genai.answering.contracts import (
     EvidenceBundle,
     EvidenceRecord,
+    GraphEntityEvidenceData,
+    GraphRelationshipEvidenceData,
+    StructuredEntityEvidenceData,
+    StructuredValueEvidenceData,
     SufficiencyAssessment,
 )
 from enterprise_genai.answering.evidence import (
@@ -28,8 +32,12 @@ __all__ = [
     "EvidenceBundle",
     "EvidenceRecord",
     "EvidenceRequirement",
+    "GraphEntityEvidenceData",
+    "GraphRelationshipEvidenceData",
     "GroundedAnswer",
     "GroundedAnswerType",
+    "StructuredEntityEvidenceData",
+    "StructuredValueEvidenceData",
     "SufficiencyAssessment",
     "evaluate_sufficiency",
     "evidence_bundle_from_snapshot",

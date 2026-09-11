@@ -2762,3 +2762,128 @@ Do not claim yet:
 - confidence calibration
 - autonomous planning
 - autonomous tool selection
+
+## Phase 9C3B0 — Typed Synthesis Evidence Substrate
+
+**Status:** IMPLEMENTED / TESTED / MEASURED / VERIFIED / FROZEN
+
+### Scope
+
+Extended the normalized answering-evidence boundary with optional,
+machine-readable synthesis data while preserving the existing
+human-readable evidence summaries and canonical provenance.
+
+This milestone does not implement final answer synthesis.
+
+Its purpose is to ensure typed executor outputs remain typed after
+normalization so later answer construction does not have to reverse-parse
+internally generated prose.
+
+### Typed evidence substrate
+
+Structured scalar evidence now preserves:
+
+- scalar value
+- unit
+
+Structured entity evidence now preserves:
+
+- entity ID
+- entity name
+- operation score when present
+- score unit when present
+
+Graph entity evidence now preserves:
+
+- entity type
+- entity ID
+- entity name
+
+Graph relationship evidence now preserves:
+
+- relationship type
+- relationship ID
+- source type and ID
+- target type and ID
+
+Retrieval evidence deliberately does not receive a parallel structured
+payload. Its canonically grounded source text remains the authoritative
+answering substrate.
+
+### Backward compatibility
+
+`EvidenceRecord.data` is optional.
+
+Existing evidence records constructed before this milestone remain valid
+without typed synthesis data.
+
+The new normalization path populates typed data for structured SQL and
+relational-graph evidence.
+
+### Validation invariants
+
+Typed evidence data must match the containing `EvidenceRecord.kind`.
+
+Retrieval records reject structured synthesis data entirely.
+
+Canonical source fact provenance remains unchanged and continues to be
+validated independently of the typed synthesis payload.
+
+### Persisted verification
+
+Real PostgreSQL execution verified preservation of:
+
+**Portfolio revenue aggregate**
+
+- evidence kind: `structured_value`
+- value: `735000000`
+- unit: `USD`
+
+**Highest year-over-year revenue growth**
+
+- evidence kind: `structured_entity`
+- entity ID: `PC-004`
+- entity name: `HelioGrid Energy`
+- score unit: `ratio`
+
+Marker:
+
+`phase9c3b0_typed_substrate: VERIFIED`
+
+### Validation
+
+- Phase 9C3B0 substrate tests: `6 passed`
+- Phase 9C3A regression tests: `10 passed`
+- Phase 9C2 regression tests: `18 passed`
+- Phase 9C1 regression tests: `10 passed`
+- Phase 9B regression tests: `21 passed`
+- Full repository: `426 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- persisted PostgreSQL typed-substrate verification: `VERIFIED`
+
+### Claim boundary
+
+Safe claim:
+
+> Preserved machine-readable scalar, entity, and graph identity data
+> through the normalized evidence layer while retaining exact canonical
+> provenance, eliminating the need to reverse-parse internally generated
+> prose during downstream answer construction.
+
+Also safe:
+
+> Added a typed synthesis substrate that carries structured SQL and
+> relational-graph results through evidence normalization without losing
+> their machine-readable values or identities.
+
+Do not claim yet:
+
+- final answer synthesis is implemented
+- natural-language answer generation
+- LLM answer generation
+- autonomous planning
+- autonomous tool selection
+- autonomous natural-language requirement generation
+- learned sufficiency classification
+- probabilistic confidence calibration

@@ -64,6 +64,83 @@ class FrozenAnsweringModel(BaseModel):
     )
 
 
+EvidenceScalar = int | float | bool | NonEmptyStr
+
+
+class StructuredValueEvidenceData(FrozenAnsweringModel):
+    """Machine-readable scalar preserved from structured execution."""
+
+    kind: Literal["structured_value"] = "structured_value"
+
+    value: EvidenceScalar
+
+    unit: NonEmptyStr | None = None
+
+
+class StructuredEntityEvidenceData(FrozenAnsweringModel):
+    """Machine-readable entity selected by structured execution."""
+
+    kind: Literal["structured_entity"] = "structured_entity"
+
+    entity_id: NonEmptyStr
+
+    entity_name: NonEmptyStr
+
+    score: EvidenceScalar | None = None
+
+    score_unit: NonEmptyStr | None = None
+
+    @model_validator(mode="after")
+    def validate_score_unit(
+        self,
+    ) -> StructuredEntityEvidenceData:
+        if self.score is None and self.score_unit is not None:
+            raise ValueError("Structured entity score_unit requires a score.")
+
+        return self
+
+
+class GraphEntityEvidenceData(FrozenAnsweringModel):
+    """Machine-readable identity for one graph node."""
+
+    kind: Literal["graph_entity"] = "graph_entity"
+
+    entity_type: NonEmptyStr
+
+    entity_id: NonEmptyStr
+
+    entity_name: NonEmptyStr
+
+
+class GraphRelationshipEvidenceData(FrozenAnsweringModel):
+    """Machine-readable identity for one graph relationship."""
+
+    kind: Literal["graph_relationship"] = "graph_relationship"
+
+    relationship_type: NonEmptyStr
+
+    relationship_id: NonEmptyStr
+
+    source_type: NonEmptyStr
+
+    source_id: NonEmptyStr
+
+    target_type: NonEmptyStr
+
+    target_id: NonEmptyStr
+
+
+EvidenceData = Annotated[
+    (
+        StructuredValueEvidenceData
+        | StructuredEntityEvidenceData
+        | GraphEntityEvidenceData
+        | GraphRelationshipEvidenceData
+    ),
+    Field(discriminator="kind"),
+]
+
+
 class EvidenceRecord(FrozenAnsweringModel):
     """One normalized, provenance-bearing unit of evidence."""
 
@@ -87,6 +164,8 @@ class EvidenceRecord(FrozenAnsweringModel):
         ge=1,
     )
 
+    data: EvidenceData | None = None
+
     @model_validator(mode="after")
     def validate_record(
         self,
@@ -101,6 +180,9 @@ class EvidenceRecord(FrozenAnsweringModel):
             raise ValueError("Evidence source fact IDs must use deterministic sorted ordering.")
 
         if self.tool == "retrieval":
+            if self.data is not None:
+                raise ValueError("Retrieval evidence must not contain structured synthesis data.")
+
             if self.kind != "retrieval_hit":
                 raise ValueError("Retrieval evidence must use retrieval_hit kind.")
 
@@ -111,6 +193,9 @@ class EvidenceRecord(FrozenAnsweringModel):
                 raise ValueError("Retrieval evidence requires rank.")
 
             return self
+
+        if self.data is not None and self.data.kind != self.kind:
+            raise ValueError("Evidence data kind must match the evidence record kind.")
 
         if self.tool == "sql" and self.kind not in {
             "structured_value",

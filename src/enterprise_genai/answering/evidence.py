@@ -3,6 +3,10 @@ from __future__ import annotations
 from enterprise_genai.answering.contracts import (
     EvidenceBundle,
     EvidenceRecord,
+    GraphEntityEvidenceData,
+    GraphRelationshipEvidenceData,
+    StructuredEntityEvidenceData,
+    StructuredValueEvidenceData,
 )
 from enterprise_genai.execution.contracts import (
     GraphPayload,
@@ -90,6 +94,10 @@ def _structured_records(
                     f"{unit_suffix}."
                 ),
                 source_fact_ids=(source_facts),
+                data=StructuredValueEvidenceData(
+                    value=payload.value,
+                    unit=payload.unit,
+                ),
             ),
         )
 
@@ -116,6 +124,12 @@ def _structured_records(
                     f"{score_suffix}."
                 ),
                 source_fact_ids=facts,
+                data=StructuredEntityEvidenceData(
+                    entity_id=entity.company_id,
+                    entity_name=entity.name,
+                    score=entity.score,
+                    score_unit=(payload.unit if entity.score is not None else None),
+                ),
             )
         )
 
@@ -146,6 +160,11 @@ def _graph_records(
                 kind="graph_entity",
                 summary=(f"{node.entity_type} {node.name} ({node.entity_id})."),
                 source_fact_ids=facts,
+                data=GraphEntityEvidenceData(
+                    entity_type=node.entity_type,
+                    entity_id=node.entity_id,
+                    entity_name=node.name,
+                ),
             )
         )
 
@@ -170,6 +189,14 @@ def _graph_records(
                     f"{edge.target_id}."
                 ),
                 source_fact_ids=facts,
+                data=GraphRelationshipEvidenceData(
+                    relationship_type=(edge.relationship_type),
+                    relationship_id=(edge.relationship_id),
+                    source_type=edge.source_type,
+                    source_id=edge.source_id,
+                    target_type=edge.target_type,
+                    target_id=edge.target_id,
+                ),
             )
         )
 
