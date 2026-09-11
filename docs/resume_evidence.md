@@ -2242,3 +2242,92 @@ Do not claim:
 - abstention policy
 - production latency or throughput
 - GPU/CUDA execution
+
+## Phase 9C1 — Evidence and Sufficiency Contracts
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+### Scope
+
+Introduced the typed answering boundary that separates tool execution
+from later evidence-sufficiency decisions and answer synthesis.
+
+This milestone defines contracts only. It does not implement a
+sufficiency evaluator, abstention policy, or answer generator.
+
+### Contracts
+
+`EvidenceRecord`
+
+- Normalizes one provenance-bearing unit of answering evidence.
+- Supports retrieval, SQL, and relational-graph evidence.
+- Requires canonical source fact IDs.
+- Enforces deterministic sorted provenance.
+- Retrieval evidence additionally requires document identity and rank.
+- SQL and graph evidence cannot carry retrieval-only metadata.
+
+`EvidenceBundle`
+
+- Groups normalized evidence for one question.
+- Represents four execution-side states:
+  `completed`, `blocked`, `failed`, and `unsupported_request`.
+- Allows a completed bundle with zero records so execution success is
+  not incorrectly equated with answerability.
+- Represents unsupported requests separately from execution failure.
+
+`SufficiencyAssessment`
+
+- Represents the later answerability decision as a typed outcome.
+- Separates `sufficient` from `insufficient`.
+- Requires exact supporting evidence IDs for sufficient decisions.
+- Requires missing-information declarations for insufficient decisions.
+- Prevents references to evidence records outside the bundle.
+- Carries an explicit policy version.
+
+### Abstention-boundary design
+
+The contracts preserve two distinct insufficient-evidence paths:
+
+- Post-execution insufficiency:
+  execution may complete but fail to produce evidence sufficient to
+  answer the requested fact.
+- Unsupported request:
+  the requested information cannot be represented by the bounded
+  execution contract before valid execution occurs.
+
+This distinction is intended to support the existing Northstar
+insufficient-evidence cases without collapsing abstention into tool
+failure or empty retrieval alone.
+
+### Validation
+
+- Phase 9C1 contract tests: `10 passed`
+- Phase 9B orchestration regression tests: `21 passed`
+- Full repository: `392 passed`
+- Pydantic JSON round-trip:
+  verified
+- Ruff:
+  clean
+- `git diff --check`:
+  clean
+
+### Claim boundary
+
+Safe claim:
+
+> Designed and tested immutable typed evidence and sufficiency
+> contracts that preserve canonical provenance across retrieval, SQL,
+> and relational-graph evidence while distinguishing completed
+> execution, blocked/failed execution, and unsupported requests.
+
+Do not claim yet:
+
+- an implemented sufficiency evaluator
+- production abstention behavior
+- Q-0023 abstention verification
+- Q-0024 end-to-end abstention verification
+- answer synthesis
+- LLM-grounded generation
+- confidence calibration
+- autonomous planning
+- autonomous tool selection
