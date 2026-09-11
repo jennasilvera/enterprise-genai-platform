@@ -31,3 +31,19 @@ __all__ = [
     "PresentationSource",
     "TextAnswerPayload",
 ]
+
+from enterprise_genai.application.specification import (
+    AnswerExecutionSpecification,
+    AnswerSpecificationProviderProtocol,
+    AnswerSynthesisSpecification,
+    ExecutableAnswerSpecification,
+    UnsupportedAnswerSpecification,
+)
+
+__all__ += [
+    "AnswerExecutionSpecification",
+    "AnswerSpecificationProviderProtocol",
+    "AnswerSynthesisSpecification",
+    "ExecutableAnswerSpecification",
+    "UnsupportedAnswerSpecification",
+]

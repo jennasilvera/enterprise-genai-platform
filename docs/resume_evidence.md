@@ -4434,3 +4434,106 @@ At the Phase 11A freeze candidate:
 - gRPC or microservice deployment,
 - distributed tracing,
 - production serving readiness.
+
+## Phase 11B0 — Bounded Answer Specification Contract
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Introduced an explicit typed specification boundary between an incoming
+application `AnswerRequest` and grounded execution.
+
+The contract prevents the application service from silently inferring execution
+plans, evidence requirements, synthesis instructions, or unsupported-request
+decisions from arbitrary natural-language questions.
+
+### Executable specification
+
+`ExecutableAnswerSpecification` contains:
+
+- the exact normalized question,
+- a preconstructed `BoundedOrchestrationPlan`,
+- one or more explicit `EvidenceRequirement` objects,
+- optional bounded synthesis metadata.
+
+The specification enforces exact equality between the specification question
+and the orchestration-plan question.
+
+Evidence requirement IDs must be unique and at least one requirement is
+mandatory.
+
+### Synthesis specification
+
+`AnswerSynthesisSpecification` contains:
+
+- deterministic `SynthesisMode`,
+- typed `GroundedAnswerType`.
+
+It does not contain generated text and does not infer synthesis behavior from
+natural language.
+
+### Unsupported specification
+
+`UnsupportedAnswerSpecification` explicitly represents a request that is
+outside the bounded execution contract and carries a typed explanatory detail.
+
+This makes unsupported handling an explicit application decision rather than a
+fallback invented during answer generation.
+
+### Provider abstraction
+
+`AnswerSpecificationProviderProtocol` defines:
+
+`prepare(AnswerRequest) -> AnswerExecutionSpecification`
+
+The protocol deliberately makes no claim about how a specification is
+produced.
+
+Any future deterministic compiler, learned router/planner, or other
+implementation behind this boundary must be evaluated independently before
+claims are made about its behavior.
+
+### Architectural boundary
+
+The intended application flow is:
+
+`AnswerRequest`
+→ `AnswerSpecificationProviderProtocol`
+→ `AnswerExecutionSpecification`
+→ bounded execution
+→ evidence normalization
+→ deterministic sufficiency
+→ deterministic synthesis
+→ guarded generation
+→ `AnswerServiceResult`
+
+The grounded answering service itself therefore does not need to become an
+autonomous natural-language planner.
+
+### Verification
+
+At the Phase 11B0 freeze candidate:
+
+- specification contract tests: 6 passing
+- Phase 11A application regression tests: 16 passing
+- Phase 10 comparison regression tests: 23 passing
+- full repository: 552 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 11A remained a frozen ancestor
+
+### Safe claim
+
+> Designed and verified a bounded answer-specification contract that separates
+> natural-language request intake from explicit orchestration plans, evidence
+> requirements, synthesis metadata, and unsupported-request decisions.
+
+### Do not claim
+
+- autonomous natural-language planning,
+- learned or LLM-based plan generation,
+- arbitrary question-to-tool compilation,
+- production `/answer` execution,
+- live PostgreSQL/Qwen serving through the application service,
+- gRPC or distributed service deployment.
