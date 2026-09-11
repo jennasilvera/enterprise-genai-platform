@@ -3476,3 +3476,151 @@ Do not claim:
 - autonomous evidence-requirement generation
 - autonomous synthesis-instruction generation
 - learned sufficiency or confidence calibration
+
+## Phase 10A — Grounded Generation Authority Boundary
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / REPRODUCIBLE / FROZEN
+
+### Scope
+
+Introduced an explicit authority boundary between the deterministic
+answering system and future probabilistic language generation.
+
+Generation policy version:
+
+`northstar-grounded-generation-policy-v1`
+
+The boundary preserves the deterministic answering outcome as the
+authoritative source of:
+
+- answer versus abstention state
+- answer type
+- typed answer value
+- numeric unit
+- abstention reason
+- missing-information detail
+- sufficiency-selected supporting records
+- canonical source-fact provenance
+- allowed citation IDs
+
+The generation provider is not permitted to expand any of those fields.
+
+### Selected-evidence boundary
+
+Generation does not receive the full retrieval result set.
+
+Only records selected by deterministic sufficiency are exposed through
+`GroundedGenerationRequest`.
+
+Real persisted verification demonstrated:
+
+- `Q-0001`: 10 retrieval records → 1 generation record
+- `Q-0010`: 1 structured evidence record → 1 generation record
+- `Q-0011`: 1 structured evidence record → 1 generation record
+- `Q-0023`: 10 retrieval records → 0 generation records
+- `Q-0024`: 0 evidence records → 0 generation records
+
+For `Q-0001`, the only generation-visible record was:
+
+`RET:001:EVID-CORE-PC006-RISK-PRIMARY`
+
+with canonical source fact:
+
+`RISK-006`
+
+The other nine retrieved records were excluded from serialized generation
+context.
+
+### Structured authority
+
+For `Q-0011`, the deterministic authority crossing the generation boundary
+remained exactly:
+
+`735000000 USD`
+
+with all eight canonical 2026 Q2 portfolio revenue fact IDs.
+
+The generation layer therefore cannot redefine the authoritative numeric
+value without violating the contract.
+
+### Abstention authority
+
+For `Q-0023`, real retrieval produced ten grounded records, but
+deterministic sufficiency selected none.
+
+The generation request therefore contained:
+
+- outcome: `abstain`
+- reason: `missing_required_information`
+- generation evidence: none
+- citation IDs: none
+
+For `Q-0024`, the unsupported structured request crossed the boundary as:
+
+- outcome: `abstain`
+- reason: `unsupported_request`
+- generation evidence: none
+- citation IDs: none
+
+A future language model cannot turn either abstention into an authorized
+answer.
+
+### Contract hardening
+
+The boundary rejects:
+
+- answer-type / authoritative-value mismatches
+- generation questions that differ from the deterministic outcome question
+- evidence outside sufficiency-selected support
+- citation IDs outside sufficiency-selected support
+- canonical provenance mismatches
+- grounding-policy version overrides
+- answer fields attached to abstention authority
+
+### Formal artifact
+
+Artifact:
+
+`artifacts/generation/phase10a_generation_authority_confirmation.json`
+
+Exact artifact-file SHA-256:
+
+`94225514dee475b5a29d0297f522399bff105ab993e536e75a5df27c51686769`
+
+The artifact was independently regenerated and verified byte-identical.
+
+### Validation
+
+- Phase 10A contract tests: `13 passed`
+- Phase 9C4B regression tests: `6 passed`
+- Phase 9C4A regression tests: `13 passed`
+- answering regression tests: `49 passed`
+- full repository: `469 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- real persisted authority-boundary probe: `VERIFIED`
+- formal artifact regeneration: byte-identical
+
+### Claim boundary
+
+Safe claim:
+
+> Designed and verified a deterministic authority boundary that restricts
+> probabilistic generation to sufficiency-selected evidence while
+> preserving typed answer values, canonical provenance, citation
+> allowlists, and abstention decisions.
+
+Also safe:
+
+> Verified on persisted retrieval and SQL execution that unselected
+> retrieval candidates are excluded from generation context; one case
+> reduced 10 retrieved records to 1 authorized generation record, while
+> an insufficient-evidence case reduced 10 grounded records to zero.
+
+Do not claim yet:
+
+- a generative language model is implemented
+- LLM output has been validated
+- hallucination rate has been measured
+- generated citations have been validated
+- free-form generated answer quality has been benchmarked
