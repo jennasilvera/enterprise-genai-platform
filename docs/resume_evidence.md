@@ -3624,3 +3624,196 @@ Do not claim yet:
 - hallucination rate has been measured
 - generated citations have been validated
 - free-form generated answer quality has been benchmarked
+
+## Phase 10B1 — Pinned Local Causal-LM Provider
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+### Scope
+
+Implemented a real local Hugging Face causal-language-model provider behind
+the frozen Phase 10A deterministic generation-authority boundary.
+
+Direct runtime dependency:
+
+`transformers==5.16.1`
+
+Pinned model:
+
+`Qwen/Qwen2.5-0.5B-Instruct`
+
+Pinned immutable model revision:
+
+`7ae557604adf67be50417f59c2c2f167def9a775`
+
+Provider version:
+
+`northstar-hf-causal-generation-provider-v1`
+
+### Runtime configuration
+
+Verified real model execution with:
+
+- model class: `Qwen2ForCausalLM`
+- total parameters: `494032768`
+- execution device: `cpu`
+- parameter dtype: `torch.float32`
+- Torch intra-op threads: `6`
+- Torch inter-op threads: `6`
+- CUDA available: `False`
+- greedy decoding: `do_sample=False`
+- pinned immutable model revision
+- model chat template enabled
+
+No GPU or CUDA execution claim is made.
+
+### Provider boundary
+
+`HuggingFaceCausalGenerationProvider`:
+
+1. accepts only a frozen `GroundedGenerationRequest`
+2. renders deterministic authority and sufficiency-selected evidence
+3. loads the pinned local causal LM
+4. performs greedy CPU generation
+5. returns `RawGeneration`
+6. attaches provider/model/revision/device/dtype metadata
+
+`RawGeneration` remains explicitly untrusted.
+
+The provider does not:
+
+- select tools
+- retrieve evidence
+- perform sufficiency assessment
+- change deterministic answer authority
+- validate its own factual fidelity
+- decide whether generated text is safe to return
+
+Those responsibilities remain outside the probabilistic model.
+
+### Real persisted provider probe
+
+The provider was executed against the same five persisted controls used by
+the grounded-answering integration confirmation.
+
+#### Q-0001 — retrieval text answer
+
+Authority:
+
+`RISK-006`
+
+Observed raw generation preserved the ORBIS-IDX-7 authentication-defect
+content without introducing a conflicting fact.
+
+#### Q-0010 — structured entity answer
+
+Authority:
+
+`HelioGrid Energy`
+
+Observed raw generation:
+
+`HelioGrid Energy (PC-004) had the highest year-over-year revenue growth in 2026 Q2.`
+
+The authoritative entity remained present.
+
+#### Q-0011 — structured numeric answer
+
+Authority:
+
+`735000000 USD`
+
+Observed raw generation:
+
+`Total portfolio revenue for 2026 Q2 was $735 million USD.`
+
+`735 million` is mathematically equivalent to `735000000`, but the raw model
+did not preserve the authoritative numeric representation exactly.
+
+Under the planned strict generation-fidelity policy, raw output is not
+automatically trusted merely because it appears semantically equivalent.
+
+#### Q-0023 — missing-information abstention
+
+Authority:
+
+- outcome: `abstain`
+- reason: `missing_required_information`
+- generation evidence: none
+
+Observed raw generation:
+
+`Northstar expects Meridian Health Systems' 2030 exit valuation to be $15 billion.`
+
+This is a direct hallucination and an explicit violation of deterministic
+abstention authority.
+
+#### Q-0024 — unsupported-request abstention
+
+Authority:
+
+- outcome: `abstain`
+- reason: `unsupported_request`
+- generation evidence: none
+
+Observed raw generation:
+
+`Alder Manufacturing had no known customer churn rate for Q2 2026.`
+
+This changes an unsupported-query condition into an unsupported substantive
+claim about company data and therefore cannot be trusted.
+
+### Engineering conclusion
+
+Prompt instructions alone are insufficient to preserve deterministic
+authority.
+
+A real greedy local instruct model violated:
+
+- abstention semantics
+- unsupported-request semantics
+- strict numeric representation preservation
+
+even though the prompt explicitly described the authority object as
+immutable.
+
+Therefore generated text must be treated as hostile/untrusted output and
+validated after generation.
+
+Phase 10C will implement deterministic generation-fidelity validation and
+fallback behavior rather than relying on prompt compliance.
+
+### Validation
+
+- Phase 10B1 provider tests: `5 passed`
+- Phase 10A regression tests: `13 passed`
+- full repository: `474 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- real pinned causal-LM provider probe: `COMPLETED`
+- Phase 10A remains an ancestor
+
+### Claim boundary
+
+Safe claim:
+
+> Implemented a pinned local Hugging Face causal-LM provider using
+> Qwen2.5-0.5B-Instruct on CPU with deterministic greedy decoding and
+> reproducibility metadata, behind a deterministic evidence-and-authority
+> boundary.
+
+Also safe:
+
+> Empirically demonstrated that raw LLM generation can violate deterministic
+> abstention and numeric-preservation constraints, motivating explicit
+> post-generation fidelity validation and deterministic fallback.
+
+Do not claim yet:
+
+- LLM-generated answers are grounded
+- generated answers are safe to return directly
+- hallucination prevention is implemented
+- generated citations are validated
+- generation fidelity has been formally measured
+- bad generations are automatically rejected
+- deterministic fallback after generation is implemented
