@@ -2887,3 +2887,204 @@ Do not claim yet:
 - autonomous natural-language requirement generation
 - learned sufficiency classification
 - probabilistic confidence calibration
+
+## Phase 9C3B1 — Deterministic Grounded Synthesis
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+### Scope
+
+Implemented a bounded deterministic synthesis layer over the previously
+verified evidence and sufficiency boundaries.
+
+The synthesizer consumes:
+
+- a `SufficiencyAssessment`
+- an explicit validated `SynthesisInstruction`
+- only evidence records selected by
+  `SufficiencyAssessment.supporting_record_ids`
+
+It produces either:
+
+- a typed `GroundedAnswer`
+- a typed `AbstentionOutcome`
+
+This milestone does not infer synthesis instructions from arbitrary
+natural-language questions.
+
+### Synthesis modes
+
+Version:
+
+`northstar-deterministic-grounded-synthesis-v1`
+
+Supported bounded modes are:
+
+- `retrieval_text`
+- `structured_value`
+- `entity_name`
+- `entity_names`
+
+`retrieval_text` returns the exact selected grounded retrieval text.
+
+`structured_value` consumes machine-readable structured evidence and
+supports bounded typed scalar answers.
+
+`entity_name` returns one machine-readable SQL or graph entity name.
+
+`entity_names` returns a deterministic tuple of selected entity names.
+
+### Evidence boundary
+
+A synthesis instruction cannot reference an evidence record that was not
+selected by the sufficiency layer.
+
+The implementation therefore enforces:
+
+`sufficiency-selected evidence`
+→ `explicit synthesis instruction`
+→ `typed grounded outcome`
+
+Evidence present in the bundle but absent from
+`supporting_record_ids` cannot become answer material.
+
+### Provenance continuity
+
+Final `GroundedAnswer.supporting_record_ids` exactly matches the
+sufficiency assessment.
+
+Final `GroundedAnswer.source_fact_ids` is the deterministic union of
+canonical fact IDs from all sufficiency-selected supporting records.
+
+This is deliberately broader than the subset of records used to render
+the answer value.
+
+That distinction preserves provenance for multi-source or dependent
+workflows in which one selected record may provide the displayed answer
+while additional selected records establish the evidence chain.
+
+### Structured-value safety
+
+Numeric answer construction requires a machine-readable numeric value.
+
+String values such as `"123"` are not parsed into numbers.
+
+The synthesizer therefore does not recover typed answers by parsing
+`EvidenceRecord.summary`.
+
+Units are preserved for numeric structured values.
+
+Boolean and text scalar modes reject incompatible values or units rather
+than silently coercing them.
+
+### Abstention
+
+An insufficient `SufficiencyAssessment` does not require a synthesis
+instruction.
+
+It deterministically produces an `AbstentionOutcome` preserving:
+
+- insufficiency reason
+- missing-information entries
+- supporting-record IDs, if any
+- sufficiency-policy version
+
+No answer value is fabricated when evidence is insufficient or the
+request is unsupported.
+
+### Verification
+
+#### Persisted SQL controls
+
+Real PostgreSQL-backed bounded execution verified:
+
+**Q0011 — portfolio revenue**
+
+- answer type: `number`
+- value: `735000000`
+- unit: `USD`
+
+**Q0010 — highest year-over-year revenue growth**
+
+- answer type: `entity`
+- value: `HelioGrid Energy`
+
+These controls exercised:
+
+SQL execution
+→ normalized typed evidence
+→ deterministic sufficiency
+→ deterministic synthesis
+→ typed grounded answer.
+
+#### Abstention-boundary controls
+
+Explicit answering-boundary controls verified:
+
+**Q0023**
+
+- outcome: `abstain`
+- reason: `missing_required_information`
+
+**Q0024**
+
+- outcome: `abstain`
+- reason: `unsupported_request`
+
+These two controls verify synthesis/abstention semantics.
+
+They are not claimed here as end-to-end persisted retrieval or routing
+executions.
+
+Marker:
+
+`phase9c3b1_grounded_synthesis: VERIFIED`
+
+### Validation
+
+- Phase 9C3B1 synthesis tests: `11 passed`
+- Phase 9C3B0 regression tests: `6 passed`
+- Phase 9C3A regression tests: `10 passed`
+- Phase 9C2 regression tests: `18 passed`
+- Phase 9C1 regression tests: `10 passed`
+- Phase 9B regression tests: `21 passed`
+- Full repository: `437 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- persisted SQL synthesis controls: `VERIFIED`
+- explicit abstention-boundary controls: `VERIFIED`
+
+### Claim boundary
+
+Safe claim:
+
+> Implemented and tested a deterministic grounded-synthesis layer that
+> constructs typed answers exclusively from sufficiency-selected
+> retrieval, SQL, or relational-graph evidence while preserving exact
+> canonical provenance and explicit abstention semantics.
+
+Also safe:
+
+> Enforced a bounded answer-construction boundary that preserves typed
+> structured values and entity identities, rejects evidence outside the
+> sufficiency-selected support set, and abstains rather than fabricating
+> unsupported answers.
+
+Also safe:
+
+> Verified PostgreSQL-backed structured numeric and entity answers across
+> execution, evidence normalization, sufficiency, and deterministic
+> synthesis.
+
+Do not claim yet:
+
+- free-form natural-language answer generation
+- LLM answer generation
+- autonomous synthesis-instruction generation
+- autonomous natural-language requirement generation
+- autonomous planning
+- autonomous tool selection
+- learned sufficiency classification
+- probabilistic confidence calibration
+- Q0023 end-to-end retrieval verification in this milestone
+- full benchmark answer-generation accuracy

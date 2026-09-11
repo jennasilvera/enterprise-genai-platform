@@ -24,9 +24,15 @@ from enterprise_genai.answering.sufficiency import (
     EvidenceRequirement,
     evaluate_sufficiency,
 )
+from enterprise_genai.answering.synthesis import (
+    SYNTHESIS_VERSION,
+    SynthesisInstruction,
+    synthesize_answer,
+)
 
 __all__ = [
     "SUFFICIENCY_POLICY_VERSION",
+    "SYNTHESIS_VERSION",
     "AbstentionOutcome",
     "AnswerOutcome",
     "EvidenceBundle",
@@ -39,7 +45,9 @@ __all__ = [
     "StructuredEntityEvidenceData",
     "StructuredValueEvidenceData",
     "SufficiencyAssessment",
+    "SynthesisInstruction",
     "evaluate_sufficiency",
     "evidence_bundle_from_snapshot",
+    "synthesize_answer",
     "unsupported_request_bundle",
 ]
