@@ -4840,7 +4840,7 @@ This milestone does not establish:
 
 ## Phase 11B3 — Bounded FastAPI Serving Assembly and Lifecycle
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
