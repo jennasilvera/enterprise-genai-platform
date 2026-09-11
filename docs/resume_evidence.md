@@ -2617,3 +2617,148 @@ Do not claim yet:
 - autonomous planning
 - autonomous tool selection
 - arbitrary agent loops
+
+## Phase 9C3A — Grounded Answer and Abstention Contracts
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+### Scope
+
+Defined the immutable typed outcome boundary consumed by the later
+grounded-synthesis layer.
+
+Phase 9C3A introduces two mutually exclusive production outcomes:
+
+- `GroundedAnswer`
+- `AbstentionOutcome`
+
+No answer-generation algorithm is implemented in this milestone.
+
+### Grounded answer contract
+
+A `GroundedAnswer` requires:
+
+- a `SufficiencyAssessment(status="sufficient")`
+- a typed answer form
+- an answer value
+- exact supporting evidence record IDs
+- exact canonical source fact IDs
+- an explicit synthesis-version identifier
+
+Supported grounded answer types are:
+
+- `text`
+- `entity`
+- `entities`
+- `number`
+- `boolean`
+
+`abstain` is deliberately not a grounded-answer type.
+
+Abstention is represented through a separate typed outcome.
+
+### Provenance invariants
+
+A grounded answer cannot change the evidence selected by the
+sufficiency layer.
+
+Its `supporting_record_ids` must exactly equal:
+
+`SufficiencyAssessment.supporting_record_ids`
+
+Its `source_fact_ids` must exactly equal the deterministic union of the
+canonical source fact IDs attached to those selected records.
+
+The contract therefore rejects:
+
+- unknown or substituted supporting records
+- added provenance
+- removed provenance
+- unrelated canonical fact IDs
+- answers built from an insufficient assessment
+
+This preserves the chain:
+
+`executor provenance`
+→ `EvidenceRecord`
+→ `SufficiencyAssessment.supporting_record_ids`
+→ `GroundedAnswer.source_fact_ids`
+
+### Typed answer values
+
+Structured values remain typed rather than being prematurely converted
+to prose.
+
+For example, a portfolio revenue result may remain:
+
+- `answer_type="number"`
+- `value=735000000`
+- `unit="USD"`
+
+Non-numeric answers cannot define units.
+
+Numeric answers reject string-encoded numbers.
+
+Entity-list answers require a non-empty tuple of unique entity strings.
+
+Boolean answers require a real boolean value.
+
+### Abstention contract
+
+`AbstentionOutcome` requires:
+
+- an insufficient sufficiency assessment
+- the exact assessment reason
+- the exact missing-information entries
+- the exact supporting-record IDs, if any
+- the exact sufficiency-policy version
+
+The abstention contract therefore cannot drift from the previously
+validated insufficiency decision.
+
+### Discriminated outcome boundary
+
+`AnswerOutcome` is a discriminated union over:
+
+- `outcome="answer"` → `GroundedAnswer`
+- `outcome="abstain"` → `AbstentionOutcome`
+
+This keeps a typed non-answer distinct from a nullable or fabricated
+answer value.
+
+### Validation
+
+- Phase 9C3A outcome-contract tests: `10 passed`
+- Phase 9C2 regression tests: `18 passed`
+- Phase 9C1 regression tests: `10 passed`
+- Phase 9B regression tests: `21 passed`
+- Full repository: `420 passed`
+- Ruff: clean
+- `git diff --check`: clean
+
+### Claim boundary
+
+Safe claim:
+
+> Designed and tested immutable grounded-answer and abstention contracts
+> that enforce exact provenance continuity from sufficiency-selected
+> retrieval, SQL, and relational-graph evidence into typed answer
+> outcomes.
+
+Also safe:
+
+> Enforced a typed answering boundary in which final-answer provenance
+> must exactly match evidence selected by the sufficiency layer, while
+> insufficient cases remain explicit abstention outcomes.
+
+Do not claim yet:
+
+- answer synthesis is implemented
+- grounded answers are generated automatically
+- natural-language generation
+- LLM answer generation
+- autonomous natural-language requirement generation
+- learned sufficiency classification
+- confidence calibration
+- autonomous planning
+- autonomous tool selection
