@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+from collections.abc import Callable
+from time import perf_counter
 from typing import (
     Protocol,
     runtime_checkable,
 )
+
+import structlog
 
 from enterprise_genai.answering.evidence import (
     evidence_bundle_from_snapshot,
@@ -47,12 +51,18 @@ from enterprise_genai.generation.guarded import (
 from enterprise_genai.generation.validation import (
     assess_generation_fidelity,
 )
+from enterprise_genai.observability.answering import (
+    duration_ms,
+    request_trace_fields,
+)
 from enterprise_genai.orchestration.contracts import (
     BoundedOrchestrationPlan,
     OrchestrationStateSnapshot,
 )
 
 GROUNDED_ANSWERING_SERVICE_VERSION = "northstar-grounded-answering-service-v1"
+
+logger = structlog.get_logger()
 
 
 @runtime_checkable
@@ -180,6 +190,11 @@ class GroundedAnsweringService:
 
     The service does not infer tool selection, execution plans,
     evidence requirements, or synthesis instructions.
+
+    Operational tracing is privacy-safe by construction: events use
+    bounded taxonomy, status, and duration fields and never include
+    question text, evidence contents, prompts, model output, or
+    answer text.
     """
 
     def __init__(
@@ -188,97 +203,371 @@ class GroundedAnsweringService:
         specification_provider: (AnswerSpecificationProviderProtocol),
         runtime: AnswerExecutionRuntimeProtocol,
         generation_provider: GenerationProvider,
+        clock: Callable[
+            [],
+            float,
+        ] = perf_counter,
     ) -> None:
         self._specification_provider = specification_provider
+
         self._runtime = runtime
+
         self._generation_provider = generation_provider
+
+        self._clock = clock
 
     def answer(
         self,
         request: AnswerRequest,
     ) -> AnswerServiceResult:
-        specification = self._specification_provider.prepare(request)
+        service_started_at = self._clock()
 
-        if specification.question != request.question:
-            raise ValueError(
-                "answer specification question must exactly match the incoming request question"
-            )
+        trace_fields = request_trace_fields()
 
-        if isinstance(
-            specification,
-            UnsupportedAnswerSpecification,
-        ):
-            bundle = unsupported_request_bundle(
-                question=request.question,
-                detail=specification.detail,
-            )
+        stage_durations_ms: dict[
+            str,
+            float,
+        ] = {}
 
-            requirements = ()
-            synthesis = None
+        tool_durations_ms: dict[
+            str,
+            float,
+        ] = {}
 
-        elif isinstance(
-            specification,
-            ExecutableAnswerSpecification,
-        ):
-            snapshot = self._runtime.execute(specification.orchestration_plan)
+        tool_statuses: dict[
+            str,
+            str,
+        ] = {}
 
-            if snapshot.plan != specification.orchestration_plan:
-                raise RuntimeError(
-                    "answering runtime returned a snapshot for a different orchestration plan"
-                )
+        specification_kind: str | None = None
 
-            bundle = evidence_bundle_from_snapshot(snapshot)
+        route_label: str | None = None
 
-            requirements = specification.requirements
+        tools: tuple[
+            str,
+            ...,
+        ] = ()
 
-            synthesis = specification.synthesis
+        generation_invoked = False
 
-        else:
-            raise TypeError("unsupported answer specification")
+        current_stage = "specification"
 
-        assessment = evaluate_sufficiency(
-            bundle=bundle,
-            requirements=requirements,
+        logger.info(
+            "answer_service_started",
+            **trace_fields,
         )
 
-        if assessment.status == "sufficient":
-            if synthesis is None:
-                raise ValueError("sufficient evidence requires an explicit synthesis specification")
+        try:
+            # -------------------------------------
+            # Specification
+            # -------------------------------------
 
-            outcome = synthesize_answer(
-                assessment=assessment,
-                instruction=(
-                    SynthesisInstruction(
-                        mode=synthesis.mode,
-                        answer_type=(synthesis.answer_type),
-                        answer_record_ids=(assessment.supporting_record_ids),
+            started_at = self._clock()
+
+            specification = self._specification_provider.prepare(request)
+
+            stage_durations_ms["specification"] = duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            if specification.question != request.question:
+                raise ValueError(
+                    "answer specification question must exactly match the incoming request question"
+                )
+
+            specification_kind = specification.kind
+
+            if isinstance(
+                specification,
+                ExecutableAnswerSpecification,
+            ):
+                execution_plan = specification.orchestration_plan.execution_plan
+
+                route_label = execution_plan.route_label
+
+                tools = tuple(execution_plan.required_tools())
+
+            logger.info(
+                "answer_specification_prepared",
+                **trace_fields,
+                specification_kind=(specification_kind),
+                route_label=route_label,
+                tools=tools,
+                duration_ms=(stage_durations_ms["specification"]),
+            )
+
+            # -------------------------------------
+            # Execution / evidence
+            # -------------------------------------
+
+            if isinstance(
+                specification,
+                UnsupportedAnswerSpecification,
+            ):
+                current_stage = "evidence"
+
+                started_at = self._clock()
+
+                bundle = unsupported_request_bundle(
+                    question=(request.question),
+                    detail=(specification.detail),
+                )
+
+                stage_durations_ms["evidence"] = duration_ms(
+                    clock=self._clock,
+                    started_at=(started_at),
+                )
+
+                requirements = ()
+                synthesis = None
+
+            elif isinstance(
+                specification,
+                ExecutableAnswerSpecification,
+            ):
+                current_stage = "execution"
+
+                started_at = self._clock()
+
+                snapshot = self._runtime.execute(specification.orchestration_plan)
+
+                stage_durations_ms["execution"] = duration_ms(
+                    clock=self._clock,
+                    started_at=(started_at),
+                )
+
+                if snapshot.plan != specification.orchestration_plan:
+                    raise RuntimeError(
+                        "answering runtime returned a snapshot for a different orchestration plan"
+                    )
+
+                tool_durations_ms = {result.tool: result.duration_ms for result in snapshot.results}
+
+                tool_statuses = {result.tool: result.status for result in snapshot.results}
+
+                logger.info(
+                    "answer_execution_completed",
+                    **trace_fields,
+                    route_label=(route_label),
+                    tools=tools,
+                    orchestration_status=(snapshot.status),
+                    tool_statuses=(tool_statuses),
+                    tool_durations_ms=(tool_durations_ms),
+                    duration_ms=(stage_durations_ms["execution"]),
+                )
+
+                current_stage = "evidence"
+
+                started_at = self._clock()
+
+                bundle = evidence_bundle_from_snapshot(snapshot)
+
+                stage_durations_ms["evidence"] = duration_ms(
+                    clock=self._clock,
+                    started_at=(started_at),
+                )
+
+                requirements = specification.requirements
+
+                synthesis = specification.synthesis
+
+            else:
+                raise TypeError("unsupported answer specification")
+
+            # -------------------------------------
+            # Sufficiency
+            # -------------------------------------
+
+            current_stage = "sufficiency"
+
+            started_at = self._clock()
+
+            assessment = evaluate_sufficiency(
+                bundle=bundle,
+                requirements=(requirements),
+            )
+
+            stage_durations_ms["sufficiency"] = duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            logger.info(
+                "answer_sufficiency_evaluated",
+                **trace_fields,
+                sufficiency_status=(assessment.status),
+                sufficiency_reason=(assessment.reason),
+                duration_ms=(stage_durations_ms["sufficiency"]),
+            )
+
+            # -------------------------------------
+            # Deterministic synthesis
+            # -------------------------------------
+
+            current_stage = "synthesis"
+
+            started_at = self._clock()
+
+            if assessment.status == "sufficient":
+                if synthesis is None:
+                    raise ValueError(
+                        "sufficient evidence requires an explicit synthesis specification"
+                    )
+
+                outcome = synthesize_answer(
+                    assessment=(assessment),
+                    instruction=(
+                        SynthesisInstruction(
+                            mode=(synthesis.mode),
+                            answer_type=(synthesis.answer_type),
+                            answer_record_ids=(assessment.supporting_record_ids),
+                        )
+                    ),
+                )
+
+            else:
+                outcome = synthesize_answer(assessment=(assessment))
+
+            generation_request = generation_request_from_outcome(
+                question=(request.question),
+                outcome=outcome,
+            )
+
+            stage_durations_ms["synthesis"] = duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            # -------------------------------------
+            # Deterministic abstention
+            # -------------------------------------
+
+            if generation_request.authority.outcome == "abstain":
+                result = _deterministic_abstention(generation_request)
+
+                logger.info(
+                    "answer_generation_skipped",
+                    **trace_fields,
+                    authority_outcome=("abstain"),
+                    abstention_reason=(result.reason),
+                )
+
+                logger.info(
+                    "answer_service_completed",
+                    **trace_fields,
+                    specification_kind=(specification_kind),
+                    route_label=(route_label),
+                    tools=tools,
+                    status=(result.status),
+                    presentation_source=(result.presentation_source),
+                    generation_fidelity=(result.generation_fidelity),
+                    abstention_reason=(result.reason),
+                    generation_invoked=(False),
+                    stage_durations_ms=(stage_durations_ms),
+                    tool_durations_ms=(tool_durations_ms),
+                    total_duration_ms=(
+                        duration_ms(
+                            clock=(self._clock),
+                            started_at=(service_started_at),
+                        )
+                    ),
+                )
+
+                return result
+
+            # -------------------------------------
+            # Probabilistic generation
+            # -------------------------------------
+
+            current_stage = "generation"
+
+            generation_invoked = True
+
+            started_at = self._clock()
+
+            raw = self._generation_provider.generate(generation_request)
+
+            stage_durations_ms["generation"] = duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            # -------------------------------------
+            # Fidelity / presentation guard
+            # -------------------------------------
+
+            current_stage = "fidelity"
+
+            started_at = self._clock()
+
+            fidelity = assess_generation_fidelity(
+                request=(generation_request),
+                raw_generation=raw,
+            )
+
+            safe = resolve_safe_generation(fidelity)
+
+            stage_durations_ms["fidelity"] = duration_ms(
+                clock=self._clock,
+                started_at=started_at,
+            )
+
+            result = _guarded_answer_result(
+                request=(generation_request),
+                safe=safe,
+            )
+
+            logger.info(
+                "answer_generation_completed",
+                **trace_fields,
+                generation_duration_ms=(stage_durations_ms["generation"]),
+                fidelity_duration_ms=(stage_durations_ms["fidelity"]),
+                fidelity_status=(fidelity.status),
+                presentation_source=(safe.source),
+            )
+
+            logger.info(
+                "answer_service_completed",
+                **trace_fields,
+                specification_kind=(specification_kind),
+                route_label=(route_label),
+                tools=tools,
+                status=(result.status),
+                presentation_source=(result.presentation_source),
+                generation_fidelity=(result.generation_fidelity),
+                abstention_reason=None,
+                generation_invoked=(generation_invoked),
+                stage_durations_ms=(stage_durations_ms),
+                tool_durations_ms=(tool_durations_ms),
+                total_duration_ms=(
+                    duration_ms(
+                        clock=(self._clock),
+                        started_at=(service_started_at),
                     )
                 ),
             )
 
-        else:
-            outcome = synthesize_answer(assessment=assessment)
+            return result
 
-        generation_request = generation_request_from_outcome(
-            question=request.question,
-            outcome=outcome,
-        )
+        except Exception as exc:
+            logger.error(
+                "answer_service_failed",
+                **trace_fields,
+                stage=current_stage,
+                specification_kind=(specification_kind),
+                route_label=(route_label),
+                tools=tools,
+                generation_invoked=(generation_invoked),
+                error_type=(type(exc).__name__),
+                stage_durations_ms=(stage_durations_ms),
+                tool_durations_ms=(tool_durations_ms),
+                total_duration_ms=(
+                    duration_ms(
+                        clock=self._clock,
+                        started_at=(service_started_at),
+                    )
+                ),
+            )
 
-        # Deterministic abstentions never cross the
-        # probabilistic generation-provider boundary.
-        if generation_request.authority.outcome == "abstain":
-            return _deterministic_abstention(generation_request)
-
-        raw = self._generation_provider.generate(generation_request)
-
-        fidelity = assess_generation_fidelity(
-            request=generation_request,
-            raw_generation=raw,
-        )
-
-        safe = resolve_safe_generation(fidelity)
-
-        return _guarded_answer_result(
-            request=generation_request,
-            safe=safe,
-        )
+            raise

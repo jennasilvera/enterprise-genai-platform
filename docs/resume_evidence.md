@@ -5197,3 +5197,205 @@ This milestone does not establish:
 - per-generation latency;
 - persistent log aggregation;
 - cross-process correlation.
+
+## Phase 11C2 — Application-Stage Answering Observability
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Extended Phase 11C1 HTTP request observability through the grounded-answering
+application service.
+
+The application-service trace exposes operational taxonomy and monotonic timing
+without logging natural-language questions, evidence contents, prompts, model
+output, answer text, missing-information prose, or exception messages.
+
+### Trace contract
+
+Implemented:
+
+`northstar-answer-service-trace-v1`
+
+The trace inherits the server-generated request ID established by the HTTP
+middleware through structlog context variables.
+
+This allows one request to be correlated across:
+
+- HTTP request start;
+- answering-service start;
+- specification preparation;
+- bounded execution;
+- sufficiency evaluation;
+- generation or generation skip;
+- fidelity validation;
+- answering-service completion;
+- HTTP request completion.
+
+### Application-stage events
+
+Implemented structured events including:
+
+- `answer_service_started`
+- `answer_specification_prepared`
+- `answer_execution_completed`
+- `answer_sufficiency_evaluated`
+- `answer_generation_completed`
+- `answer_generation_skipped`
+- `answer_service_completed`
+- `answer_service_failed`
+
+Operational taxonomy includes:
+
+- specification kind;
+- route label;
+- planned tool families;
+- orchestration status;
+- per-tool execution status;
+- sufficiency status and typed reason;
+- whether generation was invoked;
+- generation fidelity disposition;
+- presentation source;
+- typed abstention reason;
+- failure stage;
+- exception class name.
+
+### Timing
+
+The service now records monotonic durations for applicable stages:
+
+- specification preparation;
+- bounded execution;
+- evidence conversion;
+- sufficiency evaluation;
+- deterministic synthesis / generation-request construction;
+- probabilistic generation;
+- generation-fidelity validation;
+- total answering-service duration.
+
+Existing executor-native `duration_ms` values are preserved separately for
+retrieval, SQL, and graph tool execution.
+
+The service does not reinterpret those tool-level measurements.
+
+### Privacy boundary
+
+Static AST-based inspection verified that structured logger keyword arguments do
+not include prohibited content-bearing fields such as:
+
+- question;
+- text;
+- prompt;
+- evidence;
+- request body;
+- response body;
+- headers;
+- query string;
+- detail;
+- exception message;
+- raw generation;
+- model output.
+
+Runtime capture over real enabled HTTP requests additionally verified that
+captured operational events did not contain:
+
+- the five control questions;
+- `ORBIS-IDX-7`;
+- `RISK-006`;
+- `HelioGrid Energy`;
+- `735000000`;
+- `Meridian Health Systems`;
+- `Alder Manufacturing`;
+- retrieved identity-validation text.
+
+Failure traces retain only the exception class, not the exception message.
+
+### Real enabled HTTP correlation confirmation
+
+A real process was run with:
+
+`ANSWERING_ENABLED=true`
+
+Five requests were sent through `POST /answer`.
+
+Five unique UUID request IDs were returned and each request ID was observed in
+both HTTP middleware events and answering-service events.
+
+Observed control behavior:
+
+- Q-0001:
+  retrieval / generation invoked / deterministic fallback / rejected
+- Q-0010:
+  SQL / generation invoked / model generation / accepted
+- Q-0011:
+  SQL / generation invoked / deterministic fallback / rejected
+- Q-0023:
+  retrieval / no generation / deterministic abstention
+- Q-0024:
+  no execution tool / no generation / deterministic unsupported abstention
+
+Q-0023 retained an execution-stage duration, confirming post-execution
+insufficiency.
+
+Q-0024 had no execution-stage duration, confirming pre-execution unsupported
+handling.
+
+### Observed single-run service timings
+
+The five-case confirmation produced these service-level observations:
+
+- Q-0001: approximately 9065 ms
+- Q-0010: approximately 8079 ms
+- Q-0011: approximately 5190 ms
+- Q-0023: approximately 74 ms
+- Q-0024: approximately 0.2 ms
+
+These values are individual observations from the current CPU/WSL environment.
+
+They are not a benchmark, throughput result, service-level objective, or
+production-performance claim.
+
+The generation-backed cases are substantially slower than the deterministic
+abstention paths in this observed run, which motivates a separately controlled
+latency experiment in a later milestone.
+
+### Verification
+
+At the Phase 11C2 freeze candidate:
+
+- Phase 11C2 observability tests: 4 passing
+- full application-service suite: 13 passing
+- Phase 11C1 regression: 4 passing
+- Phase 11B3 serving regression: 8 passing
+- HTTP/health regression: 10 passing
+- full repository: 594 passing
+- Ruff: clean
+- `git diff --check`: clean
+- static log privacy inspection: verified
+- runtime log privacy confirmation: verified
+- five unique HTTP/application request correlations: verified
+- Phase 11C1 remained a frozen ancestor
+
+### Safe claim
+
+> Added privacy-safe application-stage tracing to the grounded-answering
+> service, propagating server-generated request IDs across the FastAPI and
+> synchronous application-service boundaries while recording specification,
+> execution, sufficiency, generation, fidelity, tool, and total-service timing
+> metadata without logging question, evidence, prompt, model-output, or answer
+> content.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- distributed tracing;
+- OpenTelemetry integration;
+- Prometheus metrics;
+- persistent metrics storage;
+- production latency or throughput;
+- service-level objectives;
+- statistical latency benchmarking;
+- concurrency scalability;
+- multi-process trace propagation;
+- external log aggregation.

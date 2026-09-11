@@ -370,3 +370,287 @@ def test_generation_provider_failure_propagates() -> None:
         match="simulated provider outage",
     ):
         service.answer(AnswerRequest(question=QUESTION))
+
+
+class _ObservabilityLogger:
+    def __init__(
+        self,
+    ) -> None:
+        self.events: list[
+            tuple[
+                str,
+                str,
+                dict[
+                    str,
+                    object,
+                ],
+            ]
+        ] = []
+
+    def info(
+        self,
+        event: str,
+        **kwargs,
+    ) -> None:
+        self.events.append(
+            (
+                "info",
+                event,
+                kwargs,
+            )
+        )
+
+    def error(
+        self,
+        event: str,
+        **kwargs,
+    ) -> None:
+        self.events.append(
+            (
+                "error",
+                event,
+                kwargs,
+            )
+        )
+
+
+class _IncrementingClock:
+    def __init__(
+        self,
+    ) -> None:
+        self.value = 0.0
+
+    def __call__(
+        self,
+    ) -> float:
+        self.value += 0.001
+
+        return self.value
+
+
+def test_answer_service_observability_trace_version() -> None:
+    from enterprise_genai.observability.answering import (
+        ANSWER_SERVICE_TRACE_VERSION,
+    )
+
+    assert ANSWER_SERVICE_TRACE_VERSION == "northstar-answer-service-trace-v1"
+
+
+def test_answer_service_observability_is_privacy_safe_and_correlated(
+    monkeypatch,
+) -> None:
+    from structlog.contextvars import (
+        bind_contextvars,
+        clear_contextvars,
+    )
+
+    import enterprise_genai.application.service as service_module
+
+    fake = _ObservabilityLogger()
+
+    monkeypatch.setattr(
+        service_module,
+        "logger",
+        fake,
+    )
+
+    request_id = "request-observability-test"
+
+    bind_contextvars(request_id=request_id)
+
+    try:
+        service = GroundedAnsweringService(
+            specification_provider=(StaticSpecificationProvider(_spec())),
+            runtime=(FixedRuntime(_snapshot())),
+            generation_provider=(FakeGenerationProvider(AUTHORITY_TEXT)),
+            clock=(_IncrementingClock()),
+        )
+
+        result = service.answer(AnswerRequest(question=QUESTION))
+
+    finally:
+        clear_contextvars()
+
+    assert result.status == "answered"
+
+    event_names = tuple(event for _level, event, _fields in fake.events)
+
+    assert event_names == (
+        "answer_service_started",
+        "answer_specification_prepared",
+        "answer_execution_completed",
+        "answer_sufficiency_evaluated",
+        "answer_generation_completed",
+        "answer_service_completed",
+    )
+
+    for (
+        _level,
+        _event,
+        fields,
+    ) in fake.events:
+        assert fields["request_id"] == request_id
+
+        assert fields["answer_trace_version"] == ("northstar-answer-service-trace-v1")
+
+    completed = fake.events[-1][2]
+
+    assert completed["specification_kind"] == "executable"
+
+    assert completed["route_label"] == "retrieval"
+
+    assert completed["tools"] == ("retrieval",)
+
+    assert completed["status"] == "answered"
+
+    assert completed["presentation_source"] == "model_generation"
+
+    assert completed["generation_fidelity"] == "accepted"
+
+    assert completed["generation_invoked"] is True
+
+    assert completed["tool_durations_ms"] == {
+        "retrieval": 0.0,
+    }
+
+    assert set(completed["stage_durations_ms"]) == {
+        "specification",
+        "execution",
+        "evidence",
+        "sufficiency",
+        "synthesis",
+        "generation",
+        "fidelity",
+    }
+
+    assert completed["total_duration_ms"] >= 0.0
+
+    serialized = repr(fake.events)
+
+    assert QUESTION not in serialized
+
+    assert AUTHORITY_TEXT not in serialized
+
+    assert "EVID-001" not in serialized
+
+    assert "RISK-006" not in serialized
+
+
+def test_unsupported_observability_skips_execution_and_generation(
+    monkeypatch,
+) -> None:
+    import enterprise_genai.application.service as service_module
+
+    question = "What was Alder Manufacturing's exact customer churn rate?"
+
+    sensitive_detail = "PRIVATE-UNSUPPORTED-DETAIL"
+
+    fake = _ObservabilityLogger()
+
+    monkeypatch.setattr(
+        service_module,
+        "logger",
+        fake,
+    )
+
+    service = GroundedAnsweringService(
+        specification_provider=(
+            StaticSpecificationProvider(
+                UnsupportedAnswerSpecification(
+                    question=question,
+                    detail=(sensitive_detail),
+                )
+            )
+        ),
+        runtime=NoCallRuntime(),
+        generation_provider=(NoCallGenerationProvider()),
+        clock=(_IncrementingClock()),
+    )
+
+    result = service.answer(AnswerRequest(question=question))
+
+    assert result.status == "abstained"
+
+    event_names = tuple(event for _level, event, _fields in fake.events)
+
+    assert event_names == (
+        "answer_service_started",
+        "answer_specification_prepared",
+        "answer_sufficiency_evaluated",
+        "answer_generation_skipped",
+        "answer_service_completed",
+    )
+
+    completed = fake.events[-1][2]
+
+    assert completed["specification_kind"] == "unsupported"
+
+    assert completed["route_label"] is None
+
+    assert completed["tools"] == ()
+
+    assert completed["generation_invoked"] is False
+
+    assert completed["presentation_source"] == "deterministic"
+
+    assert completed["generation_fidelity"] == "not_applicable"
+
+    assert completed["abstention_reason"] == "unsupported_request"
+
+    serialized = repr(fake.events)
+
+    assert question not in serialized
+
+    assert sensitive_detail not in serialized
+
+
+def test_answer_service_failure_observability_redacts_exception_message(
+    monkeypatch,
+) -> None:
+    import enterprise_genai.application.service as service_module
+
+    sensitive_error = "PRIVATE-PROVIDER-FAILURE"
+
+    fake = _ObservabilityLogger()
+
+    monkeypatch.setattr(
+        service_module,
+        "logger",
+        fake,
+    )
+
+    class RaisingProvider:
+        def generate(
+            self,
+            request: GroundedGenerationRequest,
+        ) -> RawGeneration:
+            raise RuntimeError(sensitive_error)
+
+    service = GroundedAnsweringService(
+        specification_provider=(StaticSpecificationProvider(_spec())),
+        runtime=(FixedRuntime(_snapshot())),
+        generation_provider=(RaisingProvider()),
+        clock=(_IncrementingClock()),
+    )
+
+    with pytest.raises(
+        RuntimeError,
+        match=sensitive_error,
+    ):
+        service.answer(AnswerRequest(question=QUESTION))
+
+    level, event, fields = fake.events[-1]
+
+    assert level == "error"
+
+    assert event == "answer_service_failed"
+
+    assert fields["stage"] == "generation"
+
+    assert fields["error_type"] == "RuntimeError"
+
+    assert fields["generation_invoked"] is True
+
+    assert sensitive_error not in repr(fake.events)
+
+    assert QUESTION not in repr(fake.events)
