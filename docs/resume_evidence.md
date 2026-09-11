@@ -4437,7 +4437,7 @@ At the Phase 11A freeze candidate:
 
 ## Phase 11B0 — Bounded Answer Specification Contract
 
-**Status:** VERIFIED / FROZEN pending commit/tag
+**Status:** VERIFIED / FROZEN
 
 ### Purpose
 
