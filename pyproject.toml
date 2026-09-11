@@ -11,6 +11,7 @@ dependencies = [
     "accelerate==1.15.0",
     "alembic>=1.14,<2.0",
     "fastapi>=0.115,<1.0",
+    "langgraph==1.2.11",
     "numpy==2.5.2",
     "peft==0.20.0",
     "pgvector>=0.3,<1.0",
