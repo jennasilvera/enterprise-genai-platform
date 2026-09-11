@@ -6,6 +6,7 @@ import structlog
 from fastapi import FastAPI, Response, status
 from pydantic import BaseModel
 
+from enterprise_genai.api.answer import router as answer_router
 from enterprise_genai.core.config import get_settings
 from enterprise_genai.core.logging import configure_logging
 from enterprise_genai.db.session import check_database
@@ -48,6 +49,8 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+app.include_router(answer_router)
 
 
 @app.get("/health/live", response_model=LiveHealthResponse)

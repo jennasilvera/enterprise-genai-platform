@@ -4696,3 +4696,145 @@ This milestone does not establish:
 - authentication or authorization;
 - gRPC or distributed deployment;
 - production latency or throughput.
+
+## Phase 11B2 — FastAPI Grounded Answer Transport
+
+**Status:** VERIFIED / FROZEN
+
+### Purpose
+
+Added a thin FastAPI transport boundary for the previously verified grounded
+answering application service.
+
+This phase intentionally does not construct the real retrieval runtime, model,
+or specification provider inside the HTTP layer.
+
+### HTTP contract
+
+Added:
+
+`POST /answer`
+
+Request:
+
+- `AnswerRequest`
+- normalized nonblank question
+- unknown request fields rejected by the closed Pydantic contract
+
+Response:
+
+- `AnswerServiceResult`
+- discriminated answered/abstained response union
+- typed answer payloads
+- presentation source
+- generation-fidelity disposition
+- citation IDs
+- provenance fact IDs
+
+### Service resolution
+
+The endpoint resolves an `AnsweringServiceProtocol` implementation from:
+
+`app.state.answering_service`
+
+The HTTP route performs no tool selection, retrieval, SQL, orchestration,
+sufficiency evaluation, synthesis, or model generation itself.
+
+Its responsibility is limited to:
+
+HTTP validation
+→ application-service invocation
+→ typed HTTP serialization.
+
+### Unavailable-service behavior
+
+If no answering service has been installed in application state, `POST /answer`
+returns HTTP 503 with:
+
+`answering service unavailable`
+
+This is intentional.
+
+At this milestone the default FastAPI application does not pretend to support
+arbitrary natural-language answering before a truthful serving assembly and
+specification-provider implementation have been installed.
+
+### Validation behavior
+
+Verified that:
+
+- valid answered results serialize through HTTP;
+- valid abstention results serialize through HTTP;
+- outer whitespace in questions is normalized before service invocation;
+- blank questions are rejected with HTTP 422;
+- unknown request fields are rejected with HTTP 422;
+- invalid requests do not invoke the application service;
+- an absent application service returns HTTP 503.
+
+### OpenAPI verification
+
+The real application OpenAPI document contains `POST /answer` with operation ID:
+
+`answer_question`
+
+The HTTP 200 response preserves the top-level `status` discriminator and
+two-member `oneOf` mapping for:
+
+- `answered`
+- `abstained`
+
+The endpoint therefore exposes the same typed result boundary previously
+verified in Phase 11A.
+
+### Resource-lifecycle boundary
+
+This phase deliberately does not initialize heavyweight dependencies inside the
+route.
+
+In particular:
+
+- `FrozenHybridRetrievalExecutor.from_persisted_corpus(...)` is not called per
+  request;
+- `HuggingFaceCausalGenerationProvider.from_pretrained()` is not called per
+  request;
+- no database-backed runtime is constructed per request;
+- no model is loaded per request.
+
+Real resource assembly and lifecycle management are deferred to the next
+serving milestone.
+
+### Verification
+
+At the Phase 11B2 freeze:
+
+- Phase 11B2 API tests: 7 passing
+- health regression tests: 3 passing
+- Phase 11B1 service regression tests: 9 passing
+- Phase 11A contract/schema regression tests: 16 passing
+- full repository: 568 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 11B1 remained a frozen ancestor
+- real application OpenAPI `/answer` discriminator verified
+
+### Safe claim
+
+> Implemented and verified a thin FastAPI `POST /answer` transport over a typed
+> grounded-answering service boundary, including strict request validation,
+> discriminated answer/abstention responses, OpenAPI schema preservation, and
+> explicit HTTP 503 behavior when no answering service is installed.
+
+### Claim boundary
+
+This milestone does not establish:
+
+- live persisted answering through the default HTTP application;
+- arbitrary natural-language planning;
+- a production specification provider;
+- model or retrieval initialization during application startup;
+- request-time PostgreSQL integration through the HTTP endpoint;
+- provider outage recovery;
+- authentication or authorization;
+- HTTP latency or throughput measurements;
+- gRPC or distributed deployment.
+
