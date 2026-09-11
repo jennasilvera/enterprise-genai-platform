@@ -4540,7 +4540,7 @@ At the Phase 11B0 freeze candidate:
 
 ## Phase 11B1 — Grounded Answering Application Service
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
@@ -4696,4 +4696,3 @@ This milestone does not establish:
 - authentication or authorization;
 - gRPC or distributed deployment;
 - production latency or throughput.
-
