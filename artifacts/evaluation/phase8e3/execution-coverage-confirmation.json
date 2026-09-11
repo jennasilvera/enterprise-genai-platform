@@ -1,0 +1,564 @@
+{
+  "cases": [
+    {
+      "observed": {
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified",
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-004-2026Q2",
+                "FIN-PC-004-2025Q2"
+              ],
+              "company_id": "PC-004",
+              "name": "HelioGrid Energy",
+              "score": "0.3529411764705882352941176471"
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-001-2025Q2",
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2025Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2025Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2025Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2025Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2025Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2025Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "ratio",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0010",
+      "question": "Which portfolio company had the highest year-over-year revenue growth in 2026 Q2?",
+      "required_tools": [
+        "sql"
+      ]
+    },
+    {
+      "observed": {
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified",
+        "sql": {
+          "entities": [],
+          "source_fact_ids": [
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "USD",
+          "value": 735000000
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0011",
+      "question": "What was total portfolio revenue in 2026 Q2?",
+      "required_tools": [
+        "sql"
+      ]
+    },
+    {
+      "observed": {
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified",
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-005-2026Q2"
+              ],
+              "company_id": "PC-005",
+              "name": "Vantage Retail Analytics",
+              "score": "97.000"
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "percent",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0012",
+      "question": "Which company had net retention below 100 percent in 2026 Q2?",
+      "required_tools": [
+        "sql"
+      ]
+    },
+    {
+      "observed": {
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified",
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-006-2026Q2"
+              ],
+              "company_id": "PC-006",
+              "name": "Orbis Cybersecurity",
+              "score": "0.2479338842975206611570247934"
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "ratio",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0013",
+      "question": "Which company had the highest EBITDA margin in 2026 Q2?",
+      "required_tools": [
+        "sql"
+      ]
+    },
+    {
+      "observed": {
+        "graph": {
+          "company_node_ids": [
+            "PC-002",
+            "PC-008"
+          ],
+          "customer_node_ids": [],
+          "matched_company_ids": [
+            "PC-002",
+            "PC-008"
+          ],
+          "relationship_ids": [
+            "CS-003",
+            "CS-011"
+          ],
+          "source_fact_ids": [
+            "CS-003",
+            "CS-011",
+            "PC-002",
+            "PC-008",
+            "SUP-005",
+            "SUP-011"
+          ],
+          "supplier_node_ids": [
+            "SUP-005",
+            "SUP-011"
+          ]
+        },
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified"
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0014",
+      "question": "Which portfolio companies depend on critical suppliers located in Germany?",
+      "required_tools": [
+        "graph"
+      ]
+    },
+    {
+      "observed": {
+        "graph": {
+          "company_node_ids": [
+            "PC-006"
+          ],
+          "customer_node_ids": [
+            "CUST-010"
+          ],
+          "matched_company_ids": [
+            "PC-006"
+          ],
+          "relationship_ids": [
+            "CC-010"
+          ],
+          "source_fact_ids": [
+            "CC-010",
+            "CUST-010",
+            "PC-006"
+          ],
+          "supplier_node_ids": []
+        },
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified"
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0015",
+      "question": "Which portfolio company serves a customer based in Germany?",
+      "required_tools": [
+        "graph"
+      ]
+    },
+    {
+      "observed": {
+        "graph": {
+          "company_node_ids": [
+            "PC-008"
+          ],
+          "customer_node_ids": [],
+          "matched_company_ids": [
+            "PC-008"
+          ],
+          "relationship_ids": [
+            "CS-011",
+            "CS-012"
+          ],
+          "source_fact_ids": [
+            "CS-011",
+            "CS-012",
+            "PC-008",
+            "SUP-011",
+            "SUP-012"
+          ],
+          "supplier_node_ids": [
+            "SUP-011",
+            "SUP-012"
+          ]
+        },
+        "observed_composition_coverage": "single_tool",
+        "observed_primitive_coverage": "verified"
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "single_tool",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0016",
+      "question": "Which company has both a critical German supplier and a supplier located in Switzerland?",
+      "required_tools": [
+        "graph"
+      ]
+    },
+    {
+      "observed": {
+        "composition_mode": "parallel_evidence_join",
+        "observed_composition_coverage": "verified_explicit",
+        "observed_primitive_coverage": "verified",
+        "retrieval": {
+          "canonical_hit": {
+            "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+            "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+            "rank": 1,
+            "source_fact_ids": [
+              "RISK-005",
+              "FIN-PC-005-2025Q2",
+              "FIN-PC-005-2026Q2"
+            ]
+          },
+          "top_10_evidence_ids": [
+            "EVID-CORE-PC005-QMR-SIGNAL",
+            "EVID-CORE-PC005-RISK-PRIMARY",
+            "EVID-CORE-PC005-BOARD-PRIORITY",
+            "EVID-CORE-PC007-QMR-FINANCIAL",
+            "EVID-CORE-PC006-QMR-FINANCIAL",
+            "EVID-CORE-PC003-QMR-FINANCIAL",
+            "EVID-CORE-PC005-QMR-FINANCIAL",
+            "EVID-CORE-PC001-QMR-FINANCIAL",
+            "EVID-CORE-PC006-BOARD-PRIORITY",
+            "EVID-CORE-PC006-RISK-INDICATOR"
+          ]
+        },
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-005-2026Q2"
+              ],
+              "company_id": "PC-005",
+              "name": "Vantage Retail Analytics",
+              "score": "97.000"
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "percent",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "pending_explicit_verification",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0020",
+      "question": "Which company had net retention below 100 percent in 2026 Q2 and also has document evidence that newer customer cohorts are failing to normalize?",
+      "required_tools": [
+        "sql",
+        "hybrid_retrieval"
+      ]
+    },
+    {
+      "observed": {
+        "composition_mode": "parallel_evidence_join",
+        "observed_composition_coverage": "verified_explicit",
+        "observed_primitive_coverage": "verified",
+        "retrieval": {
+          "canonical_hit": {
+            "document_id": "DOC-CORE-PC004-RISK-2026Q2",
+            "evidence_id": "EVID-CORE-PC004-RISK-PRIMARY",
+            "rank": 1,
+            "source_fact_ids": [
+              "RISK-004"
+            ]
+          },
+          "top_10_evidence_ids": [
+            "EVID-CORE-PC004-RISK-PRIMARY",
+            "EVID-CORE-PC004-BOARD-PRIORITY",
+            "EVID-CORE-PC005-RISK-PRIMARY",
+            "EVID-CORE-PC003-QMR-FINANCIAL",
+            "EVID-CORE-PC004-QMR-FINANCIAL",
+            "EVID-CORE-PC004-QMR-SIGNAL",
+            "EVID-CORE-PC005-QMR-FINANCIAL",
+            "EVID-CORE-PC007-QMR-FINANCIAL",
+            "EVID-CORE-PC002-QMR-SIGNAL",
+            "EVID-CORE-PC002-QMR-FINANCIAL"
+          ]
+        },
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-004-2026Q2",
+                "FIN-PC-004-2025Q2"
+              ],
+              "company_id": "PC-004",
+              "name": "HelioGrid Energy",
+              "score": "0.3529411764705882352941176471"
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-001-2025Q2",
+            "FIN-PC-001-2026Q2",
+            "FIN-PC-002-2025Q2",
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-003-2025Q2",
+            "FIN-PC-003-2026Q2",
+            "FIN-PC-004-2025Q2",
+            "FIN-PC-004-2026Q2",
+            "FIN-PC-005-2025Q2",
+            "FIN-PC-005-2026Q2",
+            "FIN-PC-006-2025Q2",
+            "FIN-PC-006-2026Q2",
+            "FIN-PC-007-2025Q2",
+            "FIN-PC-007-2026Q2",
+            "FIN-PC-008-2025Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "ratio",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "pending_explicit_verification",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0021",
+      "question": "Which company had the highest year-over-year revenue growth in 2026 Q2 and also has a documented permitting problem?",
+      "required_tools": [
+        "sql",
+        "hybrid_retrieval"
+      ]
+    },
+    {
+      "observed": {
+        "composition_mode": "graph_candidates_to_sql",
+        "graph": {
+          "company_node_ids": [
+            "PC-002",
+            "PC-008"
+          ],
+          "customer_node_ids": [],
+          "matched_company_ids": [
+            "PC-002",
+            "PC-008"
+          ],
+          "relationship_ids": [
+            "CS-003",
+            "CS-011"
+          ],
+          "source_fact_ids": [
+            "CS-003",
+            "CS-011",
+            "PC-002",
+            "PC-008",
+            "SUP-005",
+            "SUP-011"
+          ],
+          "supplier_node_ids": [
+            "SUP-005",
+            "SUP-011"
+          ]
+        },
+        "observed_composition_coverage": "verified_explicit",
+        "observed_primitive_coverage": "verified",
+        "sql": {
+          "entities": [
+            {
+              "canonical_fact_ids": [
+                "FIN-PC-008-2026Q2"
+              ],
+              "company_id": "PC-008",
+              "name": "NovaBio Instruments",
+              "score": 83000000
+            }
+          ],
+          "source_fact_ids": [
+            "FIN-PC-002-2026Q2",
+            "FIN-PC-008-2026Q2"
+          ],
+          "unit": "USD",
+          "value": null
+        }
+      },
+      "protocol": {
+        "abstention": "not_applicable",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "verified_explicit",
+        "planner": "not_implemented",
+        "primitive_coverage": "verified"
+      },
+      "query_id": "Q-0022",
+      "question": "Among companies with critical suppliers in Germany, which had lower revenue in 2026 Q2?",
+      "required_tools": [
+        "graph",
+        "sql"
+      ]
+    },
+    {
+      "observed": {
+        "abstention_implemented": false,
+        "bounded_contract_rejected_metric": true,
+        "observed_composition_coverage": "not_applicable",
+        "observed_primitive_coverage": "unsupported_metric_by_design",
+        "requested_metric": "customer_churn_rate"
+      },
+      "protocol": {
+        "abstention": "not_implemented",
+        "answer_synthesis": "not_implemented",
+        "composition_coverage": "not_applicable",
+        "planner": "not_implemented",
+        "primitive_coverage": "unsupported_metric_by_design"
+      },
+      "query_id": "Q-0024",
+      "question": "What was Alder Manufacturing's exact customer churn rate in 2026 Q2?",
+      "required_tools": [
+        "sql"
+      ]
+    }
+  ],
+  "confirmation_version": "northstar-execution-coverage-confirmation-v1",
+  "dataset_version": "northstar-v1",
+  "evaluation_version": "northstar-eval-v1-seed",
+  "execution_boundary": {
+    "commit": "ee1387d52655b618d7288c8cf1edbb6054564422",
+    "tag": "phase-8e2b-portfolio-graph-execution"
+  },
+  "protocol": {
+    "commit": "8953e198df58c755dcc9894544cec62c6a554f79",
+    "evaluation_payload_sha256": "aa96f2cfea999f1c15293b8f8dcf843ff0c128cd0c4c0e2ce5b3832c5792ef5d",
+    "report_sha256": "5970e7dbff67bc4fb2e1db5d86ee1116604fd1111b682b0eb31573b73ccc103f",
+    "tag": "phase-8e3a-execution-coverage-protocol"
+  },
+  "retrieval": {
+    "batch_size": 16,
+    "bm25_b": 0.75,
+    "bm25_k1": 1.5,
+    "chunks": 80,
+    "dense_representation": "e5-document-title-text-v1",
+    "dense_version": "dense-e5-small-v2-v1",
+    "device": "cpu",
+    "embedding_dimension": 384,
+    "lexical_representation": "document-title-text-v1",
+    "model_id": "intfloat/e5-small-v2",
+    "model_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+    "retriever_version": "hybrid:rrf-k60-v1",
+    "rrf_k": 60
+  },
+  "summary": {
+    "abstention_implemented": false,
+    "answer_synthesis_implemented": false,
+    "explicit_compositions_verified": 3,
+    "planner_implemented": false,
+    "single_tool_cases_verified": 7,
+    "target_cases": 11,
+    "unsupported_by_design_cases": 1,
+    "verified_primitive_cases": 10
+  }
+}

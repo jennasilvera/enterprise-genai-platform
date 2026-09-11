@@ -1879,3 +1879,222 @@ Do not claim:
 - SQL execution correctness;
 - graph execution correctness;
 - end-to-end agent quality.
+
+## Phase 8E — Bounded Portfolio Execution Coverage
+
+**Status:** IMPLEMENTED / TESTED / MEASURED / REPRODUCIBLE / VERIFIED / FROZEN
+
+Phase 8E extended the typed execution layer from known-entity operations to
+bounded portfolio-wide structured and graph operations, then measured benchmark
+primitive coverage before introducing an agent state machine.
+
+### Phase 8E1 — Portfolio Structured SQL
+
+Implemented bounded portfolio-level structured operations:
+
+- portfolio metric sum;
+- portfolio metric filtering;
+- portfolio metric ranking;
+- year-over-year growth ranking;
+- ratio ranking;
+- optional candidate-company scoping for upstream-tool handoff.
+
+Execution remains parameterized SQLAlchemy rather than free-form SQL.
+
+Behavior includes:
+
+- deterministic ordering and company-ID tie-breaking;
+- strict candidate-scope validation;
+- typed empty states;
+- rejection of non-additive percentage summation;
+- relational source-row provenance;
+- winning-entity canonical fact provenance.
+
+Verified against real PostgreSQL for the benchmark semantics corresponding to:
+
+- Q-0010: highest 2026 Q2 year-over-year revenue growth → HelioGrid Energy;
+- Q-0011: total 2026 Q2 portfolio revenue → $735 million;
+- Q-0012: net retention below 100% → Vantage Retail Analytics;
+- Q-0013: highest EBITDA margin → Orbis Cybersecurity;
+- Q-0022 SQL stage: candidate-scoped lower 2026 Q2 revenue.
+
+Frozen Phase 8E1B boundary:
+
+`phase-8e1b-portfolio-structured-sql`
+
+### Phase 8E2 — Portfolio Relationship-Graph Execution
+
+Implemented bounded portfolio existential graph predicates over the relational
+Northstar relationship model.
+
+Supported relationship families:
+
+- company → supplier;
+- company → customer.
+
+Supported predicate fields include:
+
+- target country;
+- supplier criticality;
+- supplier single-source status;
+- relationship status.
+
+Multiple predicates use independent existential semantics: each predicate may
+be satisfied by a different relationship while all predicates must hold for the
+same company. This is required for benchmark questions such as a company having
+both a critical German supplier and a separate Swiss supplier.
+
+The executor returns only the matched subgraph, including:
+
+- deterministic matched company IDs;
+- matched company / supplier / customer nodes;
+- matched canonical relationship edges;
+- direct node and relationship provenance.
+
+`ToolExecutionPlan.graph` and the execution coordinator accept both bounded
+known-start `GraphQuery` requests and portfolio-wide `PortfolioGraphQuery`
+requests.
+
+Verified against real PostgreSQL:
+
+- Q-0014 → Alder Manufacturing and NovaBio Instruments;
+- Q-0015 → Orbis Cybersecurity;
+- Q-0016 → NovaBio Instruments using distinct qualifying supplier
+  relationships;
+- Q-0022 graph stage → candidate companies Alder Manufacturing and NovaBio
+  Instruments.
+
+Q-0022 was additionally verified by explicitly passing the graph-discovered
+candidate IDs into bounded structured SQL, which selected NovaBio Instruments
+at $83 million of 2026 Q2 revenue.
+
+Frozen Phase 8E2B boundary:
+
+`phase-8e2b-portfolio-graph-execution`
+
+### Phase 8E3 — Execution-Coverage Confirmation
+
+A coverage protocol was frozen before final mixed-tool confirmation.
+
+Frozen protocol boundary:
+
+`phase-8e3a-execution-coverage-protocol`
+
+Frozen protocol report SHA-256:
+
+`5970e7dbff67bc4fb2e1db5d86ee1116604fd1111b682b0eb31573b73ccc103f`
+
+The confirmation evaluates 11 benchmark cases requiring SQL and/or graph
+execution:
+
+- 10 cases have verified executable primitive paths;
+- 1 case is intentionally unsupported by the bounded metric vocabulary;
+- 7 single-tool cases were verified;
+- 3 explicit multi-tool compositions were verified.
+
+Explicit mixed-tool confirmations:
+
+Q-0020:
+
+- bounded SQL identifies Vantage Retail Analytics from 2026 Q2 net retention;
+- frozen Phase 6A RRF retrieval recovers
+  `EVID-CORE-PC005-QMR-SIGNAL` at rank 1;
+- the canonical retrieval evidence carries `RISK-005`.
+
+Q-0021:
+
+- bounded SQL identifies HelioGrid Energy from the highest 2026 Q2
+  year-over-year revenue growth;
+- frozen Phase 6A RRF retrieval recovers
+  `EVID-CORE-PC004-RISK-PRIMARY` at rank 1;
+- the canonical retrieval evidence carries `RISK-004`.
+
+Q-0022:
+
+- portfolio graph execution identifies `PC-002` and `PC-008`;
+- those IDs are explicitly passed into candidate-scoped structured SQL;
+- the SQL stage selects NovaBio Instruments at $83 million.
+
+Q-0024:
+
+- `customer_churn_rate` is not part of the bounded `StructuredMetric` contract;
+- the request is rejected at typed validation;
+- this demonstrates a bounded execution guardrail, not an implemented
+  abstention decision.
+
+Canonical confirmation artifact:
+
+`artifacts/evaluation/phase8e3/execution-coverage-confirmation.json`
+
+Canonical confirmation SHA-256:
+
+`0089e0a0dabd5a4a24cb9fd9b7c39aa9c3be555add4a14377a2ac61710d3056e`
+
+Reproducibility:
+
+- canonical run used real persisted PostgreSQL data;
+- retrieval used the frozen Phase 6A hybrid RRF stack;
+- dense retrieval used pinned `intfloat/e5-small-v2`;
+- dense model revision:
+  `ffb93f3bd4047442299a41ebb6fa998a38507c52`;
+- runtime device: CPU;
+- an independent post-fix rerun reproduced the confirmation artifact
+  byte-identically;
+- independent rerun SHA-256 exactly matched the canonical artifact.
+
+Interview evidence:
+
+- designed typed bounded SQL and relationship-graph execution contracts;
+- implemented parameterized portfolio aggregation, filtering, ranking, growth,
+  and ratio operations;
+- implemented candidate-scoped structured execution for upstream-tool handoff;
+- implemented bounded portfolio existential graph predicates;
+- implemented deterministic direct relational provenance;
+- preserved frozen RRF retrieval semantics in mixed-tool execution tests;
+- verified SQL, graph, retrieval+SQL, and graph→SQL primitive compositions
+  against persisted PostgreSQL data;
+- froze the execution-coverage protocol before mixed-tool confirmation;
+- generated a deterministic byte-reproducible execution-coverage artifact;
+- retained an unsupported-metric case as a documented system limitation rather
+  than converting it into a false success.
+
+Supports:
+
+> Built typed, bounded retrieval, SQL, and relational-graph execution primitives
+> with deterministic provenance and verified portfolio-level aggregation,
+> ranking, graph predicates, and explicit multi-tool composition against
+> persisted PostgreSQL data; confirmed 10 of 11 scoped benchmark cases had
+> executable primitive paths while preserving an unsupported metric as a
+> documented guardrail.
+
+Important limitations:
+
+The execution coordinator consumes an already-populated execution plan. It does
+not yet infer dependencies between tools or dynamically feed one tool's result
+into another.
+
+The Q-0020 and Q-0021 confirmations are explicit parallel SQL/retrieval evidence
+composition, not autonomous agent planning.
+
+The Q-0022 confirmation explicitly passes graph output into SQL, but that
+handoff is not yet selected or scheduled by an agent state machine.
+
+No final answer-synthesis component has been implemented.
+
+No downstream abstention node or abstention policy has been implemented.
+Rejecting an unsupported `StructuredMetric` is therefore not equivalent to
+producing a correct agent abstention.
+
+Do not claim:
+
+- autonomous agent planning;
+- dependency-aware dynamic orchestration;
+- LangGraph execution;
+- autonomous graph-to-SQL chaining;
+- implemented answer synthesis;
+- implemented abstention behavior;
+- free-form SQL generation;
+- Neo4j execution;
+- general enterprise benchmark coverage;
+- production latency or throughput;
+- GPU/CUDA execution.
