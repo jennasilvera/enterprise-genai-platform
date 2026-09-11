@@ -5402,7 +5402,7 @@ This milestone does not establish:
 
 ## Phase 11C3 — Bounded Process-Local Operational Metrics
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
