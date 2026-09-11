@@ -2453,3 +2453,167 @@ Do not claim yet:
 - confidence calibration
 - autonomous planning
 - autonomous tool selection
+
+## Phase 9C2B — Deterministic Sufficiency and Abstention
+
+**Status:** IMPLEMENTED / TESTED / MEASURED / VERIFIED / FROZEN
+
+### Scope
+
+Implemented a deterministic evidence-sufficiency policy over the typed
+`EvidenceBundle` layer introduced in Phase 9C2A.
+
+The evaluator operates over explicit, prevalidated
+`EvidenceRequirement` objects.
+
+It does not infer requirements from arbitrary natural-language
+questions and does not use benchmark `answer_source_fact_ids` as
+inference-time oracle information.
+
+### Policy
+
+Policy version:
+
+`northstar-deterministic-sufficiency-v1`
+
+Each `EvidenceRequirement` may constrain:
+
+- allowed evidence tools
+- allowed evidence kinds
+- terms that must all occur
+- terms for which at least one must occur
+
+Each completed evidence bundle must be evaluated against at least one
+explicit requirement.
+
+A requirement is satisfied only when at least one normalized evidence
+record satisfies all of its bounded constraints.
+
+Different requirements may be satisfied by different evidence records.
+
+The evaluator does not perform arbitrary semantic inference, learned
+confidence scoring, or retrieval-score thresholding.
+
+### Typed outcomes
+
+Sufficient:
+
+- status: `sufficient`
+- reason: `evidence_supports_answer`
+- exact supporting evidence record IDs are preserved
+
+Insufficient:
+
+- `no_relevant_evidence`
+- `missing_required_information`
+- `unsupported_request`
+- `execution_failed`
+- `blocked_dependency`
+
+Unsupported, blocked, and failed bundles are converted directly into
+typed insufficient outcomes without fabricating answering evidence.
+
+### Real persisted verification
+
+**Q-0001 — positive retrieval control**
+
+Observed:
+
+- sufficiency status: `sufficient`
+- reason: `evidence_supports_answer`
+- supporting record:
+  `RET:001:EVID-CORE-PC006-RISK-PRIMARY`
+
+This verified that a canonical retrieval record explicitly containing
+the ORBIS-IDX-7 authentication-defect evidence satisfies the bounded
+retrieval requirement.
+
+**Q-0011 — positive structured control**
+
+Observed:
+
+- sufficiency status: `sufficient`
+- reason: `evidence_supports_answer`
+- supporting record:
+  `SQL:VALUE:portfolio_metric_sum`
+
+This verified that a structured portfolio revenue aggregate is accepted
+when the evidence requirement explicitly requests a structured scalar
+value.
+
+**Q-0023 — post-execution insufficiency**
+
+Question:
+
+`What is Northstar's expected 2030 exit valuation for Meridian Health Systems?`
+
+Observed:
+
+- retrieval execution completed successfully
+- the evidence bundle contained 10 grounded Meridian records
+- sufficiency status: `insufficient`
+- reason: `missing_required_information`
+- supporting record IDs: none
+- missing requirement:
+  explicit evidence of Northstar's expected 2030 exit valuation
+
+This verifies that non-empty, entity-relevant, canonically grounded
+retrieval evidence is not automatically treated as sufficient.
+
+**Q-0024 — unsupported bounded request**
+
+Question:
+
+`What was Alder Manufacturing's exact customer churn rate in 2026 Q2?`
+
+Observed:
+
+- `customer_churn_rate` remained outside the bounded
+  `StructuredQuery` metric contract
+- sufficiency status: `insufficient`
+- reason: `unsupported_request`
+- supporting record IDs: none
+
+This verifies a separate pre-execution abstention path for requests that
+cannot be represented by the bounded execution contract.
+
+### Validation
+
+- Phase 9C2B sufficiency tests: `10 passed`
+- Phase 9C2A evidence-normalization regression tests: `8 passed`
+- Phase 9C1 contract regression tests: `10 passed`
+- Phase 9B orchestration regression tests: `21 passed`
+- Full repository: `410 passed`
+- Ruff: clean
+- `git diff --check`: clean
+- real persisted sufficiency check:
+  `VERIFIED`
+
+### Claim boundary
+
+Safe claim:
+
+> Implemented and verified a deterministic evidence-sufficiency and
+> abstention layer over typed retrieval, SQL, and relational-graph
+> evidence, preserving exact supporting provenance and distinguishing
+> missing evidence, unsupported requests, execution failure, and blocked
+> dependencies; verified both answerable controls and two distinct
+> insufficient-evidence paths against persisted project data.
+
+Also safe when more compact:
+
+> Built a deterministic provenance-aware abstention layer that rejects
+> unsupported or insufficiently evidenced answers rather than treating
+> successful retrieval as sufficient evidence.
+
+Do not claim yet:
+
+- autonomous natural-language requirement generation
+- learned sufficiency classification
+- calibrated probabilistic confidence
+- answer synthesis
+- grounded natural-language answer generation
+- LLM-generated final answers
+- autonomous planning
+- autonomous tool selection
+- arbitrary agent loops
