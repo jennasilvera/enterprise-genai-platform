@@ -3995,3 +3995,71 @@ Do **not** claim:
 
 This phase establishes a conservative mechanical safety boundary and verified
 fallback behavior, not a general-purpose semantic factuality guarantee.
+
+## Phase 10D1 — Deterministic vs Raw-LLM vs Guarded-LLM Comparison Protocol
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Frozen comparison protocol for evaluating three presentation paths:
+
+1. `deterministic`
+2. `raw_llm`
+3. `guarded_llm`
+
+The protocol is frozen before comparative scores are computed.
+
+### Protocol
+
+Version:
+
+`northstar-generation-comparison-v1`
+
+Frozen five-case integration control set:
+
+- `Q-0001`
+- `Q-0010`
+- `Q-0011`
+- `Q-0023`
+- `Q-0024`
+
+Mechanical metrics include:
+
+- authority preservation,
+- abstention preservation,
+- exact numeric-literal preservation,
+- unit preservation,
+- entity preservation,
+- absence of unauthorized numeric literals,
+- absence of unauthorized citation IDs,
+- rejected raw-generation non-exposure.
+
+The five cases define 25 applicable case/metric checks across each of the
+three systems.
+
+### Methodological boundary
+
+This protocol is **not blind or preregistered**.
+
+The individual Phase 10C model behaviors had already been observed before this
+Phase 10D comparison protocol was defined. The defensible methodological claim
+is narrower: the metric matrix and scoring rules are frozen before comparative
+scores are computed.
+
+The protocol evaluates deterministic mechanical fidelity properties. It does
+not establish general semantic answer accuracy, factuality of arbitrary
+free-form prose, or performance on the complete 24-case benchmark.
+
+### Verification
+
+At the Phase 10D1 freeze candidate:
+
+- comparison protocol tests: 9 passing
+- Phase 10C regression tests: 33 passing
+- full repository: 516 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 10C frozen boundary remained unchanged
+
+No comparative score has been computed as part of Phase 10D1.
