@@ -4146,3 +4146,172 @@ At the Phase 10D2 freeze candidate:
 
 The next phase executes the frozen scorer against the real deterministic,
 raw-Qwen, and guarded-Qwen presentation paths.
+
+## Phase 10E — Formal Generation Comparison Confirmation
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
+
+### Purpose
+
+Formalized and persisted the real three-system generation comparison executed
+against the Phase 10D1 frozen comparison protocol and Phase 10D2 frozen
+mechanical scorer.
+
+Systems:
+
+1. `deterministic`
+2. `raw_llm`
+3. `guarded_llm`
+
+### Frozen experimental boundaries
+
+Phase 10D1 comparison protocol:
+
+`16b67e3d5b6f5011664f63a0c6f4c7da1448bd92`
+
+Phase 10D2 mechanical scorer:
+
+`d9c8cf862ff70184dd812af6d33dfca88fc14b8b`
+
+Both were frozen before the formal three-system measurement.
+
+### Runtime
+
+- Model: `Qwen/Qwen2.5-0.5B-Instruct`
+- Immutable revision:
+  `7ae557604adf67be50417f59c2c2f167def9a775`
+- Runtime: CPU
+- dtype: float32
+- CUDA observed: false
+- Decoding: deterministic greedy generation
+
+### Five-case integration control set
+
+- `Q-0001` — retrieval-backed Orbis risk answer
+- `Q-0010` — structured highest-growth entity answer
+- `Q-0011` — structured portfolio revenue numeric answer
+- `Q-0023` — missing-required-information abstention
+- `Q-0024` — unsupported-request abstention
+
+Each system received exactly 25 applicable frozen mechanical checks across the
+five cases.
+
+### Measured result
+
+- deterministic: `25 / 25` = `1.00`
+- raw LLM: `12 / 25` = `0.48`
+- guarded LLM: `25 / 25` = `1.00`
+
+These are mechanical fidelity scores, not semantic answer-accuracy scores.
+
+### Observed comparison behavior
+
+`Q-0001`
+
+- deterministic: 4/4
+- raw LLM: 2/4
+- guarded LLM: 4/4
+- raw generation failed strict authoritative-text preservation and exposed a
+  generation the fidelity layer classified as rejected.
+- guarded presentation substituted deterministic authority.
+
+`Q-0010`
+
+- deterministic: 5/5
+- raw LLM: 5/5
+- guarded LLM: 5/5
+- the raw entity generation passed the frozen fidelity constraints and was
+  retained by the guarded path.
+
+`Q-0011`
+
+- deterministic: 6/6
+- raw LLM: 2/6
+- guarded LLM: 6/6
+- raw Qwen transformed authoritative `735000000 USD` into
+  `$735 million USD`.
+- this failed exact numeric-literal preservation and introduced an
+  unauthorized numeric literal under the frozen mechanical policy.
+- guarded presentation returned deterministic `735000000 USD`.
+
+`Q-0023`
+
+- deterministic: 5/5
+- raw LLM: 1/5
+- guarded LLM: 5/5
+- raw Qwen replaced the deterministic missing-information abstention with an
+  invented `$15 billion` valuation.
+- guarded presentation restored the deterministic abstention.
+
+`Q-0024`
+
+- deterministic: 5/5
+- raw LLM: 2/5
+- guarded LLM: 5/5
+- raw Qwen converted an unsupported-query condition into a substantive
+  "no known customer churn rate" claim.
+- guarded presentation restored the deterministic unsupported-request outcome.
+
+### Methodological boundary
+
+The comparison protocol was not blind or preregistered: Phase 10C behavior had
+already been observed before the Phase 10D1 metric matrix was defined.
+
+The stronger ordering guarantee is:
+
+1. the Phase 10D1 metric matrix was frozen before comparative scoring;
+2. the Phase 10D2 scorer implementation was frozen before the real
+   three-system comparison;
+3. Phase 10D3 then measured the real outputs;
+4. Phase 10E persisted and independently reproduced that measurement.
+
+The `rejected_raw_not_exposed` metric includes an architectural safety
+property. In particular, the deterministic path cannot expose rejected Qwen
+output because it does not present probabilistic output. Therefore `25/25`
+must not be interpreted as a generic generation-quality or semantic-accuracy
+score.
+
+### Reproducibility artifact
+
+Artifact:
+
+`artifacts/generation/phase10e_generation_comparison_confirmation.json`
+
+Exact file SHA-256:
+
+`f5d9c5784ca7c288f7455da08438b4074f25bdfc5592f7692492316605d9a99f`
+
+The report was independently regenerated through the persisted PostgreSQL /
+frozen retrieval / deterministic answering / pinned local Qwen / frozen
+fidelity guard / frozen comparison scorer pipeline and was byte-identical to
+the persisted artifact.
+
+### Verification
+
+At the Phase 10E freeze candidate:
+
+- Phase 10E confirmation tests: 6 passing
+- Phase 10D comparison regression tests: 17 passing
+- full repository: 530 passing
+- Ruff: clean
+- `git diff --check`: clean
+- Phase 10D1 and 10D2 frozen tags remained unchanged
+
+### Safe claim
+
+> Built and evaluated a fail-closed local-LLM presentation layer over a
+> deterministic retrieval/structured-execution grounding stack. On a frozen
+> five-case integration control set, the unguarded local Qwen path passed
+> 12/25 mechanical fidelity checks, while the guarded path passed 25/25 by
+> accepting compliant generation and replacing rejected generation with
+> deterministic authority.
+
+### Do not claim
+
+- 100% semantic answer accuracy,
+- general hallucination elimination,
+- semantic factuality of arbitrary generated prose,
+- evaluation on the complete 24-case benchmark,
+- blind or preregistered comparison,
+- learned factuality/confidence scoring,
+- that 25/25 mechanical fidelity implies perfect generation quality.
