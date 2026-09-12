@@ -6092,3 +6092,383 @@ Phase 11C4B does not establish:
 - production capacity.
 
 The real frozen benchmark remains unexecuted until Phase 11C4C.
+
+## Phase 11C4C — Measured Localhost Serving Latency
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Executed the previously frozen Phase 11C4A localhost latency protocol exactly
+once through the previously frozen Phase 11C4B benchmark harness.
+
+This phase records descriptive measurements from that frozen run.
+
+It does not establish production latency, throughput, scalability, or service
+level objectives.
+
+### Frozen methodology boundary
+
+The measurement used the already frozen:
+
+- protocol tag:
+  `phase-11c4a-localhost-latency-protocol`
+- harness tag:
+  `phase-11c4b-localhost-latency-harness`
+
+Frozen protocol SHA-256:
+
+`c39f2c19135efd8959bd0490a6666acb3e7eda45ba016d76f4267634c8a2e432`
+
+The result file did not exist before execution.
+
+The frozen benchmark was then executed once and the resulting artifact was not
+regenerated.
+
+### Process and transport boundary
+
+The benchmark exercised:
+
+- a real Uvicorn server process;
+- a separate client process;
+- `127.0.0.1`;
+- localhost TCP;
+- HTTP/1.1;
+- one Uvicorn worker;
+- `asyncio`;
+- `h11`;
+- sequential request concurrency of one;
+- `ANSWERING_ENABLED=true`.
+
+This closes the earlier distinction between in-process FastAPI TestClient
+verification and an actual localhost socket boundary.
+
+### Workload
+
+One full five-case warm-up cycle was executed and excluded from the reported
+measurement summaries.
+
+The measured workload then contained exactly:
+
+`5 rounds × 5 cases = 25 requests`
+
+in the frozen order.
+
+All 25 requests preserved the previously frozen answer-status,
+presentation-source, and generation-fidelity behavior.
+
+Measured cases:
+
+- Q-0001:
+  answered / deterministic fallback / generation rejected
+- Q-0010:
+  answered / model generation / generation accepted
+- Q-0011:
+  answered / deterministic fallback / generation rejected
+- Q-0023:
+  abstained / deterministic / generation not applicable
+- Q-0024:
+  abstained / deterministic / generation not applicable
+
+### Startup observation
+
+Elapsed time from immediately before Uvicorn process launch until the first
+successful readiness response:
+
+`13,546.787 ms`
+
+approximately:
+
+`13.547 s`
+
+Startup/readiness latency is reported separately and is excluded from warm
+request-latency summaries.
+
+The startup path includes persisted serving-resource initialization and the
+configured model-loading behavior of this environment.
+
+It is not a pure framework-startup measurement.
+
+### Overall client-observed localhost latency
+
+Across all 25 measured requests:
+
+- n: 25
+- minimum: 2.256 ms
+- median: 7,056.852 ms
+- nearest-rank p95: 11,198.361 ms
+- maximum: 11,446.514 ms
+
+The overall workload combines materially different execution paths and is
+therefore multimodal rather than a homogeneous request distribution.
+
+The overall median and p95 must not be interpreted as representative of every
+question type.
+
+### Per-case client-observed latency
+
+Q-0001 — retrieval + generated presentation attempt + deterministic fallback:
+
+- n: 5
+- minimum: 7,995.592 ms
+- median: 9,150.959 ms
+- p95: 9,702.753 ms
+- maximum: 9,702.753 ms
+
+Q-0010 — SQL + accepted model generation:
+
+- n: 5
+- minimum: 10,147.632 ms
+- median: 10,851.638 ms
+- p95: 11,446.514 ms
+- maximum: 11,446.514 ms
+
+Q-0011 — SQL + generated presentation attempt + deterministic fallback:
+
+- n: 5
+- minimum: 6,565.736 ms
+- median: 7,056.852 ms
+- p95: 7,744.308 ms
+- maximum: 7,744.308 ms
+
+Q-0023 — retrieval + deterministic insufficiency abstention:
+
+- n: 5
+- minimum: 34.029 ms
+- median: 70.271 ms
+- p95: 81.469 ms
+- maximum: 81.469 ms
+
+Q-0024 — unsupported deterministic abstention:
+
+- n: 5
+- minimum: 2.256 ms
+- median: 4.537 ms
+- p95: 9.077 ms
+- maximum: 9.077 ms
+
+Because each per-case summary contains only five observations, the frozen
+nearest-rank p95 equals that case's maximum.
+
+These p95 values are descriptive summaries, not stable production tail-latency
+estimates.
+
+### Server HTTP timing
+
+Across all 25 measured requests:
+
+- n: 25
+- minimum: 1.534 ms
+- median: 7,055.492 ms
+- nearest-rank p95: 11,196.915 ms
+- maximum: 11,444.297 ms
+
+This timing is measured within the HTTP observability boundary and is distinct
+from the client-observed localhost round-trip measurement.
+
+### Grounded-answering service timing
+
+Across all 25 measured requests:
+
+- n: 25
+- minimum: 0.268 ms
+- median: 7,052.076 ms
+- nearest-rank p95: 11,192.886 ms
+- maximum: 11,440.255 ms
+
+This timing covers the synchronous grounded-answering application-service
+boundary.
+
+### Generation-provider timing
+
+Generation was invoked for 15 measured requests.
+
+Across those 15 requests:
+
+- n: 15
+- minimum: 6,519.932 ms
+- median: 9,093.054 ms
+- nearest-rank p95: 11,385.524 ms
+- maximum: 11,385.524 ms
+
+Generation duration is provider-level duration and includes provider/locking
+overhead.
+
+It is not claimed as pure transformer forward-pass or token-generation kernel
+time.
+
+### Retrieval timing
+
+Retrieval executed in 10 measured requests.
+
+Across those executions:
+
+- n: 10
+- minimum: 16.267 ms
+- median: 30.423 ms
+- nearest-rank p95: 49.368 ms
+- maximum: 49.368 ms
+
+### SQL timing
+
+SQL executed in 10 measured requests.
+
+Across those executions:
+
+- n: 10
+- minimum: 10.960 ms
+- median: 17.964 ms
+- nearest-rank p95: 34.355 ms
+- maximum: 34.355 ms
+
+No graph execution was required by the frozen five-case workload.
+
+### Observed latency composition
+
+Within this frozen CPU-only localhost run, generation-invoking cases were
+measured in seconds while retrieval and SQL tool execution were measured in
+tens of milliseconds.
+
+The generation-provider median was approximately 9.09 seconds, compared with:
+
+- retrieval median: approximately 30.4 ms;
+- SQL median: approximately 18.0 ms.
+
+Therefore the measured generated-answer paths in this specific configuration
+were dominated by local generation-provider latency rather than retrieval or
+SQL execution.
+
+This is an interpretation of this frozen environment and workload only.
+
+It is not claimed as a universal architecture or production-performance result.
+
+### Environment
+
+Measured environment:
+
+- OS/kernel:
+  Linux 6.6.87.2-microsoft-standard-WSL2
+- architecture:
+  x86_64
+- WSL detected:
+  true
+- CPU:
+  12th Gen Intel Core i7-1250U
+- logical CPUs:
+  12
+- cores per socket:
+  6
+- threads per core:
+  2
+- sockets:
+  1
+- Python:
+  3.12.14
+- Uvicorn:
+  0.52.4
+- FastAPI:
+  0.141.1
+- PyTorch:
+  2.13.0+cpu
+- CUDA available:
+  false
+- PyTorch intra-op threads:
+  6
+- PyTorch inter-op threads:
+  6
+
+No GPU/CUDA performance claim is made.
+
+### Result validation
+
+The measured artifact was checked for:
+
+- result version;
+- frozen protocol version;
+- frozen protocol SHA-256;
+- exactly five measurement rounds;
+- exactly 25 measured requests;
+- exact frozen request ordering;
+- sequential execution;
+- concurrency equal to one;
+- all frozen answer outcomes;
+- finite non-negative timing values;
+- exactly 15 generation timing samples;
+- exactly 10 retrieval timing samples;
+- exactly 10 SQL timing samples;
+- no graph summary;
+- result privacy invariants.
+
+The Uvicorn process terminated successfully after the run and the benchmark
+port was available afterward.
+
+### Privacy boundary
+
+The result artifact does not persist:
+
+- natural-language questions;
+- request IDs;
+- answer text;
+- evidence text;
+- prompt text;
+- raw model output.
+
+It stores only bounded outcome taxonomy, numerical timing data, query IDs,
+round numbers, environment metadata, and descriptive summaries.
+
+### Result artifact
+
+Artifact:
+
+`artifacts/evaluation/phase11c4c/localhost-latency-results.json`
+
+Version:
+
+`northstar-localhost-serving-latency-result-v1`
+
+SHA-256:
+
+`ebc117df07da4e0da93887902ef360f0968e468a771b0a5c58d313f49772f7d0`
+
+### Verification state
+
+After the measured run:
+
+- artifact structure: verified
+- artifact privacy: verified
+- frozen 11C4B harness ancestor: verified
+- frozen 11C4A protocol hash: verified
+- benchmark port cleanup: verified
+- Ruff: clean
+- full repository: 625 passing
+- `git diff --check`: clean
+- only the new Phase 11C4C artifact was untracked
+
+### Safe claim
+
+> Executed a frozen single-worker Uvicorn/localhost-TCP serving benchmark for a
+> grounded GenAI stack on CPU, measuring 25 sequential requests after a fixed
+> warm-up cycle. Client-observed latency had a 7.06 s mixed-workload median,
+> while deterministic abstention paths were measured at roughly 4.5–70 ms
+> median and local generation-provider latency was roughly 9.09 s median; the
+> measurements are descriptive of this WSL2 CPU environment and fixed control
+> workload.
+
+### Claim boundary
+
+Phase 11C4C does not establish:
+
+- production latency;
+- production throughput;
+- concurrent-load performance;
+- multi-worker performance;
+- scalability;
+- service-level objectives;
+- stable production p95 or p99;
+- WAN or internet latency;
+- GPU performance;
+- capacity planning;
+- general performance across arbitrary questions.
+
+The benchmark consists of one frozen execution session with 25 measured
+sequential requests after warm-up.
