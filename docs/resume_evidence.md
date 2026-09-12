@@ -5651,7 +5651,7 @@ This milestone does not establish:
 
 ## Phase 11C4A — Localhost Serving Latency Protocol
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
