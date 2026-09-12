@@ -6095,7 +6095,7 @@ The real frozen benchmark remains unexecuted until Phase 11C4C.
 
 ## Phase 11C4C — Measured Localhost Serving Latency
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
