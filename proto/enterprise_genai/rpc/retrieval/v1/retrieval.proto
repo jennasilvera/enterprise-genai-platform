@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package enterprise_genai.rpc.retrieval.v1;
+
+service RetrievalService {
+  rpc Retrieve(RetrievalRequest) returns (RetrievalResponse);
+}
+
+message RetrievalRequest {
+  // Optional presence preserves the Python domain defaults.
+  optional string dataset_version = 1;
+
+  // Required semantically; validated by the domain codec.
+  string question = 2;
+
+  // Optional presence preserves the Python default of 10.
+  optional uint32 top_k = 3;
+}
+
+message RetrievalHit {
+  uint32 rank = 1;
+
+  string chunk_id = 2;
+  string evidence_id = 3;
+  string document_id = 4;
+
+  string text = 5;
+
+  repeated string source_fact_ids = 6;
+
+  double rrf_score = 7;
+
+  optional uint32 bm25_rank = 8;
+  optional uint32 dense_rank = 9;
+}
+
+message RetrievalPayload {
+  repeated RetrievalHit hits = 1;
+}
+
+enum ExecutionStatus {
+  EXECUTION_STATUS_UNSPECIFIED = 0;
+  EXECUTION_STATUS_OK = 1;
+  EXECUTION_STATUS_EMPTY = 2;
+  EXECUTION_STATUS_ERROR = 3;
+}
+
+message RetrievalResponse {
+  ExecutionStatus status = 1;
+
+  // Present for ok/empty; absent for error.
+  RetrievalPayload payload = 2;
+
+  // Executor-native duration, not RPC round-trip latency.
+  double duration_ms = 3;
+
+  // Present only for typed domain errors.
+  optional string error = 4;
+}

@@ -1,0 +1,1 @@
+"""Retrieval RPC boundary."""

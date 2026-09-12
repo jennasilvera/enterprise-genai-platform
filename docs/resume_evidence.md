@@ -6472,3 +6472,258 @@ Phase 11C4C does not establish:
 
 The benchmark consists of one frozen execution session with 25 measured
 sequential requests after warm-up.
+
+## Phase 11D1 — Versioned gRPC Retrieval Contract
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Introduced a versioned protobuf/gRPC contract for the retrieval boundary while
+preserving the existing typed application-domain interface:
+
+`RetrievalQuery -> ToolExecutionResult`
+
+Phase 11D1 establishes the wire contract and domain/wire codec only.
+
+It does not yet claim a running gRPC server process, remote client execution,
+network deadlines, transport error mapping, or serving integration.
+
+### Existing domain boundary
+
+The pre-existing retrieval executor contract remains:
+
+- input:
+  `RetrievalQuery`
+- output:
+  `ToolExecutionResult`
+- tool family:
+  `retrieval`
+
+The RPC layer adapts this contract rather than replacing it with a second
+retrieval domain model.
+
+### Retrieval request contract
+
+The protobuf request preserves:
+
+- `dataset_version`
+- `question`
+- `top_k`
+
+Domain semantics remain:
+
+- default dataset version:
+  `northstar-v1`
+- default `top_k`:
+  `10`
+- allowed `top_k`:
+  `1..50`
+- non-empty question
+- non-empty dataset version
+
+Optional protobuf presence is used for `dataset_version` and `top_k` so omitted
+wire fields preserve the Python domain defaults.
+
+### Retrieval hit contract
+
+The protobuf hit preserves:
+
+- `rank`
+- `chunk_id`
+- `evidence_id`
+- `document_id`
+- `text`
+- `source_fact_ids`
+- `rrf_score`
+- optional `bm25_rank`
+- optional `dense_rank`
+
+Hit ordering is preserved by the repeated protobuf field and domain codec.
+
+### Retrieval result contract
+
+The protobuf execution statuses are:
+
+- `EXECUTION_STATUS_UNSPECIFIED = 0`
+- `EXECUTION_STATUS_OK = 1`
+- `EXECUTION_STATUS_EMPTY = 2`
+- `EXECUTION_STATUS_ERROR = 3`
+
+The Python domain statuses remain:
+
+- `ok`
+- `empty`
+- `error`
+
+The zero-valued protobuf status is intentionally not a valid Python domain
+status.
+
+The codec rejects unspecified or unknown execution-status values.
+
+For `ok` and `empty`:
+
+- a retrieval payload is required;
+- error text is prohibited.
+
+For `error`:
+
+- payload is prohibited;
+- non-empty error text is required.
+
+The client-side domain result reconstructs:
+
+`tool="retrieval"`
+
+because the RPC itself is already retrieval-specific.
+
+### Duration semantics
+
+`duration_ms` in the protobuf response preserves the retrieval executor's native
+duration.
+
+It is not RPC round-trip latency and is not claimed as network latency.
+
+### Stable wire numbering
+
+Frozen request field numbers:
+
+- `dataset_version = 1`
+- `question = 2`
+- `top_k = 3`
+
+Frozen hit field numbers:
+
+- `rank = 1`
+- `chunk_id = 2`
+- `evidence_id = 3`
+- `document_id = 4`
+- `text = 5`
+- `source_fact_ids = 6`
+- `rrf_score = 7`
+- `bm25_rank = 8`
+- `dense_rank = 9`
+
+Frozen response field numbers:
+
+- `status = 1`
+- `payload = 2`
+- `duration_ms = 3`
+- `error = 4`
+
+Tests explicitly freeze both protobuf field numbers and enum numeric values.
+
+### Toolchain compatibility
+
+Declared runtime requirements:
+
+- `grpcio>=1.81.1,<2`
+- `protobuf>=6.33.5,<7`
+
+Pinned code-generation requirement:
+
+- `grpcio-tools==1.81.1`
+
+Observed resolved environment:
+
+- `grpcio 1.83.1`
+- `grpcio-tools 1.81.1`
+- `protobuf 6.33.6`
+
+The generated gRPC binding declares:
+
+`GRPC_GENERATED_VERSION = 1.81.1`
+
+The generated protobuf binding declares:
+
+`Protobuf Python Version: 6.33.5`
+
+The generation script fails closed when the installed `grpcio-tools` version is
+not exactly `1.81.1`.
+
+### Generated-code reproducibility
+
+The protobuf and gRPC Python bindings are checked into the repository.
+
+A reproducibility test regenerates both bindings into a temporary directory and
+requires byte-for-byte equality with the checked-in versions.
+
+Verified:
+
+- `retrieval_pb2_reproducible: VERIFIED`
+- `retrieval_pb2_grpc_reproducible: VERIFIED`
+
+### Contract hashes
+
+Proto:
+
+`proto/enterprise_genai/rpc/retrieval/v1/retrieval.proto`
+
+SHA-256:
+
+`3a8b7eaedfb536e98a6ce957af5ea96db7d6dd9ca64bfc898ac51ffe7a4d7a5e`
+
+Generated protobuf binding:
+
+`src/enterprise_genai/rpc/retrieval/v1/retrieval_pb2.py`
+
+SHA-256:
+
+`cdd6b477aa2cf6b516ff7952b491d4150f37fba7bef94bb1c6a6e636e4c8ef03`
+
+Generated gRPC binding:
+
+`src/enterprise_genai/rpc/retrieval/v1/retrieval_pb2_grpc.py`
+
+SHA-256:
+
+`3db25702cbaf50629b6066ef0135800eb87df988466a3cd859b078c1690f6b36`
+
+### Verification state
+
+Before freeze:
+
+- gRPC contract tests:
+  `21 passed`
+- generated protobuf binding reproducibility:
+  verified
+- generated gRPC binding reproducibility:
+  verified
+- pinned generator version:
+  verified
+- Ruff:
+  clean
+- full repository:
+  `646 passed`
+- `git diff --check`:
+  clean
+
+### Safe claim
+
+> Defined and verified a versioned protobuf/gRPC retrieval-service contract that
+> losslessly adapts an existing typed `RetrievalQuery -> ToolExecutionResult`
+> domain boundary, with explicit protobuf presence semantics, stable field and
+> enum numbering, typed success/empty/error invariants, retrieval provenance
+> preservation, and byte-reproducible checked-in Python bindings generated by a
+> pinned gRPC toolchain.
+
+### Claim boundary
+
+Phase 11D1 does not establish:
+
+- a running retrieval RPC server;
+- a real network service boundary;
+- localhost or remote gRPC execution;
+- client deadlines;
+- transport-failure mapping;
+- retry behavior;
+- service discovery;
+- TLS;
+- authentication;
+- distributed tracing;
+- production RPC latency;
+- throughput;
+- independent production deployment;
+- a microservices architecture.
+
+Those claims require later Phase 11D milestones.
