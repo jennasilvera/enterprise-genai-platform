@@ -6475,7 +6475,7 @@ sequential requests after warm-up.
 
 ## Phase 11D1 — Versioned gRPC Retrieval Contract
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
