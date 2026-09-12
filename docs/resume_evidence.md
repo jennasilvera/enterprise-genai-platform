@@ -5838,3 +5838,257 @@ This protocol does not establish:
 > execution, using a real single-worker Uvicorn TCP boundary, fixed warm-up and
 > five-round request ordering, server/client timing correlation, and an explicit
 > nearest-rank p95 definition.
+
+## Phase 11C4B — Localhost Serving Latency Harness
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Implemented and unit-tested the execution harness for the previously frozen
+Phase 11C4A localhost serving-latency protocol without executing the real
+25-request measurement run.
+
+This preserves the protocol-before-measurement boundary.
+
+### Frozen protocol dependency
+
+The harness verifies the frozen Phase 11C4A protocol artifact before execution.
+
+Required protocol SHA-256:
+
+`c39f2c19135efd8959bd0490a6666acb3e7eda45ba016d76f4267634c8a2e432`
+
+The harness fails closed if the protocol artifact hash or protocol version
+changes.
+
+### Uvicorn process boundary
+
+The harness constructs the frozen Uvicorn command with:
+
+- application: `enterprise_genai.api.main:app`;
+- host: `127.0.0.1`;
+- port: `8011`;
+- workers: 1;
+- event loop: `asyncio`;
+- HTTP implementation: `h11`;
+- lifespan: on;
+- access log: off;
+- proxy headers: off;
+- server header: off;
+- date header: off;
+- answering enabled through the child-process environment.
+
+The benchmark client and Uvicorn server therefore execute in separate
+processes when the harness is eventually run.
+
+### Port-contamination guard
+
+Before server launch, the harness probes the frozen endpoint:
+
+`127.0.0.1:8011`
+
+If another process is already accepting TCP connections on that port, the
+benchmark fails before launch.
+
+This prevents an already-running process from accidentally satisfying
+readiness or serving measurement requests.
+
+The port guard was tested with synthetic socket doubles for both:
+
+- unused-port behavior;
+- occupied-port fail-closed behavior.
+
+### Readiness behavior
+
+The harness measures startup readiness from immediately before Uvicorn process
+launch until the first HTTP 200 readiness response.
+
+It also detects:
+
+- premature Uvicorn exit;
+- connection failures while startup is in progress;
+- readiness timeout.
+
+Startup latency remains separate from warm request-latency summaries.
+
+### Request execution
+
+The harness implements:
+
+- one frozen five-case warm-up round;
+- five frozen measurement rounds;
+- the fixed five-case request order;
+- sequential requests;
+- one persistent localhost HTTP connection;
+- HTTP 200 enforcement;
+- server-generated `X-Request-ID` enforcement;
+- previously frozen answer-status validation;
+- presentation-source validation;
+- generation-fidelity validation.
+
+Warm-up requests are executed but excluded from the measured result set.
+
+The measured result set must contain exactly:
+
+`5 rounds × 5 cases = 25 requests`
+
+in the exact frozen order.
+
+### Server/client timing correlation
+
+For each measured request, the harness correlates the client response
+`X-Request-ID` with structured server events.
+
+Required server events include:
+
+- `http_request_completed`;
+- `answer_service_completed`.
+
+For requests that invoked generation, exactly one
+`answer_generation_completed` event is required.
+
+Generation-skipped requests fail validation if a generation-completed event is
+present.
+
+### Recorded latency channels
+
+The result builder supports:
+
+- client-observed localhost HTTP latency;
+- HTTP middleware duration;
+- grounded-answering service total duration;
+- generation-provider duration when applicable;
+- per-tool native duration values.
+
+Generation duration remains provider-level duration and is not claimed as pure
+neural-network inference time.
+
+### Frozen statistical computation
+
+The harness delegates latency summaries to the already frozen Phase 11C4A
+statistics contract.
+
+Summaries include:
+
+- n;
+- minimum;
+- median;
+- nearest-rank p95;
+- maximum.
+
+They are computed overall and per control case.
+
+### Environment capture
+
+The harness captures execution environment metadata including:
+
+- uname/kernel identity;
+- platform and machine identity;
+- Python version;
+- WSL detection;
+- CPU model;
+- logical CPU count;
+- cores per socket;
+- sockets;
+- threads per core;
+- Uvicorn version;
+- FastAPI version;
+- PyTorch version;
+- CUDA availability;
+- PyTorch intra-op threads;
+- PyTorch inter-op threads.
+
+### Result artifact privacy
+
+The result payload stores:
+
+- round number;
+- query ID;
+- bounded answer outcome taxonomy;
+- numerical latency values;
+- environment metadata;
+- descriptive latency summaries.
+
+It deliberately excludes:
+
+- natural-language question text;
+- request IDs from the persisted samples;
+- answer text;
+- evidence text;
+- prompt text;
+- raw model output.
+
+Request IDs exist only transiently for correlation with structured server logs.
+
+### Synthetic verification
+
+The harness was verified without starting the real benchmark server.
+
+Synthetic tests covered:
+
+- exact Uvicorn command construction;
+- frozen protocol hash verification;
+- answer-outcome validation;
+- structured JSON log parsing with non-JSON server noise;
+- generated-request timing correlation;
+- generation-skipped timing correlation;
+- exact 25-request result shape;
+- result privacy;
+- incomplete measurement rejection;
+- protocol-drift rejection;
+- unused benchmark port acceptance;
+- occupied benchmark port rejection.
+
+Harness tests:
+
+`11 passing`
+
+Full repository after harness implementation:
+
+`625 passing`
+
+Ruff:
+
+`clean`
+
+`git diff --check`:
+
+`clean`
+
+### Measurement-preservation confirmation
+
+Before Phase 11C4B freeze:
+
+`artifacts/evaluation/phase11c4c/localhost-latency-results.json`
+
+did not exist.
+
+The benchmark CLI was implemented but not executed.
+
+Therefore Phase 11C4B establishes measurement machinery, not benchmark
+results.
+
+### Safe claim
+
+> Implemented and tested a fail-closed localhost latency benchmark harness for
+> a grounded GenAI serving stack, including frozen-protocol hash enforcement,
+> real Uvicorn/TCP process configuration, port-contamination protection,
+> request-ID-based server/client timing correlation, strict 25-request ordering,
+> environment capture, and privacy-bounded result construction.
+
+### Claim boundary
+
+Phase 11C4B does not establish:
+
+- observed latency results;
+- production latency;
+- production throughput;
+- concurrent-load behavior;
+- multi-worker performance;
+- service-level objectives;
+- internet or WAN performance;
+- GPU performance;
+- production capacity.
+
+The real frozen benchmark remains unexecuted until Phase 11C4C.
