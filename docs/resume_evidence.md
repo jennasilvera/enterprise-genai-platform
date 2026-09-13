@@ -6730,7 +6730,7 @@ Those claims require later Phase 11D milestones.
 
 ## Phase 11D2 — gRPC Retrieval Servicer Adapter
 
-**Status:** VERIFIED / FROZEN pending commit/tag
+**Status:** VERIFIED / FROZEN
 
 ### Purpose
 
