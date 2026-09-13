@@ -6727,3 +6727,181 @@ Phase 11D1 does not establish:
 - a microservices architecture.
 
 Those claims require later Phase 11D milestones.
+
+## Phase 11D2 — gRPC Retrieval Servicer Adapter
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Implemented the server-side adapter between the frozen Phase 11D1 protobuf
+retrieval contract and the existing typed retrieval executor boundary.
+
+Phase 11D2 remains in-process.
+
+It does not yet establish a running network server or remote client.
+
+### Servicer contract
+
+Implemented:
+
+`RetrievalGrpcServicer`
+
+Version:
+
+`northstar-retrieval-grpc-servicer-v1`
+
+The servicer subclasses the generated:
+
+`RetrievalServiceServicer`
+
+and implements the unary:
+
+`Retrieve`
+
+RPC adapter.
+
+### Execution flow
+
+The server-side adapter performs:
+
+`RetrievalRequest`
+-> protobuf/domain decoding
+-> `RetrievalQuery`
+-> injected retrieval executor
+-> `ToolExecutionResult`
+-> protobuf encoding
+-> `RetrievalResponse`
+
+The existing retrieval executor interface remains:
+
+`execute(RetrievalQuery) -> ToolExecutionResult`
+
+The RPC layer adapts the existing domain boundary rather than introducing a
+second retrieval execution model.
+
+### Request validation
+
+Incoming protobuf requests are decoded through the Phase 11D1 domain codec.
+
+Invalid domain requests fail closed as:
+
+`grpc.StatusCode.INVALID_ARGUMENT`
+
+with bounded public detail:
+
+`invalid retrieval request`
+
+The adapter does not expose Pydantic validation details.
+
+Tested invalid inputs include:
+
+- empty question;
+- empty dataset version;
+- `top_k = 0`;
+- `top_k = 51`.
+
+Invalid requests do not invoke the retrieval executor.
+
+### Domain-result preservation
+
+Valid typed retrieval results are serialized through the Phase 11D1 codec.
+
+Preserved result categories:
+
+- `ok`;
+- `empty`;
+- `error`.
+
+A typed retrieval-domain error remains a typed retrieval RPC response.
+
+It is not converted into a transport-level gRPC failure.
+
+This preserves the pre-existing retrieval-domain semantics.
+
+### Unexpected executor failure behavior
+
+Unexpected executor exceptions fail closed as:
+
+`grpc.StatusCode.INTERNAL`
+
+with bounded public detail:
+
+`retrieval executor failure`
+
+The original exception message is not returned through the RPC boundary.
+
+The test suite explicitly verifies that a synthetic secret executor exception
+message is not exposed.
+
+### Invalid executor-result behavior
+
+If an injected executor violates the retrieval result contract, the servicer
+fails closed as:
+
+`grpc.StatusCode.INTERNAL`
+
+with bounded public detail:
+
+`invalid retrieval executor result`
+
+Malformed executor output is not serialized onto the wire.
+
+### Privacy boundary
+
+The error paths do not echo the user's question.
+
+A dedicated test verifies that a synthetic private question does not appear in
+the public gRPC abort details.
+
+Phase 11D2 does not yet claim broader RPC logging or distributed tracing
+privacy because no real server process has been introduced.
+
+### Verification state
+
+Before freeze:
+
+- Ruff:
+  clean
+- Phase 11D1 contract regression:
+  `21 passed`
+- Phase 11D2 servicer tests:
+  `12 passed`
+- combined RPC tests:
+  `33 passed`
+- full repository:
+  `658 passed`
+- `git diff --check`:
+  clean
+- historical Phase 11D1 tag:
+  verified ancestor
+
+### Safe claim
+
+> Implemented and verified an in-process gRPC retrieval servicer adapter that
+> validates protobuf requests through an existing typed domain contract,
+> delegates to an injected retrieval executor, preserves typed
+> success/empty/error retrieval responses, and fails closed with sanitized gRPC
+> status errors for malformed requests, unexpected executor exceptions, or
+> invalid executor results.
+
+### Claim boundary
+
+Phase 11D2 does not establish:
+
+- a running gRPC server process;
+- socket or TCP transport;
+- localhost or remote RPC execution;
+- a gRPC client executor;
+- client deadlines;
+- transport-failure mapping on the client;
+- retry behavior;
+- TLS;
+- authentication;
+- service discovery;
+- distributed tracing;
+- gRPC latency or throughput;
+- independent production deployment;
+- a microservices architecture.
+
+Those claims require later Phase 11D milestones.
