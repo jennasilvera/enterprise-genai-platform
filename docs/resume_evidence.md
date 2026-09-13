@@ -7300,7 +7300,7 @@ Those properties require later serving, failure, and deployment milestones.
 
 ## Phase 11D5 — Application gRPC Retrieval Integration
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
