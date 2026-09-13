@@ -1,0 +1,329 @@
+{
+  "confirmation_version": "northstar-grpc-retrieval-confirmation-v1",
+  "dataset_version": "northstar-v1",
+  "deadline": {
+    "client_deadline_seconds": 0.02,
+    "expected_error": "retrieval rpc deadline exceeded",
+    "server_sleep_seconds": 0.25,
+    "verified": true
+  },
+  "endpoint": "127.0.0.1:ephemeral",
+  "parity": {
+    "all_semantically_equal": true,
+    "case_count": 4,
+    "cases": [
+      {
+        "case_id": "orbis_lexical",
+        "dataset_version": "northstar-v1",
+        "result": {
+          "error": null,
+          "payload": {
+            "hits": [
+              {
+                "bm25_rank": 1,
+                "chunk_id": "CHK-74b05f63883a4771ea10d984e455043bbb5ff7ce563c545ae0587e481c054adc",
+                "dense_rank": 1,
+                "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC006-RISK-PRIMARY",
+                "rank": 1,
+                "rrf_score": 0.03278688524590164,
+                "source_fact_ids": [
+                  "RISK-006"
+                ],
+                "text": "Orbis Cybersecurity Q2 2026 Risk Review\nThe ORBIS-IDX-7 service experienced an authentication defect that caused intermittent identity-validation failures for a subset of enterprise tenants."
+              },
+              {
+                "bm25_rank": null,
+                "chunk_id": "CHK-2b8cabf72cec9d0b238064758faf2e8a7f9284036cb443908b296c6bb28d2455",
+                "dense_rank": 2,
+                "document_id": "DOC-CORE-PC006-IC-001",
+                "evidence_id": "EVID-CORE-PC006-IC-THESIS",
+                "rank": 2,
+                "rrf_score": 0.016129032258064516,
+                "source_fact_ids": [
+                  "PC-006",
+                  "FUND-001"
+                ],
+                "text": "Orbis Cybersecurity Investment Committee Memorandum\nOrbis provides enterprise identity and threat-detection software. The investment thesis is based on durable cybersecurity demand and expansion of recurring enterprise deployments."
+              },
+              {
+                "bm25_rank": null,
+                "chunk_id": "CHK-61b1d2c4f6998dc75b7e9d66108dc6f44d444d7893e3c45868c193876988eef0",
+                "dense_rank": 3,
+                "document_id": "DOC-CORE-PC006-BOARD-2026Q2",
+                "evidence_id": "EVID-CORE-PC006-BOARD-PRIORITY",
+                "rank": 3,
+                "rrf_score": 0.015873015873015872,
+                "source_fact_ids": [
+                  "RISK-006",
+                  "OP-PC-006-2026Q1-UPTIME",
+                  "OP-PC-006-2026Q2-UPTIME"
+                ],
+                "text": "Orbis Cybersecurity Q2 2026 Board Update\nThe authentication reliability problem has been remediated, and service availability recovered materially in the following quarter."
+              },
+              {
+                "bm25_rank": null,
+                "chunk_id": "CHK-65862ef3d7b4dac85f612e092ed9a6b8a02ad3915825c7a1ff2a299bc67c02d0",
+                "dense_rank": 4,
+                "document_id": "DOC-CORE-PC006-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC006-RISK-CONTEXT",
+                "rank": 4,
+                "rrf_score": 0.015625,
+                "source_fact_ids": [
+                  "GEO-006",
+                  "CC-010",
+                  "CUST-010"
+                ],
+                "text": "Orbis Cybersecurity Q2 2026 Risk Review\nGermany represents 28 percent of Orbis revenue exposure, and Rheinwerk AG is a named German customer. This is a commercial exposure rather than a critical-supplier dependency."
+              },
+              {
+                "bm25_rank": null,
+                "chunk_id": "CHK-c451794bcfc162dff9461f81f291993126268ae8e07aee16aad028c6185106aa",
+                "dense_rank": 5,
+                "document_id": "DOC-CORE-PC006-QMR-2026Q2",
+                "evidence_id": "EVID-CORE-PC006-QMR-SIGNAL",
+                "rank": 5,
+                "rrf_score": 0.015384615384615385,
+                "source_fact_ids": [
+                  "RISK-006",
+                  "OP-PC-006-2026Q1-UPTIME",
+                  "OP-PC-006-2026Q2-UPTIME"
+                ],
+                "text": "Orbis Cybersecurity Q2 2026 Management Report\nAuthentication reliability deteriorated during the first quarter before service performance recovered during Q2."
+              }
+            ]
+          },
+          "status": "ok"
+        },
+        "semantic_parity": true,
+        "top_k": 5
+      },
+      {
+        "case_id": "alder_supplier_risk",
+        "dataset_version": "northstar-v1",
+        "result": {
+          "error": null,
+          "payload": {
+            "hits": [
+              {
+                "bm25_rank": 1,
+                "chunk_id": "CHK-bbf730ac996a7d2a03a6ceb7d5ef91e683571a63b060c5e5bd91c33a7bce5c52",
+                "dense_rank": 2,
+                "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC002-RISK-PRIMARY",
+                "rank": 1,
+                "rrf_score": 0.03252247488101534,
+                "source_fact_ids": [
+                  "RISK-002",
+                  "CS-003",
+                  "SUP-005",
+                  "GEO-002"
+                ],
+                "text": "Alder Manufacturing Q2 2026 Risk Review\nTitaniumWorks GmbH is Alder's only qualified source for a critical aerospace titanium input. The German supplier accounts for 28 percent of supplier exposure represented by the relationship."
+              },
+              {
+                "bm25_rank": 3,
+                "chunk_id": "CHK-fc5dd67746dd9897e6dc57e79710c95509622517828fac4d4885b28317c66b0f",
+                "dense_rank": 1,
+                "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC002-RISK-CONTEXT",
+                "rank": 2,
+                "rrf_score": 0.032266458495966696,
+                "source_fact_ids": [
+                  "CS-014",
+                  "SUP-002"
+                ],
+                "text": "Alder Manufacturing Q2 2026 Risk Review\nAlder also sources semiconductor components from SecureChip Technologies, but that relationship is classified as medium criticality rather than critical."
+              },
+              {
+                "bm25_rank": 2,
+                "chunk_id": "CHK-00e991afbf84ea16e6ce3ee7315b347ea919d618cedc4e500ff2aebd3b69b256",
+                "dense_rank": 4,
+                "document_id": "DOC-CORE-PC002-BOARD-2026Q2",
+                "evidence_id": "EVID-CORE-PC002-BOARD-PRIORITY",
+                "rank": 3,
+                "rrf_score": 0.031754032258064516,
+                "source_fact_ids": [
+                  "RISK-002",
+                  "OP-PC-002-2025Q2-YIELD",
+                  "OP-PC-002-2026Q2-YIELD"
+                ],
+                "text": "Alder Manufacturing Q2 2026 Board Update\nTwo operating concerns are moving in the wrong direction at the same time: factory yield has deteriorated and a critical input remains dependent on one supplier."
+              },
+              {
+                "bm25_rank": 4,
+                "chunk_id": "CHK-fa104da5d8fdcb18553eb95e4a36272da53a4c6650e44c2b24f427b348c3a75d",
+                "dense_rank": 3,
+                "document_id": "DOC-CORE-PC002-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC002-RISK-INDICATOR",
+                "rank": 4,
+                "rrf_score": 0.03149801587301587,
+                "source_fact_ids": [
+                  "OP-PC-002-2025Q2-YIELD",
+                  "OP-PC-002-2026Q2-YIELD"
+                ],
+                "text": "Alder Manufacturing Q2 2026 Risk Review\nFor monitoring context, production yield pct was 96.8 percent in 2025Q2 and 94.2 percent in 2026Q2."
+              },
+              {
+                "bm25_rank": 5,
+                "chunk_id": "CHK-f6a0ab7dd7454a2d7d300446970e6f5ce1ee3dff34a9c4c021580e610d388a88",
+                "dense_rank": 7,
+                "document_id": "DOC-CORE-PC002-QMR-2026Q2",
+                "evidence_id": "EVID-CORE-PC002-QMR-SIGNAL",
+                "rank": 5,
+                "rrf_score": 0.030309988518943745,
+                "source_fact_ids": [
+                  "RISK-002",
+                  "OP-PC-002-2026Q2-YIELD"
+                ],
+                "text": "Alder Manufacturing Q2 2026 Management Report\nManufacturing performance has weakened while a key aerospace material still lacks a qualified alternative source."
+              }
+            ]
+          },
+          "status": "ok"
+        },
+        "semantic_parity": true,
+        "top_k": 5
+      },
+      {
+        "case_id": "vantage_renewal_risk",
+        "dataset_version": "northstar-v1",
+        "result": {
+          "error": null,
+          "payload": {
+            "hits": [
+              {
+                "bm25_rank": 1,
+                "chunk_id": "CHK-2a5d7e23d23f43041c61c8cec1664d20153afb3994306d28c803f5dd1693a422",
+                "dense_rank": 1,
+                "document_id": "DOC-CORE-PC005-IC-001",
+                "evidence_id": "EVID-CORE-PC005-IC-THESIS",
+                "rank": 1,
+                "rrf_score": 0.03278688524590164,
+                "source_fact_ids": [
+                  "PC-005",
+                  "FUND-001"
+                ],
+                "text": "Vantage Retail Analytics Investment Committee Memorandum\nVantage provides demand-forecasting and merchandising analytics for large retailers. The investment thesis is based on increasing adoption of data-driven merchandising workflows."
+              },
+              {
+                "bm25_rank": 2,
+                "chunk_id": "CHK-f5a6ac6b82e44df05d39786660a922dabcf47f8e53446f05f7743736ced644cf",
+                "dense_rank": 6,
+                "document_id": "DOC-CORE-PC005-QMR-2026Q2",
+                "evidence_id": "EVID-CORE-PC005-QMR-SIGNAL",
+                "rank": 2,
+                "rrf_score": 0.03128054740957967,
+                "source_fact_ids": [
+                  "RISK-005",
+                  "FIN-PC-005-2025Q2",
+                  "FIN-PC-005-2026Q2"
+                ],
+                "text": "Vantage Retail Analytics Q2 2026 Management Report\nNew-logo activity remains healthy, but newer customer cohorts are taking longer to settle into normal renewal behavior."
+              },
+              {
+                "bm25_rank": 5,
+                "chunk_id": "CHK-98b3ed635bd78d1c4076480832346af0913c78c429aed9da9a5682a1e2fc49ae",
+                "dense_rank": 3,
+                "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC005-RISK-PRIMARY",
+                "rank": 3,
+                "rrf_score": 0.03125763125763126,
+                "source_fact_ids": [
+                  "RISK-005",
+                  "FIN-PC-005-2025Q2",
+                  "FIN-PC-005-2026Q2"
+                ],
+                "text": "Vantage Retail Analytics Q2 2026 Risk Review\nVantage's net retention declined from 112 percent in 2025 Q2 to 97 percent in 2026 Q2 despite continued revenue growth."
+              },
+              {
+                "bm25_rank": 3,
+                "chunk_id": "CHK-b7763f9e41a2d54e8c53e778c5f691d6314f4a64267e5b25ab508de71a61abfd",
+                "dense_rank": 5,
+                "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC005-RISK-CONTEXT",
+                "rank": 4,
+                "rrf_score": 0.03125763125763126,
+                "source_fact_ids": [
+                  "CC-008"
+                ],
+                "text": "Vantage Retail Analytics Q2 2026 Risk Review\nCrown Street Retail represents 27 percent of company revenue and is currently classified as an at-risk customer relationship."
+              },
+              {
+                "bm25_rank": 4,
+                "chunk_id": "CHK-a6619c82c7c8092bea325fc6866bd0efa581eac94fbc60bee78c2cf98beca5f6",
+                "dense_rank": 4,
+                "document_id": "DOC-CORE-PC005-RISK-2026Q2",
+                "evidence_id": "EVID-CORE-PC005-RISK-INDICATOR",
+                "rank": 5,
+                "rrf_score": 0.03125,
+                "source_fact_ids": [
+                  "OP-PC-005-2025Q2-JOBS",
+                  "OP-PC-005-2026Q2-JOBS"
+                ],
+                "text": "Vantage Retail Analytics Q2 2026 Risk Review\nFor monitoring context, forecast jobs million was 59 million_jobs in 2025Q2 and 93 million_jobs in 2026Q2."
+              }
+            ]
+          },
+          "status": "ok"
+        },
+        "semantic_parity": true,
+        "top_k": 5
+      },
+      {
+        "case_id": "dataset_version_error",
+        "dataset_version": "northstar-v2",
+        "result": {
+          "error": "retrieval executor dataset version mismatch",
+          "payload": null,
+          "status": "error"
+        },
+        "semantic_parity": true,
+        "top_k": 5
+      }
+    ],
+    "excluded_fields": [
+      "duration_ms"
+    ]
+  },
+  "persisted_counts": {
+    "chunks": {
+      "chunk_source_facts": 186,
+      "chunks": 80
+    },
+    "documents": {
+      "documents": 32,
+      "evidence_blocks": 80,
+      "evidence_source_facts": 186
+    }
+  },
+  "retrieval_metadata": {
+    "batch_size": 16,
+    "bm25_b": 0.75,
+    "bm25_k1": 1.5,
+    "chunks": 80,
+    "dense_representation": "e5-document-title-text-v1",
+    "dense_version": "dense-e5-small-v2-v1",
+    "device": "cpu",
+    "embedding_dimension": 384,
+    "lexical_representation": "document-title-text-v1",
+    "model_id": "intfloat/e5-small-v2",
+    "model_revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+    "retriever_version": "hybrid:rrf-k60-v1",
+    "rrf_k": 60
+  },
+  "summary": {
+    "all_passed": true,
+    "deadline_verified": true,
+    "localhost_rpc_verified": true,
+    "persisted_corpus_verified": true,
+    "semantic_parity_verified": true,
+    "unavailable_verified": true
+  },
+  "transport": "grpc-insecure-localhost-tcp",
+  "unavailable": {
+    "client_deadline_seconds": 1.0,
+    "expected_error": "retrieval rpc unavailable",
+    "verified": true
+  }
+}

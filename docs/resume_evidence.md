@@ -7089,3 +7089,211 @@ Phase 11D3 does not establish:
 - a microservices architecture.
 
 Those claims require later Phase 11D milestones.
+
+## Phase 11D4 — Localhost gRPC Retrieval Boundary Confirmation
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Verified the Phase 11D1-11D3 retrieval RPC boundary over a real localhost
+gRPC transport against the persisted Northstar retrieval corpus.
+
+Unlike the earlier contract, servicer, and client milestones, Phase 11D4
+exercises an actual gRPC server, channel, generated stub, and TCP-bound
+localhost endpoint.
+
+The server and client run within the confirmation process; this milestone does
+not yet establish an independently deployed service process.
+
+### Persisted retrieval source
+
+The confirmation uses the repository's configured PostgreSQL-backed persisted
+Northstar corpus.
+
+The retrieval executor is constructed with:
+
+`FrozenHybridRetrievalExecutor.from_persisted_corpus(...)`
+
+The confirmation verifies the persisted retrieval corpus contains:
+
+- 32 documents;
+- 80 evidence blocks;
+- 80 chunks;
+- 186 chunk-source-fact relationships.
+
+The confirmation does not substitute an in-memory synthetic retrieval corpus
+for the persisted source.
+
+### Localhost gRPC topology
+
+The verified execution path is:
+
+`FrozenHybridRetrievalExecutor`
+-> `RetrievalGrpcServicer`
+-> real localhost gRPC server
+-> ephemeral `127.0.0.1` TCP endpoint
+-> generated `RetrievalServiceStub`
+-> `GrpcRetrievalExecutor`
+
+The confirmation report records the transport as:
+
+`grpc-insecure-localhost-tcp`
+
+The endpoint is intentionally represented as:
+
+`127.0.0.1:ephemeral`
+
+because the OS-selected port is not part of the semantic contract.
+
+### Semantic parity protocol
+
+Four frozen confirmation cases are executed both:
+
+1. directly against the persisted retrieval executor; and
+2. through the localhost gRPC boundary.
+
+Cases:
+
+- `orbis_lexical`;
+- `alder_supplier_risk`;
+- `vantage_renewal_risk`;
+- `dataset_version_error`.
+
+The semantic comparison preserves:
+
+- result status;
+- error semantics;
+- payload presence;
+- hit count and order;
+- rank;
+- chunk ID;
+- evidence ID;
+- document ID;
+- evidence text;
+- source fact IDs;
+- RRF score;
+- BM25 rank;
+- dense rank.
+
+`duration_ms` is intentionally excluded because direct and RPC execution occur
+in different timing contexts.
+
+All four cases achieved semantic parity.
+
+### Real deadline behavior
+
+A controlled slow retrieval executor is served through a real localhost gRPC
+server.
+
+The client uses a finite deadline shorter than the server-side execution delay.
+
+The actual gRPC transport produces a deadline failure which the Phase 11D3
+client maps to the bounded typed retrieval error:
+
+`retrieval rpc deadline exceeded`
+
+This is a real transport confirmation rather than a fake-stub simulation.
+
+### Real unavailable behavior
+
+A localhost retrieval server and channel are created successfully and then the
+server is stopped.
+
+A subsequent client execution traverses the generated gRPC stub and observes
+the unavailable transport condition.
+
+The Phase 11D3 client maps that condition to:
+
+`retrieval rpc unavailable`
+
+This is also a real transport confirmation rather than a fake-stub simulation.
+
+### Reproducibility
+
+The real confirmation was executed twice.
+
+Both runs produced the same canonical semantic-report SHA-256:
+
+`40748e93c8d3dfcab072ef40e7c54352952b0e19de8409aac2d055fa1cd4603e`
+
+The canonical report excludes nondeterministic execution timing from semantic
+parity.
+
+The written pretty-printed artifact has byte SHA-256:
+
+`4e77f16e61209ffd2c30b66fb39ec28fa3aac8ea46845d263d9dfbd89e9f35f6`
+
+Artifact:
+
+`artifacts/evaluation/phase11d4_grpc_retrieval_confirmation.json`
+
+The canonical semantic-report hash and artifact byte hash are distinct by
+design because they hash different serializations.
+
+### Runtime observations
+
+Observed gRPC runtime version:
+
+`1.83.1`
+
+The persisted dense-retrieval runtime contacted Hugging Face Hub while loading
+model weights.
+
+The run therefore does not establish offline execution.
+
+The Hugging Face requests were unauthenticated during this confirmation.
+
+### Verification state
+
+Before freeze:
+
+- Phase 11D4 confirmation unit tests:
+  `6 passed`
+- Phase 11D1-11D4 RPC regression:
+  `55 passed`
+- full repository:
+  `680 passed`
+- Ruff:
+  clean
+- `git diff --check`:
+  clean
+- historical Phase 11D3 tag:
+  verified ancestor
+- real semantic parity cases:
+  `4 / 4`
+- real deadline transport mapping:
+  verified
+- real unavailable transport mapping:
+  verified
+- canonical report reproduced across two executions:
+  verified
+
+### Safe claim
+
+> Implemented and verified a localhost gRPC retrieval service boundary over a
+> real TCP transport against the persisted Northstar corpus, with semantic
+> parity to the in-process frozen retriever across four confirmation cases,
+> explicit real deadline behavior, bounded unavailable-service handling, and a
+> reproducible semantic confirmation artifact.
+
+### Claim boundary
+
+Phase 11D4 does not establish:
+
+- TLS;
+- authentication or authorization;
+- encrypted application transport beyond localhost assumptions;
+- retries or retry policy;
+- service discovery;
+- load balancing;
+- distributed tracing across processes;
+- production network behavior;
+- production latency, throughput, or scalability;
+- offline model loading;
+- an independently launched retrieval server process;
+- containerized independent deployment;
+- remote-host deployment;
+- a microservices architecture.
+
+Those properties require later serving, failure, and deployment milestones.
