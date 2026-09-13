@@ -1,70 +1,224 @@
 # Enterprise GenAI Retrieval, Agent & Evaluation Platform
 
-A production-oriented enterprise decision-support platform being built to study,
-implement, and evaluate retrieval, agentic workflows, Responsible AI,
-fine-tuning, and production GenAI engineering.
+A production-oriented enterprise decision-support platform for implementing and
+evaluating retrieval, bounded agentic execution, grounded generation,
+observability, and serving architecture.
 
-The project is being developed incrementally. Capabilities are only described as
-implemented after working code, tests, or measurements provide repository
-evidence for the claim.
+The repository is developed incrementally. Capabilities are described as
+implemented, measured, verified, or frozen only after corresponding code,
+tests, experiments, or reproducible repository evidence exist.
 
 ## Current Milestone
 
-**Phase 1 — Engineering Foundation**
+**Phase 11 — Application Serving, Observability, and gRPC Retrieval Integration**
 
-The current milestone establishes the reproducible application and data-system
-foundation required for later retrieval, RAG, agentic, evaluation, and
-fine-tuning work.
+The repository is complete through:
 
-## Verified Capabilities
+**Phase 11E2 — gRPC Dependency Readiness Semantics**
 
-- Python 3.12 project environment managed with `uv`
+Phase 11 established the application-serving layer on top of the previously
+frozen retrieval, execution, orchestration, evidence, and generation
+components.
+
+The current serving architecture includes:
+
+- a typed application answering boundary;
+- bounded answer specifications;
+- a grounded answering application service;
+- FastAPI answer transport;
+- managed application startup and shutdown;
+- privacy-safe HTTP request observability;
+- application-stage answering observability;
+- bounded process-local operational metrics;
+- a measured localhost serving-latency protocol and confirmation;
+- a versioned gRPC retrieval contract;
+- a gRPC servicer adapter;
+- a gRPC retrieval client executor;
+- a verified real localhost gRPC retrieval boundary;
+- opt-in application integration of the gRPC retrieval executor;
+- fail-closed required-retrieval failure semantics;
+- bounded startup reachability gating for the configured gRPC dependency.
+
+Local retrieval remains the default serving mode.
+
+## Verified Capability Areas
+
+### Data and persistence
+
+- Python 3.12 environment managed with `uv`
 - reproducible dependency locking with `uv.lock`
-- FastAPI application
-- typed environment configuration with Pydantic Settings
-- structured JSON logging foundation
-- Docker Desktop + WSL2 integration
-- Docker Compose service orchestration
 - PostgreSQL 16
 - pgvector 0.8.6
-- validated pgvector vector-distance operations
-- persistent PostgreSQL storage
-- SQLAlchemy + psycopg database connectivity
-- process-level liveness checks
-- dependency-aware readiness checks
-- graceful database outage and recovery behavior
-- Ruff linting and formatting
-- pytest automated tests
-- warning-clean FastAPI/Starlette test client configuration
+- SQLAlchemy + psycopg
+- versioned relational schema
+- deterministic structured-data ingestion
+- immutable document provenance ingestion
+- deterministic provenance-aware chunking
+- synthetic Northstar Capital enterprise ground truth
 
-## Architecture at the Current Milestone
+### Retrieval
+
+- BM25 lexical retrieval
+- dense retrieval
+- dense-representation ablation
+- hybrid Reciprocal Rank Fusion
+- frozen hybrid test confirmation
+- cross-encoder reranking
+- persisted frozen retrieval execution
+
+### Tool routing and execution
+
+- deterministic heuristic routing
+- pretrained NLI routing evaluation
+- PEFT/LoRA supervised routing evaluation
+- typed tool-execution contracts
+- structured SQL execution
+- relational graph execution
+- multi-tool execution coordination
+
+### Agentic orchestration and evidence
+
+- bounded LangGraph runtime
+- mixed-tool orchestration
+- execution-evidence normalization
+- deterministic evidence sufficiency
+- explicit abstention semantics
+- typed grounded-answer contracts
+- provenance-preserving synthesis
+
+### Generation
+
+- grounded-generation authority boundary
+- pinned local causal-LM provider
+- guarded generation with deterministic fallback
+- mechanical generation-comparison protocol and scorer
+- frozen generation-comparison confirmation
+
+### Application serving and operations
+
+- FastAPI grounded-answer endpoint
+- application lifespan ownership of expensive serving resources
+- process liveness and dependency-aware readiness
+- privacy-safe request observability
+- answering-stage observability
+- process-local operational metrics
+- measured localhost serving latency
+- opt-in gRPC retrieval backend
+- fail-closed runtime handling of required retrieval failures
+- bounded gRPC dependency reachability checking during application startup
+
+Detailed implementation evidence and claim boundaries are maintained in:
 
 ```text
-                 Client
-                   |
-                   v
-              +---------+
-              | FastAPI |
-              +----+----+
-                   |
-        +----------+-----------+
-        |                      |
-        v                      v
- /health/live            /health/ready
-                               |
-                               v
-                         SQLAlchemy
-                               |
-                               v
-                         PostgreSQL 16
-                               |
-                               v
-                          pgvector
+docs/resume_evidence.md
 ```
 
-This is only the Phase 1 architecture. Retrieval, generation, agents, graph
-reasoning, evaluation, and model-training components will be introduced in later
-milestones only when their business and technical requirements are established.
+## Current Architecture
+
+```text
+                              Client
+                                |
+                                v
+                         +-------------+
+                         |   FastAPI   |
+                         +------+------+
+                                |
+                   +------------+------------+
+                   |                         |
+                   v                         v
+            /health/live              /health/ready
+                                             |
+                                             |
+                                database + answering
+                                      readiness
+                                             |
+                                             v
+                              GroundedAnsweringService
+                                             |
+                                             v
+                           Bounded Answer Specification
+                                             |
+                                             v
+                         RequestScopedExecutionRuntime
+                             /        |         \
+                            /         |          \
+                           v          v           v
+                     Retrieval      SQL        Graph
+                        |
+              +---------+----------+
+              |                    |
+              v                    v
+        Local frozen          gRPC-backed
+        hybrid retrieval      retrieval executor
+                                   |
+                                   v
+                          versioned gRPC contract
+                                   |
+                                   v
+                         RetrievalGrpcServicer
+
+        execution results
+               |
+               v
+      evidence normalization
+               |
+               v
+     deterministic sufficiency
+               |
+        +------+------+
+        |             |
+        v             v
+   grounded       deterministic
+   generation      abstention
+        |
+        v
+ typed grounded answer
+```
+
+This is deliberately a modular application with one meaningful gRPC retrieval
+boundary.
+
+The repository does **not** claim a general microservices architecture.
+
+## Serving Modes
+
+The application supports two retrieval modes.
+
+### Local retrieval
+
+Default:
+
+```text
+RETRIEVAL_MODE=local
+```
+
+The serving assembly uses the persisted frozen hybrid retriever and retains the
+existing local retrieval behavior.
+
+### gRPC retrieval
+
+Opt-in:
+
+```text
+RETRIEVAL_MODE=grpc
+RETRIEVAL_GRPC_TARGET=127.0.0.1:50051
+```
+
+When gRPC mode is enabled, application startup:
+
+1. creates one gRPC channel;
+2. waits for that channel to become reachable within a bounded startup timeout;
+3. constructs the generated retrieval stub;
+4. constructs `GrpcRetrievalExecutor`;
+5. injects that executor into the existing serving assembly.
+
+If the configured endpoint does not become reachable within the startup
+timeout, answering is marked unavailable and the answering service is not
+installed.
+
+This startup check establishes transport/channel reachability only. It is not
+continuous runtime health polling and does not itself invoke a semantic
+retrieval RPC.
 
 ## Health Endpoints
 
@@ -74,9 +228,7 @@ milestones only when their business and technical requirements are established.
 GET /health/live
 ```
 
-Answers whether the API process itself is alive.
-
-Example response:
+Example:
 
 ```json
 {
@@ -86,8 +238,9 @@ Example response:
 }
 ```
 
-A database outage does not cause the liveness endpoint to fail because the API
-process may still be functioning correctly.
+Liveness reports whether the API process itself is alive.
+
+A database or answering dependency failure does not make process liveness fail.
 
 ### Readiness
 
@@ -95,102 +248,119 @@ process may still be functioning correctly.
 GET /health/ready
 ```
 
-Answers whether the service's required database infrastructure is currently
-usable.
+Readiness reports:
 
-When PostgreSQL and pgvector are available:
+- overall application readiness;
+- database readiness;
+- answering-service state.
+
+With a healthy database and answering disabled:
 
 ```json
 {
   "status": "ready",
-  "database": "ok"
+  "database": "ok",
+  "answering": "disabled"
 }
 ```
 
-The endpoint returns HTTP `200`.
+With a healthy database and successfully initialized answering service:
 
-When PostgreSQL is unavailable:
+```json
+{
+  "status": "ready",
+  "database": "ok",
+  "answering": "ready"
+}
+```
+
+If a required dependency prevents answering initialization:
 
 ```json
 {
   "status": "not_ready",
-  "database": "unavailable"
+  "database": "ok",
+  "answering": "unavailable"
 }
 ```
 
-The endpoint returns HTTP `503 Service Unavailable`.
-
-This distinction allows process health and dependency health to be monitored
-independently.
-
-## Database Foundation
-
-The local development database runs in Docker using:
+the endpoint returns:
 
 ```text
-PostgreSQL 16
-pgvector 0.8.6
+HTTP 503 Service Unavailable
 ```
 
-The pgvector extension is enabled during database initialization.
+A database outage also makes readiness fail while process liveness remains
+independent.
 
-A real vector-distance operation has been verified in PostgreSQL:
+The readiness endpoint does not continuously poll the gRPC dependency.
+For gRPC serving, it reflects the answering state established during startup.
 
-```sql
-SELECT '[1,2,3]'::vector <-> '[4,5,6]'::vector AS l2_distance;
-```
+## Answer Endpoint
 
-The result is:
+When answering has been successfully initialized:
 
 ```text
-5.196152422706632
+POST /answer
 ```
 
-which corresponds to the Euclidean distance:
+routes a bounded request through the existing grounded-answering service,
+request-scoped execution runtime, evidence/sufficiency policies, and synthesis
+boundary.
+
+When answering is unavailable, the endpoint fails closed with HTTP `503`
+instead of silently falling back to another retrieval mode.
+
+Required-tool execution failures that occur after successful startup remain
+governed by the frozen fail-closed execution semantics and can produce a typed
+deterministic abstention rather than an unsupported answer.
+
+## Configuration
+
+Application configuration is loaded through Pydantic Settings.
+
+Relevant environment variables include:
 
 ```text
-sqrt((1 - 4)^2 + (2 - 5)^2 + (3 - 6)^2)
-= sqrt(27)
-≈ 5.196152
+APP_NAME
+ENVIRONMENT
+LOG_LEVEL
+
+ANSWERING_ENABLED
+
+RETRIEVAL_MODE
+RETRIEVAL_GRPC_TARGET
+RETRIEVAL_GRPC_DEADLINE_SECONDS
+RETRIEVAL_GRPC_STARTUP_TIMEOUT_SECONDS
+
+DATABASE_URL
 ```
 
-This verifies the vector datatype and pgvector distance operator.
+### gRPC timeout semantics
 
-It does **not** yet constitute semantic retrieval. Embeddings, vector indexes,
-nearest-neighbor retrieval, and retrieval evaluation will be implemented in
-later milestones.
+`RETRIEVAL_GRPC_DEADLINE_SECONDS`
 
-## Failure and Recovery Behavior
+bounds an actual retrieval RPC.
 
-The following behavior has been tested against the real running services:
+`RETRIEVAL_GRPC_STARTUP_TIMEOUT_SECONDS`
 
-```text
-PostgreSQL running
-    /health/live   -> HTTP 200
-    /health/ready  -> HTTP 200
+bounds the startup wait for the configured gRPC channel to become reachable.
 
-PostgreSQL stopped
-    /health/live   -> HTTP 200
-    /health/ready  -> HTTP 503
-
-PostgreSQL restarted
-    /health/ready  -> HTTP 200
-```
-
-This verifies that the application can distinguish between process availability
-and dependency readiness and can recover after a database interruption.
+These are independent settings and both must be finite and greater than zero.
 
 ## Local Development
 
 ### Prerequisites
 
-- WSL2
+- WSL2 (verified local development environment)
 - Python 3.12
 - `uv`
-- Docker Desktop with WSL integration
+- Docker
 - Docker Compose
 
-### Create or synchronize the environment
+The checked project configuration uses the CPU PyTorch package index.
+
+### Synchronize the environment
 
 ```bash
 uv sync
@@ -202,13 +372,15 @@ uv sync
 docker compose up -d postgres
 ```
 
-Check service status:
+Check database container status:
 
 ```bash
 docker compose ps
 ```
 
 ### Run the API
+
+The default configuration leaves answering disabled:
 
 ```bash
 uv run uvicorn enterprise_genai.api.main:app \
@@ -234,7 +406,29 @@ curl -i http://127.0.0.1:8000/health/ready
 http://127.0.0.1:8000/openapi.json
 ```
 
+## Database Foundation
+
+Local PostgreSQL development uses:
+
+```text
+PostgreSQL 16
+pgvector 0.8.6
+```
+
+The database is managed by Docker Compose and uses a persistent named volume.
+
+The repository has progressed beyond the original pgvector connectivity
+foundation: the persisted enterprise corpus now supports the frozen retrieval,
+structured SQL, graph, orchestration, and answering workflows described in the
+evidence matrix.
+
 ## Quality Gates
+
+Run the full test suite:
+
+```bash
+uv run pytest -q
+```
 
 Run linting:
 
@@ -248,73 +442,16 @@ Check formatting:
 uv run ruff format --check .
 ```
 
-Run tests:
+Check Git whitespace errors:
 
 ```bash
-uv run pytest -q \
-  -W error::starlette.exceptions.StarletteDeprecationWarning
+git diff --check
 ```
 
-## Configuration
+Milestone-specific confirmations and immutable evidence artifacts are retained
+under the repository's evaluation and artifact directories.
 
-Local configuration is loaded from environment variables.
-
-The repository contains:
-
-```text
-.env.example
-```
-
-for documented development defaults.
-
-The actual:
-
-```text
-.env
-```
-
-file is ignored by Git and must not be committed.
-
-## Current Repository Scope
-
-Phase 1 provides engineering infrastructure only.
-
-The repository does **not yet** contain:
-
-- enterprise document ingestion
-- document parsing and normalization
-- chunking experiments
-- embedding generation
-- dense vector retrieval
-- HNSW or IVFFlat indexes
-- BM25 lexical retrieval
-- hybrid retrieval
-- Reciprocal Rank Fusion
-- cross-encoder reranking
-- graph retrieval
-- structured enterprise dataset
-- SQL reasoning tools
-- RAG generation
-- grounded citations
-- context engineering
-- LangGraph agent orchestration
-- tool/function calling
-- persistent workflow state
-- human-in-the-loop approval workflows
-- prompt-injection defenses
-- Responsible AI guardrails
-- GenAI evaluation benchmarks
-- retrieval precision/recall measurements
-- generation evaluation
-- agent evaluation
-- latency or throughput benchmarks
-- LoRA / PEFT fine-tuning
-- gRPC services
-
-These capabilities will only move into the verified-capabilities section after
-they have been implemented and supported by appropriate tests or measurements.
-
-## Evidence Policy
+## Evidence and Reproducibility Policy
 
 The project maintains:
 
@@ -322,9 +459,9 @@ The project maintains:
 docs/resume_evidence.md
 ```
 
-to map potential resume claims to concrete repository evidence.
+to map technical claims to concrete repository evidence.
 
-A capability is tracked using the following statuses:
+Capability states distinguish among:
 
 ```text
 NOT STARTED
@@ -332,46 +469,44 @@ IMPLEMENTED
 TESTED
 MEASURED
 VERIFIED
+FROZEN
 ```
 
-No retrieval-quality, model-quality, hallucination, latency, throughput, cost,
-or performance metric will be reported without running the corresponding
-experiment.
+Performance or quality claims are not reported without the corresponding
+experiment or measurement.
 
-## Project Goal
+Historical milestone tags preserve the code and evidence associated with
+verified phases.
 
-The finished system is intended to become a technically serious enterprise
-GenAI decision-support platform spanning:
+## Current Claim Boundaries
 
-```text
-structured + unstructured enterprise data
-                  |
-                  v
-        lexical + dense retrieval
-                  |
-                  v
-             hybrid fusion
-                  |
-                  v
-              reranking
-                  |
-                  v
-        graph + SQL reasoning
-                  |
-                  v
-        agentic orchestration
-                  |
-                  v
-       grounded RAG generation
-                  |
-                  v
-       guardrails + HITL
-                  |
-                  v
-       evaluation + observability
-```
+The repository does not currently establish:
 
-The final standard is not whether the repository contains impressive AI
-terminology. The standard is whether each claimed capability is implemented,
-testable, measurable where appropriate, reproducible, and defensible in a
+- TLS for the gRPC retrieval boundary;
+- authentication or authorization for the gRPC retrieval boundary;
+- service discovery;
+- remote-host deployment behavior;
+- independently supervised retrieval-service processes;
+- containerized retrieval-service deployment;
+- continuous runtime gRPC dependency polling;
+- automatic gRPC retry or backoff policy;
+- circuit breaking;
+- automatic fallback from gRPC retrieval to local retrieval;
+- automatic recovery semantics when a failed retrieval service returns;
+- production SLOs;
+- production-scale latency or throughput;
+- production-scale fault tolerance;
+- Kubernetes deployment semantics;
+- a microservices architecture.
+
+The verified gRPC confirmations use real localhost TCP/gRPC transport where
+explicitly documented.
+
+## Project Standard
+
+The goal is not to accumulate AI terminology or infrastructure for its own
+sake.
+
+A capability belongs in the repository's verified surface only when its
+implementation and evidence make the claim reproducible and defensible in a
 technical interview.
