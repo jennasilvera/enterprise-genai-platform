@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "application": {
+        "answering_service_installed": true,
+        "answering_status": "ready",
+        "assembly_build_calls": 1,
+        "retrieval_executor": "GrpcRetrievalExecutor"
+      },
+      "case_id": "reachable_at_startup",
+      "endpoint": "127.0.0.1:ephemeral",
+      "http": {
+        "health_ready": {
+          "answering": "ready",
+          "database": "ok",
+          "status": "ready"
+        },
+        "health_ready_status": 200
+      },
+      "lifecycle": {
+        "cleanup_verified": true
+      },
+      "passed": true,
+      "semantic_rpc_invoked": false,
+      "server_listening_during_startup": true,
+      "startup_timeout_seconds": 2.0,
+      "transport": "grpc-insecure-localhost-tcp"
+    },
+    {
+      "application": {
+        "answering_service_installed": false,
+        "answering_status": "unavailable",
+        "assembly_build_calls": 0
+      },
+      "case_id": "unavailable_at_startup",
+      "endpoint": "127.0.0.1:ephemeral",
+      "http": {
+        "answer": {
+          "detail": "answering service unavailable"
+        },
+        "answer_status": 503,
+        "health_ready": {
+          "answering": "unavailable",
+          "database": "ok",
+          "status": "not_ready"
+        },
+        "health_ready_status": 503
+      },
+      "lifecycle": {
+        "cleanup_verified": true
+      },
+      "passed": true,
+      "semantic_rpc_invoked": false,
+      "server_stopped_before_application_startup": true,
+      "startup_timeout_seconds": 0.2,
+      "transport": "grpc-insecure-localhost-tcp"
+    }
+  ],
+  "configuration": {
+    "ready_case_timeout_seconds": 2.0,
+    "startup_timeout_is_dedicated": true,
+    "unavailable_case_timeout_seconds": 0.2
+  },
+  "confirmation_version": "northstar-grpc-dependency-readiness-confirmation-v1",
+  "readiness_primitive_version": "northstar-retrieval-grpc-readiness-v1",
+  "scope": {
+    "continuous_runtime_health": false,
+    "dependency": "grpc_retrieval",
+    "phase": "application_startup_only",
+    "semantic_rpc_health": false,
+    "transport_reachability": true
+  },
+  "summary": {
+    "all_passed": true,
+    "health_schema_preserved": true,
+    "model_loading_required": false,
+    "reachable_dependency_allows_startup_readiness": true,
+    "real_localhost_grpc_transport": true,
+    "runtime_health_polling_claimed": false,
+    "semantic_rpc_health_claimed": false,
+    "unavailable_dependency_blocks_answering": true,
+    "unreachable_dependency_fails_closed": true
+  }
+}

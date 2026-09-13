@@ -27,6 +27,12 @@ class Settings(BaseSettings):
         allow_inf_nan=False,
     )
 
+    retrieval_grpc_startup_timeout_seconds: float = Field(
+        default=5.0,
+        gt=0.0,
+        allow_inf_nan=False,
+    )
+
     database_url: str = (
         "postgresql+psycopg://enterprise_genai:enterprise_genai_dev@localhost:5432/enterprise_genai"
     )

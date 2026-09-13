@@ -7761,3 +7761,325 @@ Phase 11E1 does not establish:
 - production-scale fault tolerance.
 
 Those concerns require later degradation and deployment milestones.
+
+## Phase 11E2 — gRPC Dependency Readiness Semantics
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Added bounded application-startup reachability gating for the configured gRPC
+retrieval dependency.
+
+Before Phase 11E2, successful construction of:
+
+`grpc.insecure_channel(...)`
+
+was sufficient for application startup to install the answering service and
+mark answering readiness as `ready`.
+
+Because gRPC channel construction is lazy, that state did not establish that
+the configured retrieval endpoint was reachable. An unavailable endpoint could
+therefore remain undiscovered until the first retrieval-backed request.
+
+Phase 11E2 makes startup answering readiness depend on the required gRPC
+channel reaching the gRPC `READY` connectivity state within a bounded,
+dedicated startup timeout.
+
+This is intentionally a startup-only transport-reachability contract.
+
+It does not introduce continuous runtime dependency polling or semantic RPC
+health checking.
+
+### Dedicated startup timeout
+
+Added:
+
+`retrieval_grpc_startup_timeout_seconds`
+
+Default:
+
+`5.0`
+
+Validation requires the value to be:
+
+- finite;
+- strictly greater than zero.
+
+This timeout is independent of:
+
+`retrieval_grpc_deadline_seconds`
+
+The two settings represent different operational concerns:
+
+- `retrieval_grpc_startup_timeout_seconds` bounds dependency reachability
+  waiting during application startup;
+- `retrieval_grpc_deadline_seconds` bounds an actual retrieval RPC once the
+  application is serving requests.
+
+The values can therefore be tuned independently.
+
+### Startup readiness primitive
+
+Added the bounded readiness primitive:
+
+`grpc_channel_is_ready(...)`
+
+The primitive uses:
+
+`grpc.channel_ready_future(channel).result(timeout=...)`
+
+and returns whether the channel reaches `READY` within the supplied finite
+positive timeout.
+
+On `grpc.FutureTimeoutError`, the readiness future is cancelled and the
+primitive returns `False`.
+
+The primitive establishes gRPC channel / transport reachability only.
+
+It does not:
+
+- invoke `RetrievalService.Retrieve`;
+- validate retrieval semantics;
+- establish semantic service health;
+- establish continuous runtime dependency health.
+
+### FastAPI startup integration
+
+In gRPC retrieval mode, the FastAPI lifespan now performs the following
+sequence:
+
+`grpc.insecure_channel(target)`
+-> bounded startup channel-readiness wait
+-> generated `RetrievalServiceStub`
+-> `GrpcRetrievalExecutor`
+-> serving assembly
+-> answering status `ready`.
+
+The stub, retrieval executor, and serving assembly are therefore not created
+until the configured gRPC channel has passed the bounded startup reachability
+gate.
+
+If the channel does not become ready within the configured startup timeout, the
+existing answering-initialization failure path is used.
+
+That path:
+
+- closes the created gRPC channel;
+- does not install an answering service;
+- does not install an answering assembly;
+- marks answering status `unavailable`;
+- preserves the existing health-response contract.
+
+Local retrieval mode remains unchanged.
+
+### Health contract
+
+Phase 11E2 does not add a separate retrieval field to the readiness response.
+
+`GET /health/ready`
+
+continues to expose:
+
+- overall status;
+- database status;
+- answering status.
+
+The endpoint does not perform a new gRPC connectivity probe on every health
+request.
+
+Instead, it reads the answering state established by application startup.
+
+Therefore:
+
+- successful gRPC startup reachability can result in
+  `answering = "ready"`;
+- failed gRPC startup reachability results in
+  `answering = "unavailable"` and HTTP `503`.
+
+This avoids turning the health endpoint into continuous gRPC runtime polling.
+
+### Unit and lifecycle verification
+
+Regression coverage verifies:
+
+- startup timeout default is `5.0`;
+- zero startup timeout is rejected;
+- negative startup timeout is rejected;
+- positive infinity is rejected;
+- negative infinity is rejected;
+- NaN is rejected;
+- startup timeout is independently configurable from the per-RPC deadline;
+- the configured startup timeout is forwarded to the readiness primitive;
+- successful startup readiness permits normal gRPC executor construction;
+- failed startup readiness prevents stub construction;
+- failed startup readiness prevents serving-assembly construction;
+- failed startup readiness marks answering unavailable;
+- failed startup readiness produces readiness HTTP `503`;
+- the created channel is closed on startup-readiness failure;
+- downstream initialization failure behavior remains covered;
+- the readiness helper returns `True` when the channel becomes ready;
+- the readiness helper returns `False` and cancels its future on timeout;
+- invalid helper timeout values are rejected.
+
+### Real localhost reachable-startup confirmation
+
+A genuine localhost gRPC server was bound to an ephemeral TCP port and started.
+
+No `RetrievalService` implementation was registered intentionally.
+
+This isolates the exact Phase 11E2 claim:
+
+gRPC transport/channel reachability during application startup.
+
+The normal FastAPI application lifespan was configured with:
+
+- `answering_enabled = true`;
+- `retrieval_mode = "grpc"`;
+- the real localhost endpoint;
+- startup readiness timeout: `2.0` seconds.
+
+Observed:
+
+- real localhost TCP/gRPC channel reached `READY`;
+- answering status became `ready`;
+- `GrpcRetrievalExecutor` was installed;
+- serving assembly build count was exactly `1`;
+- answering service was installed;
+- `GET /health/ready` returned HTTP `200`;
+- health payload remained:
+  `{"status": "ready", "database": "ok", "answering": "ready"}`;
+- FastAPI lifecycle cleanup was verified.
+
+No semantic retrieval RPC was invoked in this case.
+
+### Real localhost unavailable-startup confirmation
+
+A genuine localhost gRPC server was first established on an ephemeral TCP port
+and then stopped before FastAPI application startup.
+
+The application was configured against that now-unavailable endpoint with:
+
+- `answering_enabled = true`;
+- `retrieval_mode = "grpc"`;
+- startup readiness timeout: `0.2` seconds.
+
+Observed:
+
+- the startup channel did not become ready within the bounded timeout;
+- serving assembly build count remained `0`;
+- answering service was not installed;
+- answering status became `unavailable`;
+- `GET /health/ready` returned HTTP `503`;
+- readiness payload was:
+  `{"status": "not_ready", "database": "ok", "answering": "unavailable"}`;
+- `POST /answer` returned HTTP `503`;
+- `/answer` payload was:
+  `{"detail": "answering service unavailable"}`;
+- FastAPI lifecycle cleanup was verified.
+
+This confirms that an unavailable required gRPC retrieval dependency cannot
+silently produce application answering readiness during startup.
+
+### Reproducibility
+
+The real localhost dependency-readiness confirmation was executed twice.
+
+Both independent runs produced the same canonical report SHA-256:
+
+`e02b934e9fb9b9e8dee9a6b9a3b09b137598982902af11d0ec4c9830127d8be0`
+
+The serialized artifact was byte-identical across both runs with SHA-256:
+
+`9c57bcc7f9fc657829c6ec7174e762ee6ecd1b7b8e6e61f0731aeec1454ba3c4`
+
+Artifact:
+
+`artifacts/evaluation/phase11e2_grpc_dependency_readiness.json`
+
+The stable report normalizes the actual ephemeral endpoint as:
+
+`127.0.0.1:ephemeral`
+
+and excludes request IDs, wall-clock timestamps, request durations, ephemeral
+port numbers, and other run-dependent timing values.
+
+### Verification state
+
+Before freeze:
+
+- targeted readiness / serving / health regression:
+  `33 passed`;
+- full repository:
+  `720 passed`;
+- Ruff:
+  clean;
+- `git diff --check`:
+  clean;
+- Phase 11E1:
+  verified ancestor;
+- dedicated finite-positive startup timeout:
+  verified;
+- startup timeout independence from RPC deadline:
+  verified;
+- bounded startup channel-readiness gating:
+  verified;
+- real reachable localhost startup behavior:
+  verified;
+- real unavailable localhost startup behavior:
+  verified;
+- failed startup prevents serving-assembly construction:
+  verified;
+- failed startup prevents answering-service installation:
+  verified;
+- existing health schema:
+  preserved;
+- lifecycle cleanup:
+  verified;
+- canonical report reproducibility:
+  verified;
+- byte-level artifact reproducibility:
+  verified.
+
+### Safe claim
+
+> Added bounded startup transport-reachability gating for the configured gRPC
+> retrieval dependency using a dedicated finite-positive timeout independent
+> from the per-request RPC deadline. Verified with real localhost TCP/gRPC
+> endpoints that a reachable dependency permits answering readiness, while an
+> endpoint unavailable at startup prevents service installation, marks
+> answering unavailable, returns HTTP 503 from readiness and answering routes,
+> and cleans lifecycle resources. Reproduced the stable confirmation artifact
+> byte-for-byte across independent runs while preserving the existing health
+> API contract.
+
+### Claim boundary
+
+Phase 11E2 establishes startup gRPC channel / transport reachability semantics.
+
+It does not establish:
+
+- semantic `RetrievalService.Retrieve` health during the startup probe;
+- application-level retrieval correctness from the startup probe;
+- continuous runtime gRPC health polling;
+- dynamic readiness changes after successful startup;
+- automatic detection that a dependency disappeared after startup;
+- automatic recovery when a dependency later returns;
+- retry or backoff policy;
+- circuit breaking;
+- fallback from gRPC retrieval to local retrieval;
+- startup retry loops;
+- service discovery;
+- TLS;
+- authentication or authorization;
+- remote-host behavior;
+- independently launched retrieval-process supervision;
+- container orchestration or restart behavior;
+- Kubernetes readiness semantics;
+- production SLOs;
+- production latency or throughput;
+- production-scale fault tolerance;
+- a microservices architecture.
+
+Runtime retrieval failures after successful startup remain governed by the
+Phase 11E1 fail-closed request semantics.

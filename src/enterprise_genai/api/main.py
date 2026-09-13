@@ -38,6 +38,9 @@ from enterprise_genai.rpc.retrieval.v1 import (
 from enterprise_genai.rpc.retrieval.v1.client import (
     GrpcRetrievalExecutor,
 )
+from enterprise_genai.rpc.retrieval.v1.readiness import (
+    grpc_channel_is_ready,
+)
 
 settings = get_settings()
 configure_logging(settings.log_level)
@@ -104,6 +107,12 @@ async def lifespan(
                     raise RuntimeError("validated gRPC retrieval target is unavailable")
 
                 grpc_channel = grpc.insecure_channel(target)
+
+                if not grpc_channel_is_ready(
+                    grpc_channel,
+                    timeout_seconds=(settings.retrieval_grpc_startup_timeout_seconds),
+                ):
+                    raise RuntimeError("gRPC retrieval dependency unavailable during startup")
 
                 stub = retrieval_pb2_grpc.RetrievalServiceStub(grpc_channel)
 

@@ -99,6 +99,45 @@ def test_settings_reject_invalid_grpc_deadline(
         )
 
 
+def test_grpc_startup_timeout_defaults_to_five_seconds() -> None:
+    settings = Settings(_env_file=None)
+
+    assert settings.retrieval_grpc_startup_timeout_seconds == 5.0
+
+
+@pytest.mark.parametrize(
+    "timeout",
+    (
+        0.0,
+        -1.0,
+        float("inf"),
+        float("-inf"),
+        float("nan"),
+    ),
+)
+def test_settings_reject_invalid_grpc_startup_timeout(
+    timeout: float,
+) -> None:
+    with pytest.raises(ValueError):
+        Settings(
+            _env_file=None,
+            retrieval_grpc_startup_timeout_seconds=timeout,
+        )
+
+
+def test_grpc_startup_timeout_is_independent_of_rpc_deadline() -> None:
+    settings = Settings(
+        _env_file=None,
+        retrieval_mode="grpc",
+        retrieval_grpc_target="127.0.0.1:50051",
+        retrieval_grpc_deadline_seconds=1.25,
+        retrieval_grpc_startup_timeout_seconds=0.2,
+    )
+
+    assert settings.retrieval_grpc_deadline_seconds == 1.25
+    assert settings.retrieval_grpc_startup_timeout_seconds == 0.2
+
+
 def test_grpc_lifespan_injects_client_and_closes_channel(
     monkeypatch,
 ) -> None:
@@ -111,6 +150,8 @@ def test_grpc_lifespan_injects_client_and_closes_channel(
         object,
     ] = {}
 
+    observed_startup_timeouts: list[float] = []
+
     monkeypatch.setattr(
         main,
         "settings",
@@ -120,6 +161,7 @@ def test_grpc_lifespan_injects_client_and_closes_channel(
             retrieval_mode="grpc",
             retrieval_grpc_target=("127.0.0.1:50051"),
             retrieval_grpc_deadline_seconds=(1.25),
+            retrieval_grpc_startup_timeout_seconds=(0.2),
         ),
     )
 
@@ -134,6 +176,23 @@ def test_grpc_lifespan_injects_client_and_closes_channel(
         main.grpc,
         "insecure_channel",
         fake_insecure_channel,
+    )
+
+    def fake_startup_readiness(
+        supplied_channel,
+        *,
+        timeout_seconds: float,
+    ) -> bool:
+        assert supplied_channel is channel
+
+        observed_startup_timeouts.append(timeout_seconds)
+
+        return True
+
+    monkeypatch.setattr(
+        main,
+        "grpc_channel_is_ready",
+        fake_startup_readiness,
     )
 
     def fake_stub_builder(
@@ -195,6 +254,8 @@ def test_grpc_lifespan_injects_client_and_closes_channel(
 
         assert observed["target"] == "127.0.0.1:50051"
 
+        assert observed_startup_timeouts == [0.2]
+
         assert channel.close_calls == 0
 
     assert channel.close_calls == 1
@@ -220,6 +281,12 @@ def test_failed_grpc_serving_initialization_closes_channel(
         main.grpc,
         "insecure_channel",
         lambda target: channel,
+    )
+
+    monkeypatch.setattr(
+        main,
+        "grpc_channel_is_ready",
+        lambda supplied_channel, *, timeout_seconds: True,
     )
 
     monkeypatch.setattr(
@@ -251,5 +318,96 @@ def test_failed_grpc_serving_initialization_closes_channel(
         ready = client.get("/health/ready")
 
         assert ready.status_code == 503
+
+    assert channel.close_calls == 1
+
+
+def test_grpc_startup_readiness_failure_fails_closed(
+    monkeypatch,
+) -> None:
+    channel = FakeChannel()
+
+    observed_startup_timeouts: list[float] = []
+
+    monkeypatch.setattr(
+        main,
+        "settings",
+        Settings(
+            _env_file=None,
+            answering_enabled=True,
+            retrieval_mode="grpc",
+            retrieval_grpc_target="127.0.0.1:50051",
+            retrieval_grpc_startup_timeout_seconds=0.05,
+        ),
+    )
+
+    monkeypatch.setattr(
+        main.grpc,
+        "insecure_channel",
+        lambda target: channel,
+    )
+
+    def fake_startup_readiness(
+        supplied_channel,
+        *,
+        timeout_seconds: float,
+    ) -> bool:
+        assert supplied_channel is channel
+
+        observed_startup_timeouts.append(timeout_seconds)
+
+        return False
+
+    monkeypatch.setattr(
+        main,
+        "grpc_channel_is_ready",
+        fake_startup_readiness,
+    )
+
+    def forbidden_stub_builder(
+        supplied_channel,
+    ):
+        del supplied_channel
+
+        raise AssertionError("stub construction must not occur when startup readiness fails")
+
+    monkeypatch.setattr(
+        main.retrieval_pb2_grpc,
+        "RetrievalServiceStub",
+        forbidden_stub_builder,
+    )
+
+    def forbidden_build(
+        **kwargs,
+    ):
+        del kwargs
+
+        raise AssertionError("serving assembly must not be built when startup readiness fails")
+
+    monkeypatch.setattr(
+        main,
+        "build_serving_assembly",
+        forbidden_build,
+    )
+
+    monkeypatch.setattr(
+        main,
+        "check_database",
+        lambda: None,
+    )
+
+    with TestClient(main.app) as client:
+        ready = client.get("/health/ready")
+
+        assert ready.status_code == 503
+
+        assert main.app.state.answering_status == "unavailable"
+
+        assert not hasattr(
+            main.app.state,
+            "answering_service",
+        )
+
+    assert observed_startup_timeouts == [0.05]
 
     assert channel.close_calls == 1
