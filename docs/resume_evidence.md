@@ -109,81 +109,187 @@ Supports:
 
 ## Dense Vector Retrieval
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/retrieval/dense.py`
+- `src/enterprise_genai/retrieval/dense_representation.py`
+- `src/enterprise_genai/evaluation/dense_benchmark.py`
+- `src/enterprise_genai/evaluation/dense_ablation.py`
+- Phase 5A measured dense-retrieval baseline
+- Phase 5B dense-representation ablation
+
+Supports:
+
+> Implemented and measured dense retrieval over the frozen enterprise
+> corpus, including representation evaluation and deterministic validation.
 
 ---
 
 ## BM25 Lexical Retrieval
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/retrieval/bm25.py`
+- `src/enterprise_genai/evaluation/bm25_benchmark.py`
+- `src/enterprise_genai/evaluation/bm25_ablation.py`
+- `src/enterprise_genai/evaluation/bm25_confirmation.py`
+- Phase 4A baseline
+- Phase 4B representation ablation
+- Phase 4C frozen test confirmation
+
+Supports:
+
+> Implemented and evaluated deterministic BM25 lexical retrieval with
+> representation experiments and frozen test confirmation.
 
 ---
 
 ## Hybrid Retrieval
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/retrieval/rrf.py`
+- `src/enterprise_genai/evaluation/hybrid_rrf.py`
+- `src/enterprise_genai/evaluation/hybrid_confirmation.py`
+- Phase 6A hybrid RRF baseline
+- Phase 6B frozen test confirmation
+
+Supports:
+
+> Implemented reciprocal-rank fusion across lexical and dense retrieval
+> and confirmed the frozen hybrid configuration on the held-out test split.
 
 ---
 
 ## Cross-Encoder Reranking
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/retrieval/reranker.py`
+- `src/enterprise_genai/evaluation/reranker_benchmark.py`
+- `src/enterprise_genai/evaluation/reranker_selection.py`
+- Phase 7A measured cross-encoder reranker experiment
+
+Supports:
+
+> Implemented and evaluated a cross-encoder reranking candidate against the
+> frozen hybrid retriever.
+
+Limitation:
+
+The evaluated reranker failed the preregistered retrieval guardrail and was
+therefore not promoted into the frozen serving retrieval configuration.
+Verification applies to implementation and measured evaluation, not to
+selection as the production retrieval path.
 
 ---
 
 ## Graph Retrieval
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/execution/relational_graph.py`
+- Phase 8D3 relational graph executor
+- Phase 8E2A portfolio graph contracts
+- Phase 8E2B portfolio graph execution
+- Phase 8E3 execution-coverage confirmation
+
+Supports:
+
+> Implemented bounded relational graph-predicate execution for portfolio
+> relationship questions and verified it in the frozen execution-coverage
+> protocol.
+
+Limitation:
+
+This is relational graph execution over the Northstar enterprise model, not a
+claim of a standalone graph database or general graph-retrieval platform.
 
 ---
 
 ## Structured SQL Reasoning
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/execution/structured_sql.py`
+- Phase 8D2 structured SQL executor
+- Phase 8E1A portfolio structured contracts
+- Phase 8E1B portfolio structured SQL execution
+- Phase 8E3 execution-coverage confirmation
+
+Supports:
+
+> Implemented bounded typed SQL execution for structured portfolio questions
+> and verified its behavior against persisted enterprise data.
+
+Limitation:
+
+This is constrained structured execution through typed contracts, not
+unrestricted model-generated SQL.
 
 ---
 
 ## RAG Generation and Citations
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- Phase 9C1 evidence and sufficiency contracts
+- Phase 9C2 execution-evidence normalization and abstention
+- Phase 9C3 grounded answer contracts and synthesis
+- Phase 9C4 end-to-end answering confirmation
+- Phase 10A grounded-generation authority boundary
+- Phase 10C guarded generation fidelity and deterministic fallback
+- Phase 10E generation-comparison confirmation
+
+Supports:
+
+> Built a provenance-aware grounded answering pipeline with explicit evidence
+> sufficiency, citations/provenance continuity, deterministic abstention, and
+> guarded model generation.
+
+Limitation:
+
+The verified behavior is bounded to the frozen Northstar contracts and
+evaluation cases. It is not a claim of unconstrained general-purpose RAG
+correctness.
 
 ---
 
 ## LangGraph Agent Orchestration
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/orchestration/langgraph_runtime.py`
+- Phase 9A bounded orchestration contracts
+- Phase 9B0 pinned LangGraph runtime dependency
+- Phase 9B1 bounded LangGraph runtime
+- Phase 9B2 mixed-tool orchestration confirmation
+
+Supports:
+
+> Implemented bounded LangGraph orchestration across retrieval, SQL, and graph
+> execution paths with typed state and frozen mixed-tool confirmation.
+
+Limitation:
+
+The system uses constrained deterministic planning and bounded tool execution;
+it does not claim open-ended autonomous-agent behavior.
 
 ---
 
@@ -193,7 +299,13 @@ Status: NOT STARTED
 
 Evidence:
 
-- None.
+- No dedicated human approval, review, escalation, or resumable intervention
+  workflow has been implemented.
+
+Limitation:
+
+Existing typed rejection and abstention behavior is automated system policy and
+must not be represented as human-in-the-loop control.
 
 ---
 
@@ -203,17 +315,51 @@ Status: NOT STARTED
 
 Evidence:
 
-- None.
+- No dedicated Responsible AI policy or guardrail layer has yet been frozen.
+
+Adjacent verified controls already exist in other phases, including:
+
+- provenance-aware evidence boundaries;
+- deterministic insufficiency and abstention;
+- guarded generation-fidelity rejection;
+- prevention of rejected raw model output from crossing presentation;
+- privacy-safe observability behavior;
+- bounded typed input and execution contracts.
+
+Limitation:
+
+Those controls are important safety properties, but they do not by themselves
+establish the broader Responsible AI guardrail capability reserved by this
+section.
 
 ---
 
 ## Automated GenAI Evaluation Harness
 
-Status: NOT STARTED
+Status: VERIFIED
 
 Evidence:
 
-- None.
+- `src/enterprise_genai/answering/evaluation.py`
+- `src/enterprise_genai/evaluation/retrieval_metrics.py`
+- `src/enterprise_genai/evaluation/routing_metrics.py`
+- `src/enterprise_genai/evaluation/answering_confirmation.py`
+- `src/enterprise_genai/evaluation/generation_comparison.py`
+- `src/enterprise_genai/evaluation/generation_comparison_confirmation.py`
+- retrieval, routing, execution, answering, generation, and serving confirmation
+  artifacts across frozen milestones
+
+Supports:
+
+> Built reproducible task-specific evaluation and confirmation harnesses across
+> retrieval, routing, execution, grounded answering, generation, and serving
+> behavior.
+
+Limitation:
+
+The repository contains multiple bounded evaluation harnesses rather than one
+general-purpose external GenAI evaluation framework or production evaluation
+service.
 
 ---
 
