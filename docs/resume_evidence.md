@@ -6905,3 +6905,187 @@ Phase 11D2 does not establish:
 - a microservices architecture.
 
 Those claims require later Phase 11D milestones.
+
+## Phase 11D3 — gRPC Retrieval Client Executor
+
+**Status:** VERIFIED / FROZEN pending commit/tag
+
+### Purpose
+
+Implemented the client-side adapter between the existing typed retrieval
+executor boundary and the frozen Phase 11D1 gRPC retrieval contract.
+
+Phase 11D3 remains stub-injected and does not yet establish a real network
+connection.
+
+### Client contract
+
+Implemented:
+
+`GrpcRetrievalExecutor`
+
+Version:
+
+`northstar-retrieval-grpc-client-v1`
+
+The client preserves the existing structural executor interface:
+
+`execute(RetrievalQuery) -> ToolExecutionResult`
+
+This allows the gRPC-backed client to be substituted anywhere the application
+already expects a retrieval executor.
+
+### Execution flow
+
+The client performs:
+
+`RetrievalQuery`
+-> protobuf encoding
+-> `RetrievalRequest`
+-> generated retrieval stub
+-> `RetrievalResponse`
+-> protobuf/domain decoding
+-> `ToolExecutionResult`
+
+The RPC layer adapts the existing domain model rather than introducing a second
+retrieval-result abstraction.
+
+### Deadline behavior
+
+Every RPC invocation receives an explicit finite positive deadline.
+
+The client constructor rejects:
+
+- zero;
+- negative values;
+- positive infinity;
+- negative infinity;
+- NaN.
+
+The configured deadline is passed directly to the generated unary RPC callable
+through the `timeout` argument.
+
+### Valid-result preservation
+
+For valid RPC responses, the client preserves typed retrieval-domain results:
+
+- `ok`;
+- `empty`;
+- `error`.
+
+The server-provided retrieval result is decoded through the frozen Phase 11D1
+codec.
+
+For valid responses, `duration_ms` remains the server/executor-native duration
+carried by the protobuf response.
+
+It is not replaced by client-observed RPC elapsed time.
+
+### Transport-failure mapping
+
+`grpc.StatusCode.DEADLINE_EXCEEDED` maps to:
+
+`retrieval rpc deadline exceeded`
+
+`grpc.StatusCode.UNAVAILABLE` maps to:
+
+`retrieval rpc unavailable`
+
+Other RPC status failures map to:
+
+`retrieval rpc failed: <status>`
+
+An unavailable/unknown status maps to a bounded `unknown` status token.
+
+The raw gRPC `details()` string is not returned through the typed retrieval
+error.
+
+### Malformed-response handling
+
+If the RPC returns:
+
+- an invalid protobuf execution status;
+- a response that violates the frozen domain codec;
+- an object that is not a `RetrievalResponse`;
+
+the client fails closed with:
+
+`retrieval rpc response invalid`
+
+Malformed response contents are not exposed through the returned error.
+
+### Failure duration semantics
+
+When a valid retrieval response exists:
+
+- `duration_ms` is the server/executor-native duration.
+
+When no valid typed response can be produced because of:
+
+- an RPC transport failure; or
+- an invalid RPC response;
+
+the client creates a typed retrieval error and measures local client-observed
+elapsed time for `duration_ms`.
+
+These timing semantics are intentionally distinct.
+
+### Privacy boundary
+
+Tests verify that mapped client-side RPC errors do not expose:
+
+- synthetic secret gRPC detail strings;
+- the user's question.
+
+Phase 11D3 does not yet establish network-level logging or distributed tracing
+privacy because no real server/client socket execution has been introduced.
+
+### Verification state
+
+Before freeze:
+
+- Ruff:
+  clean
+- Phase 11D1 contract regression:
+  `21 passed`
+- Phase 11D2 servicer regression:
+  `12 passed`
+- Phase 11D3 client tests:
+  `16 passed`
+- combined RPC test set:
+  `49 passed`
+- full repository:
+  `674 passed`
+- `git diff --check`:
+  clean
+- historical Phase 11D2 tag:
+  verified ancestor
+
+### Safe claim
+
+> Implemented and verified a gRPC-backed retrieval client adapter that preserves
+> an existing typed `RetrievalQuery -> ToolExecutionResult` interface, applies
+> explicit finite RPC deadlines, preserves valid typed retrieval responses, and
+> maps deadline, availability, other transport, and malformed-response failures
+> into bounded retrieval-domain errors without exposing raw RPC details.
+
+### Claim boundary
+
+Phase 11D3 does not establish:
+
+- a running gRPC server process;
+- an actual socket or TCP connection;
+- localhost or remote RPC execution;
+- real transport deadline behavior;
+- real server unavailability behavior;
+- network parity with the in-process retriever;
+- retry behavior;
+- TLS;
+- authentication;
+- service discovery;
+- distributed tracing;
+- gRPC latency or throughput;
+- independent production deployment;
+- a microservices architecture.
+
+Those claims require later Phase 11D milestones.
