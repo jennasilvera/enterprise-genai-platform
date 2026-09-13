@@ -7561,7 +7561,7 @@ Those concerns belong to later failure/degradation and deployment milestones.
 
 ## Phase 11E1 — Fail-Closed gRPC Failure & Degradation Semantics
 
-**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN
 
 ### Purpose
 
