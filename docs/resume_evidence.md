@@ -6908,7 +6908,7 @@ Those claims require later Phase 11D milestones.
 
 ## Phase 11D3 — gRPC Retrieval Client Executor
 
-**Status:** VERIFIED / FROZEN pending commit/tag
+**Status:** VERIFIED / FROZEN
 
 ### Purpose
 
