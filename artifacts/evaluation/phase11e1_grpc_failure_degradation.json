@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "case_id": "real_grpc_deadline",
+      "client_deadline_seconds": 0.05,
+      "endpoint": "127.0.0.1:ephemeral",
+      "generation_calls": 0,
+      "http_status": 200,
+      "lifecycle_cleanup": true,
+      "response": {
+        "citation_ids": [],
+        "detail": "retrieval: retrieval rpc deadline exceeded",
+        "generation_fidelity": "not_applicable",
+        "presentation_source": "deterministic",
+        "provenance_fact_ids": [],
+        "reason": "execution_failed",
+        "status": "abstained"
+      },
+      "retrieval_executor": "GrpcRetrievalExecutor",
+      "server_delay_seconds": 0.3,
+      "server_retrieval_calls": 1,
+      "transport": "grpc-insecure-localhost-tcp"
+    },
+    {
+      "case_id": "real_grpc_unavailable",
+      "client_deadline_seconds": 1.0,
+      "endpoint": "127.0.0.1:ephemeral",
+      "generation_calls": 0,
+      "http_status": 200,
+      "lifecycle_cleanup": true,
+      "response": {
+        "citation_ids": [],
+        "detail": "retrieval: retrieval rpc unavailable",
+        "generation_fidelity": "not_applicable",
+        "presentation_source": "deterministic",
+        "provenance_fact_ids": [],
+        "reason": "execution_failed",
+        "status": "abstained"
+      },
+      "retrieval_executor": "GrpcRetrievalExecutor",
+      "server_retrieval_calls": 0,
+      "server_stopped_before_request": true,
+      "transport": "grpc-insecure-localhost-tcp"
+    }
+  ],
+  "confirmation_version": "northstar-grpc-failure-degradation-confirmation-v1",
+  "policy": {
+    "abstention_reason": "execution_failed",
+    "application_outcome": "typed_deterministic_abstention",
+    "generation_on_failure": false,
+    "http_status": 200,
+    "required_tool_error": "fail_closed"
+  },
+  "question": "What defect affected ORBIS-IDX-7?",
+  "summary": {
+    "all_passed": true,
+    "deadline_fail_closed": true,
+    "generation_skipped": true,
+    "lifecycle_cleanup_verified": true,
+    "typed_abstention_verified": true,
+    "unavailable_fail_closed": true
+  }
+}

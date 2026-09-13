@@ -7558,3 +7558,206 @@ Phase 11D5 does not establish:
 - a microservices architecture.
 
 Those concerns belong to later failure/degradation and deployment milestones.
+
+## Phase 11E1 — Fail-Closed gRPC Failure & Degradation Semantics
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Verified the application's existing fail-closed behavior for required-tool
+execution failures and exercised that behavior through real localhost gRPC
+transport failures.
+
+Phase 11E1 does not introduce a second error model. It verifies and freezes the
+existing typed execution, orchestration, evidence, sufficiency, synthesis, and
+application contracts.
+
+### Atomic required-tool failure policy
+
+The frozen policy is:
+
+`required tool error`
+-> failed orchestration
+-> failed evidence bundle
+-> insufficient sufficiency assessment
+-> `execution_failed`
+-> deterministic abstention.
+
+The sufficiency policy evaluates terminal bundle status before matching
+individual evidence requirements.
+
+Therefore, surviving evidence from another tool cannot authorize a partial
+answer after a required-tool failure.
+
+Regression tests explicitly verify that an otherwise sufficient surviving
+structured record is unable to convert a failed evidence bundle into an answer.
+
+This is an atomic answer-authority policy: a required-tool failure prevents the
+remaining subset of evidence from silently weakening the original bounded
+execution plan.
+
+### Existing failure isolation
+
+Executor exceptions and typed tool errors remain behind the existing
+`ToolExecutionResult` boundary.
+
+The orchestration runtime converts required-tool errors into a terminal
+`failed` snapshot.
+
+Evidence normalization retains bounded diagnostic details but marks the bundle
+`failed`.
+
+The sufficiency layer converts a failed bundle to:
+
+- status: `insufficient`;
+- reason: `execution_failed`.
+
+Deterministic synthesis converts that insufficiency into an abstention.
+
+Probabilistic generation is not invoked for this outcome.
+
+### Real gRPC deadline confirmation
+
+A real localhost gRPC retrieval service was started with a controlled slow
+retrieval executor.
+
+Configuration:
+
+- transport: insecure localhost TCP/gRPC;
+- client deadline: `0.05` seconds;
+- controlled server delay: `0.30` seconds.
+
+Observed path:
+
+`POST /answer`
+-> `GrpcRetrievalExecutor`
+-> real gRPC `DEADLINE_EXCEEDED`
+-> bounded retrieval error
+-> failed orchestration
+-> insufficient / `execution_failed`
+-> deterministic abstention.
+
+Observed application result:
+
+- HTTP status: `200`;
+- answer status: `abstained`;
+- presentation source: `deterministic`;
+- generation fidelity: `not_applicable`;
+- reason: `execution_failed`;
+- detail: `retrieval: retrieval rpc deadline exceeded`;
+- generation calls: `0`;
+- citation IDs: empty;
+- provenance fact IDs: empty;
+- lifecycle cleanup: verified.
+
+The server received exactly one retrieval call.
+
+### Real unavailable-service confirmation
+
+A real localhost retrieval server and channel were established successfully and
+the server was stopped before the application request.
+
+Observed path:
+
+`POST /answer`
+-> `GrpcRetrievalExecutor`
+-> real gRPC `UNAVAILABLE`
+-> bounded retrieval error
+-> failed orchestration
+-> insufficient / `execution_failed`
+-> deterministic abstention.
+
+Observed application result:
+
+- HTTP status: `200`;
+- answer status: `abstained`;
+- presentation source: `deterministic`;
+- generation fidelity: `not_applicable`;
+- reason: `execution_failed`;
+- detail: `retrieval: retrieval rpc unavailable`;
+- generation calls: `0`;
+- citation IDs: empty;
+- provenance fact IDs: empty;
+- lifecycle cleanup: verified.
+
+Because the server was stopped before the request, the retrieval executor
+received zero server-side calls.
+
+### Reproducibility
+
+The real degradation confirmation was executed twice.
+
+Both runs produced the same canonical report SHA-256:
+
+`73346bb31d237bdeb1d277428777647f2ed8377f0f5e98d219702ffa28ffb7fa`
+
+The written artifact remained byte-identical with SHA-256:
+
+`a70aa28bb0907073205ece065deda3e31a924ee47b051cee9ed6561404c1f483`
+
+Artifact:
+
+`artifacts/evaluation/phase11e1_grpc_failure_degradation.json`
+
+The stable artifact excludes timing-dependent request and tool durations.
+
+### Verification state
+
+Before freeze:
+
+- atomic failure-policy tests:
+  `5 passed`;
+- Phase 11E1 policy + confirmation contract:
+  `9 passed`;
+- answering failure regression:
+  `44 passed`;
+- gRPC regression:
+  `64 passed`;
+- full repository:
+  `704 passed`;
+- Ruff:
+  clean;
+- `git diff --check`:
+  clean;
+- Phase 11D5:
+  verified ancestor;
+- real deadline fail-closed behavior:
+  verified;
+- real unavailable fail-closed behavior:
+  verified;
+- generation skipped on execution failure:
+  verified;
+- lifecycle cleanup:
+  verified;
+- canonical and byte-level artifact reproducibility:
+  verified.
+
+### Safe claim
+
+> Verified fail-closed degradation semantics for required retrieval failures:
+> real localhost gRPC deadline and unavailable conditions are converted into
+> bounded retrieval errors, failed orchestration, deterministic
+> `execution_failed` abstentions, HTTP 200 typed application results, zero
+> probabilistic generation calls, and clean lifecycle teardown. Also froze the
+> answering-layer atomicity rule that a failed required-tool execution cannot be
+> weakened into a partial answer using otherwise sufficient surviving evidence.
+
+### Claim boundary
+
+Phase 11E1 does not establish:
+
+- startup reachability probing of the gRPC dependency;
+- readiness reflecting runtime gRPC reachability;
+- retry or backoff policy;
+- circuit breaking;
+- automatic fallback from gRPC retrieval to local retrieval;
+- automatic recovery behavior after a service returns;
+- remote-host failure behavior;
+- TLS or authenticated transport;
+- production SLOs;
+- multi-process supervision;
+- container restart behavior;
+- production-scale fault tolerance.
+
+Those concerns require later degradation and deployment milestones.
