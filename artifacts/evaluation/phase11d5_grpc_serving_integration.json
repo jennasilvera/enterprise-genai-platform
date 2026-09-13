@@ -1,0 +1,47 @@
+{
+  "configuration": {
+    "answering_enabled": true,
+    "retrieval_grpc_deadline_seconds": 30.0,
+    "retrieval_mode": "grpc"
+  },
+  "confirmation_version": "northstar-grpc-serving-integration-confirmation-v1",
+  "dataset_version": "northstar-v1",
+  "http": {
+    "answer": {
+      "citation_count": 0,
+      "generation_fidelity": "rejected",
+      "presentation_source": "deterministic_fallback",
+      "status": "answered"
+    },
+    "path": "/answer",
+    "question": "What defect affected ORBIS-IDX-7?",
+    "status_code": 200
+  },
+  "lifecycle": {
+    "cleanup_verified": true
+  },
+  "readiness": {
+    "answering": "ready",
+    "database": "ok",
+    "status": "ready"
+  },
+  "retrieval": {
+    "executor_type": "GrpcRetrievalExecutor",
+    "observed_query": {
+      "dataset_version": "northstar-v1",
+      "question": "What defect affected ORBIS-IDX-7?",
+      "top_k": 10
+    },
+    "remote_call_count": 1
+  },
+  "retrieval_endpoint": "127.0.0.1:ephemeral",
+  "summary": {
+    "all_passed": true,
+    "answer_completed": true,
+    "fastapi_path_verified": true,
+    "grpc_retrieval_injected": true,
+    "lifecycle_cleanup_verified": true,
+    "remote_retrieval_observed": true
+  },
+  "transport_path": "fastapi-testclient-asgi->grpc-insecure-localhost-tcp"
+}

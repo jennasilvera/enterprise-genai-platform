@@ -7297,3 +7297,264 @@ Phase 11D4 does not establish:
 - a microservices architecture.
 
 Those properties require later serving, failure, and deployment milestones.
+
+## Phase 11D5 — Application gRPC Retrieval Integration
+
+**Status:** VERIFIED / REPRODUCIBLE / FROZEN pending commit/tag
+
+### Purpose
+
+Integrated the verified gRPC retrieval client into the existing application
+serving composition without changing the answering, orchestration, SQL, graph,
+generation, or HTTP-domain contracts.
+
+The application can now explicitly select either:
+
+- the existing local persisted frozen retriever; or
+- a gRPC-backed retrieval executor.
+
+Local retrieval remains the default.
+
+### Configuration
+
+Added validated serving configuration:
+
+- `retrieval_mode = "local" | "grpc"`;
+- `retrieval_grpc_target`;
+- `retrieval_grpc_deadline_seconds`.
+
+Default retrieval mode:
+
+`local`
+
+gRPC mode requires a non-empty target.
+
+The gRPC deadline is required to be finite and greater than zero.
+
+### Composition boundary
+
+The serving assembly continues to expose the existing structural retrieval
+executor contract:
+
+`execute(RetrievalQuery) -> ToolExecutionResult`
+
+When no retrieval executor is supplied, the pre-existing local behavior is
+retained:
+
+persisted frozen retriever
+-> `LockedRetrievalExecutor`
+-> request-scoped runtime.
+
+When an external executor is supplied, the serving assembly injects that
+executor directly.
+
+The gRPC retrieval client is not wrapped in the local dense-model lock.
+
+This preserves serialization around the shared local dense runtime without
+unnecessarily serializing independent RPC calls.
+
+### FastAPI lifecycle ownership
+
+The FastAPI lifespan now owns the long-lived gRPC client channel when gRPC
+retrieval mode is enabled.
+
+Startup:
+
+- creates one `grpc.insecure_channel`;
+- creates one generated `RetrievalServiceStub`;
+- creates one `GrpcRetrievalExecutor`;
+- injects it into the normal serving assembly.
+
+Shutdown:
+
+- closes the gRPC channel;
+- removes installed answering resources from application state.
+
+If serving initialization fails after the channel is created, the channel is
+closed before the application marks answering unavailable.
+
+### Real integration confirmation
+
+A real persisted Northstar frozen retriever was exposed behind:
+
+`RetrievalGrpcServicer`
+
+on an ephemeral localhost gRPC endpoint.
+
+The normal FastAPI application lifespan was then configured with:
+
+- `answering_enabled = true`;
+- `retrieval_mode = "grpc"`;
+- the real localhost retrieval target;
+- a finite 30-second RPC deadline.
+
+The confirmation executed:
+
+`POST /answer`
+
+with:
+
+`What defect affected ORBIS-IDX-7?`
+
+Observed application path:
+
+`FastAPI TestClient / ASGI`
+-> `GroundedAnsweringService`
+-> `RequestScopedExecutionRuntime`
+-> `GrpcRetrievalExecutor`
+-> generated gRPC stub
+-> real localhost TCP/gRPC transport
+-> `RetrievalGrpcServicer`
+-> persisted `FrozenHybridRetrievalExecutor`
+
+The HTTP side of this confirmation is in-process ASGI via FastAPI TestClient.
+
+The retrieval hop is a real localhost TCP/gRPC boundary.
+
+### Observed integration behavior
+
+Observed:
+
+- readiness HTTP status:
+  `200`;
+- answering readiness:
+  `ready`;
+- `/answer` HTTP status:
+  `200`;
+- answer status:
+  `answered`;
+- installed retrieval executor:
+  `GrpcRetrievalExecutor`;
+- real remote retrieval calls:
+  `1`;
+- remote retrieval dataset:
+  `northstar-v1`;
+- remote retrieval question:
+  `What defect affected ORBIS-IDX-7?`;
+- remote retrieval `top_k`:
+  `10`;
+- FastAPI lifespan cleanup:
+  verified.
+
+The application execution trace observed:
+
+- route:
+  retrieval;
+- retrieval tool status:
+  `ok`;
+- orchestration:
+  completed;
+- evidence sufficiency:
+  sufficient;
+- final application status:
+  answered.
+
+Generation was invoked.
+
+The raw generated presentation failed the frozen fidelity policy, so the
+application returned its deterministic fallback presentation.
+
+This is expected guarded-generation behavior and does not represent retrieval
+or application execution failure.
+
+### Stable confirmation artifact
+
+Artifact:
+
+`artifacts/evaluation/phase11d5_grpc_serving_integration.json`
+
+Canonical stable-report SHA-256:
+
+`ada368531d10d53f51276f1c8b6d0bd6f39d14710101eeb5319b6395ed12cbd1`
+
+Pretty-printed artifact byte SHA-256:
+
+`3ca185081af262c8292b5ba09423a4ace3aa5406621804a1fad450ff1efaafb9`
+
+The stable report intentionally excludes generated answer text and
+timing-dependent measurements.
+
+Its stable answer projection records:
+
+- application status;
+- presentation source;
+- generation fidelity status;
+- citation count.
+
+### Reproducibility
+
+The real application/gRPC confirmation was executed twice.
+
+Both executions produced the same canonical stable-report SHA-256 and the same
+pretty-printed artifact byte SHA-256.
+
+This establishes reproducibility for the frozen stable confirmation payload,
+not deterministic generation text or execution latency.
+
+### Runtime observations
+
+Observed gRPC runtime version:
+
+`1.83.1`
+
+The run contacted Hugging Face Hub while loading model resources.
+
+The confirmation therefore does not establish offline model execution.
+
+The gRPC retrieval transport was insecure localhost transport.
+
+### Verification state
+
+Before freeze:
+
+- Phase 11D5 composition/configuration/lifecycle test set:
+  `25 passed`;
+- Phase 11D1-11D4 RPC regression:
+  `55 passed`;
+- full repository:
+  `695 passed`;
+- Ruff:
+  clean;
+- `git diff --check`:
+  clean;
+- historical Phase 11D4 tag:
+  verified ancestor;
+- real `/answer` application path:
+  verified;
+- real gRPC retrieval injection:
+  verified;
+- real remote retrieval observation:
+  verified;
+- FastAPI lifecycle cleanup:
+  verified;
+- stable confirmation payload reproducibility:
+  verified.
+
+### Safe claim
+
+> Integrated the gRPC retrieval boundary into the existing application serving
+> architecture as an opt-in retrieval backend, preserving local retrieval as
+> the default and the existing typed runtime contract. Verified the normal
+> FastAPI answering path with a real localhost TCP/gRPC retrieval hop against
+> the persisted Northstar retriever, including application readiness, one
+> observed remote retrieval execution, successful grounded answering, managed
+> channel lifecycle, and reproducible stable integration evidence.
+
+### Claim boundary
+
+Phase 11D5 does not establish:
+
+- HTTP serving over a real Uvicorn TCP socket for this integration test;
+- TLS for gRPC;
+- authentication or authorization;
+- service discovery;
+- retry or backoff policy;
+- remote-host deployment;
+- distributed tracing across independent processes;
+- production gRPC latency or throughput;
+- independent retrieval-server process management;
+- containerized retrieval-service deployment;
+- offline model loading;
+- a microservices architecture.
+
+Those concerns belong to later failure/degradation and deployment milestones.

@@ -2,6 +2,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Literal
 
+import grpc
 import structlog
 from fastapi import (
     FastAPI,
@@ -30,6 +31,12 @@ from enterprise_genai.db.session import (
 from enterprise_genai.observability import (
     OperationalMetricsRegistry,
     RequestObservabilityMiddleware,
+)
+from enterprise_genai.rpc.retrieval.v1 import (
+    retrieval_pb2_grpc,
+)
+from enterprise_genai.rpc.retrieval.v1.client import (
+    GrpcRetrievalExecutor,
 )
 
 settings = get_settings()
@@ -73,9 +80,12 @@ async def lifespan(
         service=settings.app_name,
         environment=(settings.environment),
         answering_enabled=(settings.answering_enabled),
+        retrieval_mode=(settings.retrieval_mode),
     )
 
     installed_answering_service = False
+
+    grpc_channel: grpc.Channel | None = None
 
     metrics_registry = OperationalMetricsRegistry()
 
@@ -87,14 +97,43 @@ async def lifespan(
         logger.info("answering_service_initializing")
 
         try:
-            assembly = build_serving_assembly(
-                engine=engine,
-                metrics_registry=(metrics_registry),
-            )
+            if settings.retrieval_mode == "grpc":
+                target = settings.retrieval_grpc_target
+
+                if target is None:
+                    raise RuntimeError("validated gRPC retrieval target is unavailable")
+
+                grpc_channel = grpc.insecure_channel(target)
+
+                stub = retrieval_pb2_grpc.RetrievalServiceStub(grpc_channel)
+
+                retrieval_executor = GrpcRetrievalExecutor(
+                    stub,
+                    deadline_seconds=(settings.retrieval_grpc_deadline_seconds),
+                )
+
+                assembly = build_serving_assembly(
+                    engine=engine,
+                    metrics_registry=(metrics_registry),
+                    retrieval_executor=(retrieval_executor),
+                )
+
+            else:
+                assembly = build_serving_assembly(
+                    engine=engine,
+                    metrics_registry=(metrics_registry),
+                )
+
         except Exception:
+            if grpc_channel is not None:
+                grpc_channel.close()
+
+                grpc_channel = None
+
             _app.state.answering_status = "unavailable"
 
             logger.exception("answering_service_initialization_failed")
+
         else:
             _app.state.answering_assembly = assembly
 
@@ -108,7 +147,11 @@ async def lifespan(
 
     try:
         yield
+
     finally:
+        if grpc_channel is not None:
+            grpc_channel.close()
+
         if installed_answering_service:
             if hasattr(
                 _app.state,

@@ -237,3 +237,34 @@ def test_serving_assembly_reuses_supplied_metrics_registry() -> None:
     assert assembly.metrics_registry is metrics
 
     assert assembly.service._metrics_registry is metrics
+
+
+def test_supplied_retrieval_executor_skips_local_builder() -> None:
+    engine = create_engine("sqlite://")
+
+    retrieval = EmptyRetrieval()
+
+    def forbidden_retrieval_builder(
+        session,
+        dataset_version,
+    ):
+        del session
+        del dataset_version
+
+        raise AssertionError("remote retrieval must not build the local retriever")
+
+    assembly = build_serving_assembly(
+        engine=engine,
+        retrieval_builder=(forbidden_retrieval_builder),
+        retrieval_executor=retrieval,
+        generation_builder=(lambda: UnusedGenerationProvider()),
+    )
+
+    assert assembly.retrieval_executor is retrieval
+
+    assert assembly.runtime._retrieval_executor is retrieval
+
+    assert not isinstance(
+        assembly.retrieval_executor,
+        LockedRetrievalExecutor,
+    )

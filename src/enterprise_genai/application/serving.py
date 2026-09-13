@@ -116,7 +116,7 @@ class ServingAssembly:
 
     runtime: RequestScopedExecutionRuntime
 
-    retrieval_executor: LockedRetrievalExecutor
+    retrieval_executor: RetrievalExecutorProtocol
 
     generation_provider: LockedGenerationProvider
 
@@ -128,6 +128,7 @@ def build_serving_assembly(
     engine: Engine,
     dataset_version: str = "northstar-v1",
     retrieval_builder: RetrievalBuilder = (_build_persisted_retrieval),
+    retrieval_executor: RetrievalExecutorProtocol | None = None,
     generation_builder: GenerationBuilder = (_build_generation_provider),
     metrics_registry: (OperationalMetricsRegistry | None) = None,
 ) -> ServingAssembly:
@@ -135,13 +136,17 @@ def build_serving_assembly(
 
     metrics = metrics_registry if metrics_registry is not None else OperationalMetricsRegistry()
 
-    with Session(engine) as session:
-        persisted_retrieval = retrieval_builder(
-            session,
-            dataset_version,
-        )
+    if retrieval_executor is None:
+        with Session(engine) as session:
+            persisted_retrieval = retrieval_builder(
+                session,
+                dataset_version,
+            )
 
-    retrieval = LockedRetrievalExecutor(persisted_retrieval)
+        retrieval: RetrievalExecutorProtocol = LockedRetrievalExecutor(persisted_retrieval)
+
+    else:
+        retrieval = retrieval_executor
 
     generation = LockedGenerationProvider(generation_builder())
 
