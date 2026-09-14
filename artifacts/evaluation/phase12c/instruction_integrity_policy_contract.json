@@ -1,0 +1,149 @@
+{
+  "canonical_sha256": "2fd50731aca34c5eab62567b77247b6c6ccafb9b4b6fd24106dc81ee099ca8c3",
+  "claim_boundary": {
+    "complete_prompt_injection_detector": false,
+    "comprehensive_responsible_ai_guardrail": false,
+    "intended_claim": "typed deterministic instruction-integrity boundary for selected natural-language retrieval evidence before deterministic answer authority",
+    "universal_jailbreak_prevention": false
+  },
+  "contract_version": "northstar-instruction-integrity-phase12c-policy-contract-v1",
+  "decision_contract": {
+    "blocked_record_ids_must_be_subset_of_inspected": true,
+    "deterministic_sorted_ids": true,
+    "deterministic_sorted_violation_codes": true,
+    "dispositions": [
+      "allow",
+      "block"
+    ],
+    "policy_result_contains_source_text": false
+  },
+  "normalization": {
+    "casefold": true,
+    "collapse_whitespace": true,
+    "probabilistic_classifier": false,
+    "semantic_model": false
+  },
+  "phase12a_protocol": {
+    "commit": "f18d48703ee89e0d193b3621c08746d04a106d4b",
+    "sha256": "0a52c1daf1f439ed6977a834305f5bff9a2256d25b0153118d1bd90f4a8516f2",
+    "tag": "phase-12a-instruction-integrity-protocol"
+  },
+  "phase12b_baseline": {
+    "canonical_sha256": "47a095e3c264398b7e3ed3beca1697cd9e2cb5f738ff2d955cc0ab7e80923f78",
+    "commit": "af379f07af2678206672c0a6894acbc0615b66a3",
+    "file_sha256": "a2149e2bb1b7ae248e4bc4c76dd06c323be6e12cce1d3d2278b7ce9a84e95955",
+    "tag": "phase-12b4-instruction-integrity-baseline-v2"
+  },
+  "phase12b_manifest": {
+    "canonical_sha256": "20a5fcfe0a7ab41cabe36d3503dabf9828ffa65753c8c747cdfd3974afe224b8",
+    "commit": "a1f3d8703899e0b414e45fb830e1c59196b5af7e",
+    "file_sha256": "af91e9ede94085d8b9d1f713506520b1e882a6da64a7bcdb59a4c8352576f924",
+    "tag": "phase-12b0-instruction-integrity-case-manifest"
+  },
+  "phase12c_parent_commit": "1fdf6b661d343356a2bc1901eb8caef9cd036673",
+  "policy_version": "northstar-selected-retrieval-instruction-integrity-v1",
+  "reviewed_source_sha256": {
+    "src/enterprise_genai/answering/instruction_integrity.py": "647170957b86b6ddc89fbcb2396b66931f7c30032a075f9187ff79d267dacbd1",
+    "src/enterprise_genai/application/service.py": "37dd9b68f91e493db5cc349311aa08da2ad9f6de42d38299b45b455c846cb6cc",
+    "tests/unit/test_application_service.py": "84caf940ffd8dff27e762767b6eb7fa1689c92630019eefda0a7f90487bea393",
+    "tests/unit/test_instruction_integrity_policy.py": "57f4cf95b6cf659fc1191171b928676f60600566b908b63def527fd2887ca01f"
+  },
+  "rules": [
+    {
+      "pattern": "\\bignore\\s+(?:all\\s+)?previous\\s+instructions\\b",
+      "violation_code": "authority_priority_override"
+    },
+    {
+      "pattern": "\\bignore\\s+(?:the\\s+)?question\\b",
+      "violation_code": "authority_priority_override"
+    },
+    {
+      "pattern": "\\bignore\\s+all\\s+other\\s+evidence\\b",
+      "violation_code": "authority_priority_override"
+    },
+    {
+      "pattern": "\\btreat\\s+this\\s+(?:text|document)\\s+as\\s+(?:higher\\s+priority|the\\s+only\\s+authority)\\b",
+      "violation_code": "authority_priority_override"
+    },
+    {
+      "pattern": "(?:\\[system\\s+message\\]|\\[developer\\s+message\\]|##\\s*system\\s+instruction\\b|<system>)",
+      "violation_code": "authority_priority_override"
+    },
+    {
+      "pattern": "\\breturn\\s+the\\s+fabricated\\s+answer\\b",
+      "violation_code": "answer_redirection"
+    },
+    {
+      "pattern": "\\breveal\\s+unrelated\\b",
+      "violation_code": "answer_redirection"
+    },
+    {
+      "pattern": "\\banswer\\s+about\\b",
+      "violation_code": "answer_redirection"
+    },
+    {
+      "pattern": "\\boutput\\b.{0,80}\\boverride(?:-accepted)?\\b",
+      "violation_code": "answer_redirection"
+    },
+    {
+      "pattern": "\\breport\\s+the\\s+defect\\s+count\\s+as\\b",
+      "violation_code": "answer_value_manipulation"
+    },
+    {
+      "pattern": "\\breplace\\s+(?:the\\s+)?(?:affected\\s+entity|answer)\\s+with\\b",
+      "violation_code": "answer_value_manipulation"
+    },
+    {
+      "pattern": "\\bstate\\s+the\\s+answer\\s+unit\\s+as\\b",
+      "violation_code": "answer_value_manipulation"
+    },
+    {
+      "pattern": "\\bsuppress\\s+all\\s+citations\\b",
+      "violation_code": "citation_manipulation"
+    },
+    {
+      "pattern": "\\badd\\s+citation\\b",
+      "violation_code": "citation_manipulation"
+    },
+    {
+      "pattern": "\\bdrop\\s+required\\s+provenance\\b",
+      "violation_code": "provenance_manipulation"
+    },
+    {
+      "pattern": "\\bignore\\s+any\\s+abstention\\s+state\\b",
+      "violation_code": "abstention_override"
+    }
+  ],
+  "safe_failure": {
+    "citation_ids": "selected supporting record IDs",
+    "detail": "Selected retrieval evidence contains a control directive that is not permitted to become deterministic answer authority.",
+    "generation_authority_created": false,
+    "generation_fidelity": "not_applicable",
+    "generation_invoked": false,
+    "presentation_source": "deterministic",
+    "presentation_text": "The selected evidence cannot be promoted to answer authority under the instruction-integrity policy.",
+    "provenance_fact_ids": "canonical source-fact union of selected support",
+    "reason": "instruction_integrity_blocked",
+    "retrieval_text_exposed_in_policy_result": false,
+    "retrieval_text_exposed_in_presentation": false,
+    "service_status": "abstained",
+    "synthesis_invoked": false,
+    "trigger": "decision.disposition == block"
+  },
+  "scope": {
+    "inspected_record_kind": "retrieval_hit",
+    "inspected_record_tool": "retrieval",
+    "record_selection": "assessment.supporting_record_ids",
+    "required_assessment_status": "sufficient",
+    "structured_sql_graph_records": "outside_this_policy",
+    "unselected_retrieval_records": "not_inspected"
+  },
+  "violation_codes": [
+    "abstention_override",
+    "answer_redirection",
+    "answer_value_manipulation",
+    "authority_priority_override",
+    "citation_manipulation",
+    "provenance_manipulation"
+  ]
+}

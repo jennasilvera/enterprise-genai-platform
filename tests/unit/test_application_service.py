@@ -480,9 +480,20 @@ def test_answer_service_observability_is_privacy_safe_and_correlated(
         "answer_specification_prepared",
         "answer_execution_completed",
         "answer_sufficiency_evaluated",
+        "answer_instruction_integrity_evaluated",
         "answer_generation_completed",
         "answer_service_completed",
     )
+
+    integrity_event = fake.events[4][2]
+
+    assert integrity_event["disposition"] == "allow"
+    assert integrity_event["violation_codes"] == ()
+    assert integrity_event["inspected_record_count"] == 1
+    assert integrity_event["blocked_record_count"] == 0
+
+    assert QUESTION not in repr(integrity_event)
+    assert AUTHORITY_TEXT not in repr(integrity_event)
 
     for (
         _level,
@@ -518,6 +529,7 @@ def test_answer_service_observability_is_privacy_safe_and_correlated(
         "execution",
         "evidence",
         "sufficiency",
+        "instruction_integrity",
         "synthesis",
         "generation",
         "fidelity",

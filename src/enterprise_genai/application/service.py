@@ -9,9 +9,19 @@ from typing import (
 
 import structlog
 
+from enterprise_genai.answering.contracts import (
+    SufficiencyAssessment,
+)
 from enterprise_genai.answering.evidence import (
     evidence_bundle_from_snapshot,
     unsupported_request_bundle,
+)
+from enterprise_genai.answering.instruction_integrity import (
+    INSTRUCTION_INTEGRITY_BLOCK_DETAIL,
+    INSTRUCTION_INTEGRITY_BLOCK_REASON,
+    INSTRUCTION_INTEGRITY_BLOCK_TEXT,
+    InstructionIntegrityDecision,
+    evaluate_instruction_integrity,
 )
 from enterprise_genai.answering.sufficiency import (
     evaluate_sufficiency,
@@ -165,6 +175,41 @@ def _deterministic_abstention(
         provenance_fact_ids=(authority.source_fact_ids),
         reason=reason,
         detail=detail,
+    )
+
+
+def _selected_support_source_fact_ids(
+    assessment: SufficiencyAssessment,
+) -> tuple[str, ...]:
+    records = {record.record_id: record for record in assessment.bundle.records}
+
+    return tuple(
+        sorted(
+            {
+                fact_id
+                for record_id in assessment.supporting_record_ids
+                for fact_id in records[record_id].source_fact_ids
+            }
+        )
+    )
+
+
+def _instruction_integrity_abstention(
+    *,
+    assessment: SufficiencyAssessment,
+    decision: InstructionIntegrityDecision,
+) -> AbstainedServiceResult:
+    if decision.disposition != "block":
+        raise ValueError("Instruction-integrity abstention requires a block decision.")
+
+    return AbstainedServiceResult(
+        presentation_source="deterministic",
+        generation_fidelity="not_applicable",
+        text=INSTRUCTION_INTEGRITY_BLOCK_TEXT,
+        citation_ids=(assessment.supporting_record_ids),
+        provenance_fact_ids=(_selected_support_source_fact_ids(assessment)),
+        reason=(INSTRUCTION_INTEGRITY_BLOCK_REASON),
+        detail=(INSTRUCTION_INTEGRITY_BLOCK_DETAIL),
     )
 
 
@@ -406,6 +451,87 @@ class GroundedAnsweringService:
                 sufficiency_reason=(assessment.reason),
                 duration_ms=(stage_durations_ms["sufficiency"]),
             )
+
+            # -------------------------------------
+            # Selected retrieval instruction integrity
+            # -------------------------------------
+
+            if assessment.status == "sufficient":
+                current_stage = "instruction_integrity"
+
+                started_at = self._clock()
+
+                integrity_decision = evaluate_instruction_integrity(
+                    assessment=assessment,
+                )
+
+                stage_durations_ms["instruction_integrity"] = duration_ms(
+                    clock=self._clock,
+                    started_at=started_at,
+                )
+
+                logger.info(
+                    "answer_instruction_integrity_evaluated",
+                    **trace_fields,
+                    disposition=(integrity_decision.disposition),
+                    violation_codes=(integrity_decision.violation_codes),
+                    inspected_record_count=len(integrity_decision.inspected_record_ids),
+                    blocked_record_count=len(integrity_decision.blocked_record_ids),
+                    duration_ms=(stage_durations_ms["instruction_integrity"]),
+                )
+
+                if integrity_decision.disposition == "block":
+                    result = _instruction_integrity_abstention(
+                        assessment=assessment,
+                        decision=integrity_decision,
+                    )
+
+                    logger.info(
+                        "answer_instruction_integrity_blocked",
+                        **trace_fields,
+                        violation_codes=(integrity_decision.violation_codes),
+                        blocked_record_count=len(integrity_decision.blocked_record_ids),
+                    )
+
+                    logger.info(
+                        "answer_service_completed",
+                        **trace_fields,
+                        specification_kind=(specification_kind),
+                        route_label=route_label,
+                        tools=tools,
+                        status=result.status,
+                        presentation_source=(result.presentation_source),
+                        generation_fidelity=(result.generation_fidelity),
+                        abstention_reason=(result.reason),
+                        generation_invoked=False,
+                        stage_durations_ms=(stage_durations_ms),
+                        tool_durations_ms=(tool_durations_ms),
+                        total_duration_ms=(
+                            duration_ms(
+                                clock=self._clock,
+                                started_at=(service_started_at),
+                            )
+                        ),
+                    )
+
+                    if self._metrics_registry is not None:
+                        self._metrics_registry.record_answer_completed(
+                            status=result.status,
+                            presentation_source=(result.presentation_source),
+                            generation_fidelity=(result.generation_fidelity),
+                            abstention_reason=(result.reason),
+                            generation_invoked=False,
+                            stage_durations_ms=(stage_durations_ms),
+                            tool_durations_ms=(tool_durations_ms),
+                            total_duration_ms=(
+                                duration_ms(
+                                    clock=self._clock,
+                                    started_at=(service_started_at),
+                                )
+                            ),
+                        )
+
+                    return result
 
             # -------------------------------------
             # Deterministic synthesis
