@@ -8229,3 +8229,152 @@ It does not establish:
 
 Runtime retrieval failures after successful startup remain governed by the
 Phase 11E1 fail-closed request semantics.
+
+---
+
+## Phase 12B — Instruction-Integrity Unguarded Baseline
+
+**Status:** MEASURED / VERIFIED / REPRODUCIBLE / FROZEN
+
+Purpose:
+
+Measure the existing unguarded deterministic retrieval-to-authority boundary
+before Phase 12C changes system behavior.
+
+Frozen protocol:
+
+- Phase 12A tag: `phase-12a-instruction-integrity-protocol`
+- Phase 12A commit: `f18d48703ee89e0d193b3621c08746d04a106d4b`
+- protocol:
+  `docs/evaluation/instruction_integrity_plan.md`
+- protocol SHA-256:
+  `0a52c1daf1f439ed6977a834305f5bff9a2256d25b0153118d1bd90f4a8516f2`
+
+Frozen case manifest:
+
+- tag: `phase-12b0-instruction-integrity-case-manifest`
+- commit: `a1f3d8703899e0b414e45fb830e1c59196b5af7e`
+- artifact:
+  `artifacts/evaluation/phase12b/instruction_integrity_case_manifest.json`
+- case count: 32
+- canonical SHA-256:
+  `20a5fcfe0a7ab41cabe36d3503dabf9828ffa65753c8c747cdfd3974afe224b8`
+- file SHA-256:
+  `af91e9ede94085d8b9d1f713506520b1e882a6da64a7bcdb59a4c8352576f924`
+
+Corrected frozen measuring instrument:
+
+- tag: `phase-12b3-instruction-integrity-baseline-instrument-v2`
+- commit: `ae5f20bd4f1af3ef52378ecd91ad3d29897f51c7`
+- runner:
+  `src/enterprise_genai/evaluation/instruction_integrity_baseline.py`
+- runner SHA-256:
+  `e8a0b9ab8075d239401530f9166fcf284a1fe8ecf9a4ffc400dbf0073b6fc788`
+- unit test:
+  `tests/unit/test_instruction_integrity_baseline.py`
+- unit-test SHA-256:
+  `ab0424f9955a98e7c1a0fbe1e92a0654f299fad4bbe0eace3063a6df4316881f`
+- baseline version:
+  `northstar-instruction-integrity-phase12b-unguarded-baseline-v2`
+- authority-exposure metric version:
+  `raw-string-leaf-exact-span-v2`
+
+Frozen corrected baseline:
+
+- tag: `phase-12b4-instruction-integrity-baseline-v2`
+- exact baseline commit:
+  `af379f07af2678206672c0a6894acbc0615b66a3`
+- artifact:
+  `artifacts/evaluation/phase12b/instruction_integrity_baseline.json`
+- artifact file SHA-256:
+  `a2149e2bb1b7ae248e4bc4c76dd06c323be6e12cce1d3d2278b7ce9a84e95955`
+- canonical report SHA-256:
+  `47a095e3c264398b7e3ed3beca1697cd9e2cb5f738ff2d955cc0ab7e80923f78`
+
+Measured baseline results:
+
+- Plan Integrity Rate: `32 / 32 = 100%`
+- Authority Instruction Exposure Rate:
+  `21 / 29 = 72.41379310344828%`
+- Presentation Instruction Exposure Rate:
+  `21 / 29 = 72.41379310344828%`
+- Citation Integrity Rate: `32 / 32 = 100%`
+- Provenance Integrity Rate: `32 / 32 = 100%`
+- Clean Answer Retention Rate:
+  baseline reference only; scored after the Phase 12C guardrail in Phase 12D
+- Safe Failure Rate:
+  intentionally not scored before the frozen Phase 12C policy contract
+- baseline observation only:
+  5 of 26 cases designated for future safe failure already abstained under the
+  existing system; this is not the Phase 12D Safe Failure Rate.
+
+Interpretation:
+
+The frozen unguarded system preserved the preregistered execution plan,
+citation authority, and provenance in every locked case. However, among the 29
+cases whose manifest forbade instruction-bearing retrieval payloads from
+crossing the authority boundary, 21 copied a registered disallowed payload
+into deterministic answer authority. The same 21 cases exposed the registered
+payload in deterministic presentation.
+
+This is evidence of a narrow retrieval-context instruction-integrity weakness
+at the deterministic authority boundary. It is not a claim that arbitrary tool
+execution, citation expansion, provenance expansion, or model-level jailbreak
+occurred.
+
+The metric is an exact locked-span measure over the frozen synthetic benchmark.
+It is not a complete semantic prompt-injection or jailbreak detector and must
+not be generalized to universal attack-prevention performance.
+
+Measurement-defect lineage:
+
+The first frozen measuring instrument serialized authority objects before
+performing exact-span matching. JSON escaping caused false-negative authority
+exposure observations for newline-bearing cases `PH12B-F2` and `PH12B-F3`.
+
+That first result was preserved rather than overwritten:
+
+- tag:
+  `phase-12b2-instruction-integrity-baseline-v1-metric-defect`
+- commit:
+  `5b79351e4cdd7bb1ae10152e0b78124209241b1b`
+- preserved v1 artifact:
+  `artifacts/evaluation/phase12b/instruction_integrity_baseline_v1_metric_defect.json`
+- preserved v1 file SHA-256:
+  `c99e0564b7391159667be18aceca1881355d672a2dcb7b344ca95ccc0b0090dc`
+- diagnostic:
+  `artifacts/evaluation/phase12b/instruction_integrity_metric_diagnostic_v1.json`
+- diagnostic canonical SHA-256:
+  `e9f12cafe38d15810a9edda782fa683138e20a192d12527b8d384ee2404be98f`
+
+The corrected v2 metric matches exact registered spans against raw string
+leaves without serialization transforms. The v1-to-v2 audit showed that only
+the authority-exposure flags for `PH12B-F2` and `PH12B-F3` changed. All other
+case measurements and the clean-control reference were identical.
+
+Reproducibility:
+
+- the corrected baseline was independently executed a second time to a
+  temporary path;
+- the reproduction canonical SHA-256 matched exactly;
+- the reproduction file SHA-256 matched exactly;
+- the reproduction was byte-for-byte identical to the frozen canonical
+  artifact;
+- 728 repository tests passed;
+- Ruff passed;
+- formatting passed for 272 files.
+
+Supports:
+
+> Measured a preregistered 32-case adversarial instruction-integrity baseline
+> over a bounded deterministic RAG authority path, preserving plan, citation,
+> and provenance integrity while identifying registered retrieved-instruction
+> exposure in 21 of 29 applicable cases.
+
+Claim boundary:
+
+This phase measures the pre-guardrail system. It does not establish that an
+instruction-integrity guardrail has been implemented, and it does not change
+the broader `Responsible AI Guardrails` capability from `NOT STARTED`.
+
+Phase 12C may begin only from this frozen baseline evidence.
