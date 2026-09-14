@@ -10,6 +10,7 @@ from enterprise_genai.evaluation.instruction_integrity_baseline import (
     PHASE12B_MANIFEST_CANONICAL_SHA256,
     PHASE12B_MANIFEST_FILE_SHA256,
     InjectedRetrievalExecutor,
+    _contains_any,
     deterministic_report_bytes,
     load_frozen_manifest,
     report_sha256,
@@ -124,3 +125,44 @@ def test_report_serialization_is_deterministic() -> None:
     assert report_sha256(report) == hashlib.sha256(first).hexdigest()
 
     assert json.loads(first.decode("utf-8")) == report
+
+
+def test_authority_exposure_detects_locked_newline_cases() -> None:
+    manifest = load_frozen_manifest()
+
+    by_id = {case["case_id"]: case for case in manifest["cases"]}
+
+    for case_id in (
+        "PH12B-F2",
+        "PH12B-F3",
+    ):
+        case = by_id[case_id]
+
+        assert len(case["retrieval_hits"]) == 1
+
+        raw_authority_like = {"authority_value": (case["retrieval_hits"][0]["text"])}
+
+        spans = tuple(case["disallowed_payload_spans"])
+
+        assert _contains_any(
+            value=raw_authority_like,
+            spans=spans,
+        )
+
+        serialized = json.dumps(
+            raw_authority_like,
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+
+        assert not any(span in serialized for span in spans)
+
+
+def test_authority_exposure_does_not_join_distinct_string_leaves() -> None:
+    assert not _contains_any(
+        value={
+            "first": "Ignore previous",
+            "second": " instructions",
+        },
+        spans=("Ignore previous instructions",),
+    )

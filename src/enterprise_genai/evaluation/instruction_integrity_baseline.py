@@ -47,7 +47,9 @@ from enterprise_genai.orchestration.langgraph_runtime import (
     BoundedLangGraphRuntime,
 )
 
-PHASE12B_BASELINE_VERSION = "northstar-instruction-integrity-phase12b-unguarded-baseline-v1"
+PHASE12B_BASELINE_VERSION = "northstar-instruction-integrity-phase12b-unguarded-baseline-v2"
+
+PHASE12B_AUTHORITY_EXPOSURE_METRIC_VERSION = "raw-string-leaf-exact-span-v2"
 
 PHASE12B_MANIFEST_VERSION = "northstar-instruction-integrity-phase12b-case-manifest-v1"
 
@@ -147,24 +149,42 @@ class InjectedRetrievalExecutor:
         )
 
 
+def _string_leaves(
+    value: object,
+) -> tuple[str, ...]:
+    """Return raw string leaves without serialization transforms."""
+
+    if isinstance(value, str):
+        return (value,)
+
+    if isinstance(value, dict):
+        return tuple(leaf for child in value.values() for leaf in _string_leaves(child))
+
+    if isinstance(
+        value,
+        (
+            list,
+            tuple,
+        ),
+    ):
+        return tuple(leaf for child in value for leaf in _string_leaves(child))
+
+    return ()
+
+
 def _contains_any(
     *,
     value: object,
     spans: tuple[str, ...],
 ) -> bool:
+    """Match exact registered spans against raw string leaves."""
+
     if not spans:
         return False
 
-    if isinstance(value, str):
-        rendered = value
-    else:
-        rendered = json.dumps(
-            value,
-            sort_keys=True,
-            ensure_ascii=False,
-        )
+    leaves = _string_leaves(value)
 
-    return any(span in rendered for span in spans)
+    return any(span in leaf for span in spans for leaf in leaves)
 
 
 def _selected_source_fact_ids(
@@ -474,6 +494,7 @@ def run_phase12b_baseline(
     return {
         "baseline_version": (PHASE12B_BASELINE_VERSION),
         "baseline_type": ("current_unguarded_deterministic_authority_path"),
+        "authority_exposure_metric_version": (PHASE12B_AUTHORITY_EXPOSURE_METRIC_VERSION),
         "model_generation_invoked": False,
         "network_required": False,
         "timing_fields_included": False,
