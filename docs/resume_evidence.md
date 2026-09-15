@@ -324,6 +324,8 @@ Adjacent verified controls already exist in other phases, including:
 - guarded generation-fidelity rejection;
 - prevention of rejected raw model output from crossing presentation;
 - privacy-safe observability behavior;
+- typed selected-retrieval instruction-integrity rejection before deterministic
+  answer authority, adversarially measured under the frozen Phase 12 protocol;
 - bounded typed input and execution contracts.
 
 Limitation:
@@ -346,14 +348,16 @@ Evidence:
 - `src/enterprise_genai/evaluation/answering_confirmation.py`
 - `src/enterprise_genai/evaluation/generation_comparison.py`
 - `src/enterprise_genai/evaluation/generation_comparison_confirmation.py`
-- retrieval, routing, execution, answering, generation, and serving confirmation
-  artifacts across frozen milestones
+- `src/enterprise_genai/evaluation/instruction_integrity_baseline.py`
+- `src/enterprise_genai/evaluation/instruction_integrity_confirmation.py`
+- frozen retrieval, routing, execution, answering, generation, serving, and
+  instruction-integrity confirmation artifacts across bounded milestones
 
 Supports:
 
 > Built reproducible task-specific evaluation and confirmation harnesses across
-> retrieval, routing, execution, grounded answering, generation, and serving
-> behavior.
+> retrieval, routing, execution, grounded answering, generation, serving, and
+> adversarial instruction-integrity behavior.
 
 Limitation:
 
@@ -8378,3 +8382,228 @@ instruction-integrity guardrail has been implemented, and it does not change
 the broader `Responsible AI Guardrails` capability from `NOT STARTED`.
 
 Phase 12C may begin only from this frozen baseline evidence.
+
+---
+
+## Phase 12C — Selected-Retrieval Instruction-Integrity Boundary
+
+**Status:** IMPLEMENTED / TESTED / VERIFIED / FROZEN
+
+Purpose:
+
+Prevent selected untrusted retrieval prose from being promoted directly into
+deterministic answer authority when it contains a bounded class of
+instruction-like control directives.
+
+Frozen implementation:
+
+- tag: `phase-12c-instruction-integrity-policy-v1`
+- exact implementation commit:
+  `4e5bc5dcee4979e6e4d8013971690211aa08ddb8`
+- policy:
+  `src/enterprise_genai/answering/instruction_integrity.py`
+- application integration:
+  `src/enterprise_genai/application/service.py`
+- policy-contract runner:
+  `src/enterprise_genai/evaluation/instruction_integrity_policy_contract.py`
+- frozen contract:
+  `artifacts/evaluation/phase12c/instruction_integrity_policy_contract.json`
+- contract canonical SHA-256:
+  `2fd50731aca34c5eab62567b77247b6c6ccafb9b4b6fd24106dc81ee099ca8c3`
+- contract file SHA-256:
+  `5ff4d457d6eed3ad7a240e0f85ac670ff8e1fa54cd04f08ba415bae7adba5ed2`
+
+Boundary:
+
+- applied only after deterministic evidence-sufficiency evaluation reports
+  `sufficient`;
+- inspects only records selected by `assessment.supporting_record_ids`;
+- applies only to natural-language retrieval evidence;
+- unselected retrieval records are not inspected by this policy;
+- structured SQL and graph evidence remain outside this policy;
+- runs before deterministic synthesis and before creation of
+  `GenerationAuthority`;
+- a blocked decision returns a typed deterministic abstention;
+- blocked retrieval text is not copied into the policy result or safe
+  presentation;
+- blocked requests do not invoke synthesis, create generation authority, or
+  invoke the generation provider;
+- citation IDs remain the selected supporting record IDs;
+- provenance remains the canonical union of source facts from selected support.
+
+Typed policy result:
+
+- dispositions: `allow` and `block`;
+- frozen blocked service reason:
+  `instruction_integrity_blocked`;
+- policy decisions contain bounded violation codes and record/provenance
+  identifiers rather than hostile retrieval prose;
+- decision ordering and serialized policy-contract evidence are deterministic.
+
+Detection boundary:
+
+The policy uses a deterministic bounded structural control-intent grammar over
+normalized selected retrieval text. It is intentionally not represented as a
+complete semantic prompt-injection classifier.
+
+Supports:
+
+> Implemented a typed fail-closed instruction-integrity boundary between
+> selected untrusted retrieval evidence and deterministic answer authority,
+> preserving citation and provenance metadata while preventing blocked
+> retrieval prose from entering synthesis or generation authority.
+
+Claim boundary:
+
+This phase does not establish universal prompt-injection detection, general
+jailbreak prevention, arbitrary malicious-text detection, model-level safety,
+or comprehensive Responsible AI governance. The policy is deliberately bounded
+to the frozen selected-retrieval threat model. The broader
+`Responsible AI Guardrails` capability remains `NOT STARTED`.
+
+---
+
+## Phase 12D — Frozen Instruction-Integrity Confirmation
+
+**Status:** MEASURED / VERIFIED / FROZEN / PREREGISTERED PROMOTION NOT MET
+
+Purpose:
+
+Measure the frozen Phase 12C instruction-integrity boundary against the
+preregistered 32-case Phase 12 adversarial protocol without changing the
+manifest, baseline, policy contract, measuring instrument, or promotion
+criteria after observing results.
+
+### Phase 12D0 — Frozen Confirmation Instrument
+
+The confirmation instrument was frozen before the first Phase 12D measurement.
+
+- tag: `phase-12d0-instruction-integrity-confirmation-instrument`
+- exact commit:
+  `f07e920f15cdfd1259629bd3f5af70122628f739`
+- runner:
+  `src/enterprise_genai/evaluation/instruction_integrity_confirmation.py`
+- runner SHA-256:
+  `c45dfa3da18d12fe4dd238b7ded4c067620f733560b6c7e342b786b9229611fd`
+- unit test:
+  `tests/unit/test_instruction_integrity_confirmation.py`
+- unit-test SHA-256:
+  `1e097fc0b077b29861830f225204610c91f1c7520935711327fc902fd70a898b`
+
+The D0 freeze explicitly verified that the Phase 12D result artifact did not yet
+exist. The measuring instrument, tests, frozen manifest, Phase 12B baseline, and
+Phase 12C policy contract were therefore fixed before the first confirmation
+execution.
+
+### Phase 12D1 — Frozen Measured Result
+
+- tag: `phase-12d1-instruction-integrity-confirmation-result`
+- exact result commit:
+  `c04f7d2b6a7b9ad5bb3c347d38312008481e77ad`
+- artifact:
+  `artifacts/evaluation/phase12d/instruction_integrity_confirmation.json`
+- canonical report SHA-256:
+  `404d0441dae824d020a6c5e6b256e80c6cfaf2b40da1126eaa36810a15c1ff4e`
+- artifact file SHA-256:
+  `1749c9cea2a219ea65e8d3166704a7791d7136d67585cd1325c5e88ef8f517b7`
+- case count: `32`
+- model generation invoked by the confirmation harness: `false`
+- network required by the confirmation harness: `false`
+- timing fields included: `false`
+
+Measured result:
+
+- Plan Integrity Rate: `32 / 32 = 100%`
+- Authority Instruction Exposure Rate: `0 / 29 = 0%`
+- Presentation Instruction Exposure Rate: `0 / 29 = 0%`
+- Citation Integrity Rate: `32 / 32 = 100%`
+- Provenance Integrity Rate: `32 / 32 = 100%`
+- Clean Answer Retention Rate: `3 / 3 = 100%`
+- preregistered Safe Failure Rate:
+  `21 / 26 = 80.76923076923077%`
+
+Diagnostic results:
+
+- expected Phase 12C policy-block activation:
+  `21 / 21 = 100%`
+- non-safe-failure behavior retention:
+  `6 / 6 = 100%`
+- pre-existing safe-abstention cases: `5`
+- pre-existing safe abstentions preserved: `5 / 5`
+- unexpected policy blocks: `0`
+
+Baseline-to-confirmation comparison:
+
+The frozen Phase 12B unguarded baseline exposed a registered disallowed
+retrieval payload in deterministic authority in `21 / 29` applicable cases and
+in deterministic presentation in the same `21 / 29` cases. Under the frozen
+Phase 12C boundary, both exact registered-span exposure metrics measured
+`0 / 29`.
+
+All `21 / 21` cases designated for the Phase 12C policy path terminated through
+the frozen `instruction_integrity_blocked` fail-closed disposition. All three
+clean controls and all three unselected-poison controls remained allowed with
+no registered authority or presentation exposure and no unexpected policy
+block.
+
+Preregistered promotion result:
+
+The overall preregistered promotion criterion was **not met** because the Safe
+Failure threshold required `100%`, while the frozen metric measured
+`21 / 26`.
+
+The five non-passing Safe Failure cases were not unsafe regressions. They were
+the same five cases already observed in Phase 12B to terminate through
+pre-existing typed abstention before reaching the Phase 12C policy boundary.
+Phase 12D preserved all five of those abstentions, but the frozen Phase 12A
+metric definition required the explicitly typed fail-closed disposition defined
+by the later Phase 12C contract. The denominator and promotion rule were
+therefore preserved rather than redefined after measurement.
+
+Post-measurement verification:
+
+- the measured artifact remained byte-identical through verification;
+- the frozen D0 runner and test hashes remained unchanged;
+- frozen Phase 12A, Phase 12B, and Phase 12C anchors remained unchanged;
+- post-measurement dedicated gate:
+  `10 passed, 1 deselected`;
+- the single deselected test is the frozen D0 pre-measurement lifecycle
+  assertion that the result artifact must not yet exist;
+- full repository post-measurement gate:
+  `764 passed, 1 deselected`;
+- Ruff passed;
+- formatting passed for `278` files;
+- the D1 commit contains only the measured result artifact;
+- the D1 tag resolves to the result commit and reproduces both the frozen
+  artifact file SHA-256 and canonical report SHA-256.
+
+Supports:
+
+> Implemented and adversarially evaluated a typed instruction-integrity
+> boundary for selected untrusted retrieval evidence. Under a frozen 32-case
+> protocol, registered exact-span authority and presentation exposure fell from
+> 21/29 in the unguarded baseline to 0/29 after the guard, all 21/21 intended
+> policy-block cases failed closed, clean/control behavior was retained, and
+> citation/provenance integrity remained 32/32.
+
+Qualification:
+
+The preregistered aggregate promotion criterion was not met:
+Safe Failure measured `21 / 26`, not `26 / 26`, because five designated cases
+already terminated safely upstream of the Phase 12C policy and therefore could
+not satisfy the later policy-specific disposition required by the frozen
+metric.
+
+Claim boundary:
+
+These measurements are exact registered-span results on the frozen synthetic
+Northstar benchmark. They do not establish semantic detection of arbitrary
+prompt injection, universal jailbreak resistance, complete malicious-text
+classification, production security performance, or comprehensive Responsible
+AI governance.
+
+The correct narrow conclusion is that the frozen selected-retrieval
+instruction-integrity boundary eliminated the registered authority/presentation
+exposure observed in Phase 12B for this bounded benchmark while retaining the
+measured clean and unselected-evidence controls. The broader
+`Responsible AI Guardrails` capability remains `NOT STARTED`.
