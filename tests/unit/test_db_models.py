@@ -27,6 +27,7 @@ EXPECTED_TABLES = {
     "documents",
     "evidence_blocks",
     "evidence_source_facts",
+    "human_review_requests",
 }
 
 

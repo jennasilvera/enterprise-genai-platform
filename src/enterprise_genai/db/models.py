@@ -986,3 +986,147 @@ class ChunkSourceFactRow(Base):
         Integer,
         nullable=False,
     )
+
+
+class HumanReviewRow(Base):
+    """Durable lifecycle and prepared authority for one human review."""
+
+    __tablename__ = "human_review_requests"
+
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('awaiting_review', 'approved', 'rejected')",
+            name="ck_human_review_requests_status",
+        ),
+        CheckConstraint(
+            "decision IS NULL OR decision IN ('approve', 'reject')",
+            name="ck_human_review_requests_decision",
+        ),
+        CheckConstraint(
+            "revision IN (1, 2)",
+            name="ck_human_review_requests_revision",
+        ),
+        CheckConstraint(
+            "length(review_id) > 0",
+            name="ck_human_review_requests_review_id",
+        ),
+        CheckConstraint(
+            "length(contract_version) > 0",
+            name="ck_human_review_requests_contract_version",
+        ),
+        CheckConstraint(
+            "length(question) > 0",
+            name="ck_human_review_requests_question",
+        ),
+        CheckConstraint(
+            """
+            (
+                status = 'awaiting_review'
+                AND decision IS NULL
+                AND reviewer_identity IS NULL
+                AND revision = 1
+            )
+            OR
+            (
+                status = 'approved'
+                AND decision = 'approve'
+                AND reviewer_identity IS NOT NULL
+                AND length(reviewer_identity) > 0
+                AND revision = 2
+            )
+            OR
+            (
+                status = 'rejected'
+                AND decision = 'reject'
+                AND reviewer_identity IS NOT NULL
+                AND length(reviewer_identity) > 0
+                AND revision = 2
+            )
+            """,
+            name="ck_human_review_requests_lifecycle",
+        ),
+        Index(
+            "ix_human_review_requests_status",
+            "status",
+        ),
+    )
+
+    review_id: Mapped[str] = mapped_column(
+        String(128),
+        primary_key=True,
+    )
+
+    contract_version: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+
+    question: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    status: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+
+    answer_type: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+    )
+
+    answer_value_json: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    unit: Mapped[str | None] = mapped_column(
+        String(128),
+        nullable=True,
+    )
+
+    supporting_record_ids_json: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    citation_ids_json: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    source_fact_ids_json: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    evidence_json: Mapped[str] = mapped_column(
+        Text,
+        nullable=False,
+    )
+
+    synthesis_version: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+
+    sufficiency_policy_version: Mapped[str] = mapped_column(
+        String(128),
+        nullable=False,
+    )
+
+    decision: Mapped[str | None] = mapped_column(
+        String(16),
+        nullable=True,
+    )
+
+    reviewer_identity: Mapped[str | None] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+
+    revision: Mapped[int] = mapped_column(
+        Integer,
+        nullable=False,
+    )
