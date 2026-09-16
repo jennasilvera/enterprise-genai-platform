@@ -46,6 +46,7 @@ class FakeAnsweringService:
 def clean_serving_state():
     attributes = (
         "answering_service",
+        "reviewed_answering_service",
         "answering_assembly",
         "answering_status",
         "operational_metrics",
@@ -126,7 +127,12 @@ def test_enabled_lifecycle_installs_service(
 ) -> None:
     service = FakeAnsweringService()
 
-    assembly = SimpleNamespace(service=service)
+    reviewed_service = object()
+
+    assembly = SimpleNamespace(
+        service=service,
+        reviewed_service=reviewed_service,
+    )
 
     calls = []
 
@@ -180,6 +186,8 @@ def test_enabled_lifecycle_installs_service(
 
         assert app.state.answering_service is service
 
+        assert app.state.reviewed_answering_service is reviewed_service
+
     assert len(calls) == 1
 
     assert ready.status_code == 200
@@ -204,6 +212,11 @@ def test_enabled_lifecycle_installs_service(
     assert not hasattr(
         app.state,
         "answering_assembly",
+    )
+
+    assert not hasattr(
+        app.state,
+        "reviewed_answering_service",
     )
 
     assert not hasattr(

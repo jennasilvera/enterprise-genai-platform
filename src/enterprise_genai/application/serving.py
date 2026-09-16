@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from threading import Lock
 
 from sqlalchemy import Engine
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
 
 from enterprise_genai.application.northstar_specification import (
     NorthstarBoundedSpecificationProvider,
@@ -13,6 +13,9 @@ from enterprise_genai.application.northstar_specification import (
 from enterprise_genai.application.request_runtime import (
     RequestScopedExecutionRuntime,
     RetrievalExecutorProtocol,
+)
+from enterprise_genai.application.reviewed_answering import (
+    ReviewedAnsweringService,
 )
 from enterprise_genai.application.service import (
     GroundedAnsweringService,
@@ -112,6 +115,8 @@ class ServingAssembly:
 
     service: GroundedAnsweringService
 
+    reviewed_service: ReviewedAnsweringService
+
     specification_provider: NorthstarBoundedSpecificationProvider
 
     runtime: RequestScopedExecutionRuntime
@@ -164,8 +169,19 @@ def build_serving_assembly(
         metrics_registry=metrics,
     )
 
+    reviewed_service = ReviewedAnsweringService(
+        specification_provider=(specification_provider),
+        runtime=runtime,
+        generation_provider=generation,
+        session_factory=sessionmaker(
+            bind=engine,
+            expire_on_commit=False,
+        ),
+    )
+
     return ServingAssembly(
         service=service,
+        reviewed_service=reviewed_service,
         specification_provider=(specification_provider),
         runtime=runtime,
         retrieval_executor=retrieval,

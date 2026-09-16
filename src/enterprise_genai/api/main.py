@@ -15,6 +15,9 @@ from pydantic import BaseModel
 from enterprise_genai.api.answer import (
     router as answer_router,
 )
+from enterprise_genai.api.reviewed_answer import (
+    router as reviewed_answer_router,
+)
 from enterprise_genai.application.serving import (
     build_serving_assembly,
 )
@@ -148,6 +151,15 @@ async def lifespan(
 
             _app.state.answering_service = assembly.service
 
+            reviewed_service = getattr(
+                assembly,
+                "reviewed_service",
+                None,
+            )
+
+            if reviewed_service is not None:
+                _app.state.reviewed_answering_service = reviewed_service
+
             _app.state.answering_status = "ready"
 
             installed_answering_service = True
@@ -178,6 +190,15 @@ async def lifespan(
                 delattr(
                     _app.state,
                     "answering_assembly",
+                )
+
+            if hasattr(
+                _app.state,
+                "reviewed_answering_service",
+            ):
+                delattr(
+                    _app.state,
+                    "reviewed_answering_service",
                 )
 
         if hasattr(
@@ -213,6 +234,7 @@ app = FastAPI(
 app.add_middleware(RequestObservabilityMiddleware)
 
 app.include_router(answer_router)
+app.include_router(reviewed_answer_router)
 
 
 @app.get(

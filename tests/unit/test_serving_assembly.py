@@ -268,3 +268,32 @@ def test_supplied_retrieval_executor_skips_local_builder() -> None:
         assembly.retrieval_executor,
         LockedRetrievalExecutor,
     )
+
+
+def test_serving_assembly_builds_reviewed_service_from_shared_resources() -> None:
+    from enterprise_genai.application import (
+        ReviewedAnsweringService,
+    )
+
+    engine = create_engine("sqlite://")
+
+    retrieval = EmptyRetrieval()
+
+    generation = UnusedGenerationProvider()
+
+    assembly = build_serving_assembly(
+        engine=engine,
+        retrieval_executor=retrieval,
+        generation_builder=(lambda: generation),
+    )
+
+    assert isinstance(
+        assembly.reviewed_service,
+        ReviewedAnsweringService,
+    )
+
+    assert assembly.reviewed_service._specification_provider is assembly.specification_provider
+
+    assert assembly.reviewed_service._runtime is assembly.runtime
+
+    assert assembly.reviewed_service._generation_provider is assembly.generation_provider
