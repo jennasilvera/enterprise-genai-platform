@@ -1,0 +1,51 @@
+{
+  "canonical_sha256": "7c7d1e15a0cb0248a43dd11a3476229e3e56c4b1029ec7cb2eb9cbdf710ccf11",
+  "case_manifest": {
+    "canonical_sha256": "17876a4152a66e6cfd780d60799edbec168c18fb68a751ef28b8ddb64049c755",
+    "file_sha256": "477349bd44d7e6ab8deed4b4cbef413d62977039041943df925a8e6e79fa9b8e",
+    "path": "artifacts/evaluation/phase13e0/human_review_case_manifest.json"
+  },
+  "files": {
+    "docs/evaluation/human_review_workflow_plan.md": "ea0892a19d7c7c82192253ad686347d0e0bd9af371afc56851526ca4b6b33750",
+    "migrations/versions/7b1c0e2f4a91_add_human_review_requests.py": "17e0dca103e5836e318cf3271995acaff264b1b6745437b3b7b4b6ac4b2ea620",
+    "src/enterprise_genai/api/answer.py": "a88a6215743ed1a4e2a1eb86db75420faaaa1b42bcc706b09f18e5da0f94ecc8",
+    "src/enterprise_genai/api/reviewed_answer.py": "2616f5b32f11a3104a2eeeb912d97ed6acb1c9ba5f8965b6c9b26aaacd128103",
+    "src/enterprise_genai/application/reviewed_answering.py": "1366cd7a64e31bce306f764572f52639ad5e536802cb89b2b9b055200d2a3dba",
+    "src/enterprise_genai/application/service.py": "37dd9b68f91e493db5cc349311aa08da2ad9f6de42d38299b45b455c846cb6cc",
+    "src/enterprise_genai/evaluation/human_review_confirmation.py": "2533a40b940df74adcf673b40445d1877e87cb05b93350477dbe880954d29e71",
+    "src/enterprise_genai/human_review/contracts.py": "4712aa205641632ca2942e3e58bc3033cffc8b590c21894da9176375d4e391c8",
+    "src/enterprise_genai/human_review/repository.py": "dd65284c0511433701a634689e97d45ab806cb87367b1f253bbab9b77db84b9c",
+    "tests/unit/test_human_review_confirmation.py": "a0962d4d27283afd8e3fb2a28b3dbf08a00d8a16f66de42d30ea867ebef7978f"
+  },
+  "freeze_version": "northstar-human-review-phase13e0-freeze-v1",
+  "measurement_constraints": {
+    "case_population_locked_before_measurement": true,
+    "first_result_preserved_on_metric_failure": true,
+    "overwrite_forbidden": true,
+    "runner_locked_before_measurement": true,
+    "thresholds_locked_before_measurement": true
+  },
+  "phase13a": {
+    "commit": "ae96fbdeef0919b46cc7479cdcd0d5aff2fb44c9",
+    "protocol_sha256": "ea0892a19d7c7c82192253ad686347d0e0bd9af371afc56851526ca4b6b33750",
+    "tag": "phase-13a-human-review-workflow-protocol"
+  },
+  "phase13b": {
+    "commit": "b15e66277ad0dbc3b42875813891186c36e8aa9b",
+    "contract_version": "northstar-human-review-contract-v1",
+    "schema_revision": "7b1c0e2f4a91",
+    "tag": "phase-13b-human-review-persistence-v1"
+  },
+  "phase13c": {
+    "commit": "7cfb50fba42bc373a9cae8dc0196ff5269f52cfa",
+    "tag": "phase-13c-human-review-workflow-v1"
+  },
+  "phase13d": {
+    "commit": "c282142a480cbb210472dd9004bbbff42562f186",
+    "tag": "phase-13d-human-review-api-v1"
+  },
+  "phase13e0_expected_tag": "phase-13e0-human-review-confirmation-instrument",
+  "phase13e0_parent_commit": "c282142a480cbb210472dd9004bbbff42562f186",
+  "result_absent_at_freeze": true,
+  "result_path": "artifacts/evaluation/phase13e1/human_review_confirmation.json"
+}
